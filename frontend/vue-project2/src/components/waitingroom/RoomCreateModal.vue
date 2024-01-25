@@ -11,29 +11,29 @@
           <input class="room-title" type="text" />
         </div>
         <div class="room-info">
-          <div class="room-name">방제목</div>
-          <input type="password" />
+          <div class="room-password">비밀번호</div>
+          <input class="room-pwd" type="password" />
         </div>
         <div>
           <button>확인</button>
           <button @click="closeModal">취소</button>
         </div>
-        <slot></slot>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    show: Boolean,
-  },
-  methods: {
-    closeModal() {
-      this.$emit("close");
-    },
-  },
+<script setup>
+import { ref, defineProps, defineEmits } from "vue";
+
+const props = defineProps({
+  show: Boolean,
+});
+
+const emit = defineEmits(["close"]);
+
+const closeModal = () => {
+  emit("close");
 };
 </script>
 
@@ -55,7 +55,7 @@ export default {
   background-color: #0be2ff;
   text-align: center;
   width: 80%;
-  height: 60%;
+  height: 70%;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -83,7 +83,7 @@ export default {
   width: 30%;
   height: 100%;
   background-color: #12deff;
-  font-size: 56px;
+  font-size: 52px;
   font-family: "LABdigital";
   border-radius: 5%;
   border: 0;
@@ -97,13 +97,50 @@ export default {
   height: 100%;
   border-radius: 10px;
   margin-bottom: 1%;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .room-name {
   margin: 1%;
+  margin-left: 7%;
+  margin-right: 5%;
+  padding: 1% 1%;
+  background-color: #00acfc;
+  font-size: 40px;
+  border-radius: 10px;
+  font-family: "DOSMyungjo"; /* 폰트 설정 */
+  color: white;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.room-password {
+  margin: 1%;
   margin-left: 5%;
   margin-right: 5%;
+  padding: 1% 1%;
   background-color: #00acfc;
   font-size: 24px;
+  border-radius: 10px;
+  font-size: 40px;
+  border-radius: 10px;
+  font-family: "DOSMyungjo"; /* 폰트 설정 */
+  color: white;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.room-title {
+  width: 60%;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.room-pwd {
+  width: 48%;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
 }
 </style>

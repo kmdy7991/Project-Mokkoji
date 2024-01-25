@@ -14,7 +14,7 @@ export const useWebSocketStore = defineStore(
 
     const initializeWebSocket = (newRoomId) => {
       roomId.value = newRoomId;
-      sock.value = new sockJs("http://localhost:8080/chat");
+      sock.value = new sockJs("http:/192.168.31.42:8080/chat");
       stomp.value = Stomp.over(sock.value);
       stomp.value.connect({}, (frame) => {
         console.log("Connected: " + frame);
