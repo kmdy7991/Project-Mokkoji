@@ -6,8 +6,18 @@
           <button>몸으로 말해요</button>
           <button>뮤직큐</button>
         </div>
-        <div class="ro"></div>
-        <button @click="closeModal">취소</button>
+        <div class="room-info">
+          <div class="room-name">방제목</div>
+          <input class="room-title" type="text" />
+        </div>
+        <div class="room-info">
+          <div class="room-name">방제목</div>
+          <input type="password" />
+        </div>
+        <div>
+          <button>확인</button>
+          <button @click="closeModal">취소</button>
+        </div>
         <slot></slot>
       </div>
     </div>
@@ -78,5 +88,22 @@ export default {
   border-radius: 5%;
   border: 0;
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.room-info {
+  display: flex; /* flexbox 레이아웃 사용 */
+  align-items: center; /* 세로 방향으로 중앙 정렬 */
+  background-color: #0594e0;
+  height: 100%;
+  border-radius: 10px;
+  margin-bottom: 1%;
+}
+
+.room-name {
+  margin: 1%;
+  margin-left: 5%;
+  margin-right: 5%;
+  background-color: #00acfc;
+  font-size: 24px;
 }
 </style>

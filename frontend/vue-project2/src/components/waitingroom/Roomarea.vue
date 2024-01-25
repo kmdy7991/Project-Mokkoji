@@ -12,6 +12,18 @@
 
 <script setup>
 import IndividualRoom from "./IndividualRoom.vue";
+import { useRoomStore } from "@/stores/room";
+import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
+
+const router = useRouter();
+const store = useRoomStore();
+const roomlist = null;
+
+// onMounted(() => {
+//   roomlist = store.getRoomlist();
+//   console.log(roomlist);
+// });
 </script>
 <style>
 .game_room {

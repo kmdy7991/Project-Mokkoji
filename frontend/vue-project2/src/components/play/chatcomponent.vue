@@ -44,6 +44,7 @@ const roomIdRef = ref(props.roomId);
 onMounted(() => {
   store.setRoomId(props.roomId);
   webSocketStore.initializeWebSocket(props.roomId);
+  store.removeChat(props.roomId);
   // sock.value = new sockJs("http://localhost:8080/chat");
   // stomp.value = Stomp.over(sock.value);
   // stomp.value.connect({}, (frame) => {
@@ -56,13 +57,13 @@ onMounted(() => {
   //     // userName 속성에 접근
   //     console.log(messageObject);
   //     store.addChat(messageObject);
-    });
+});
 //   });
 // });
 
 function sendMessage() {
   webSocketStore.sendMessage(inputChat.value);
-  inputChat.value = '';
+  inputChat.value = "";
   // if (inputChat.value === "") {
   //   // 입력란이 비어있거나 공백만 있는 경우 함수 실행 중단
   //   return;
@@ -104,7 +105,7 @@ function sendMessage() {
   margin-bottom: 2%;
 }
 
-.chat> p {
+.chat > p {
   margin: 1%;
 }
 .room-number {
