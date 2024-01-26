@@ -16,10 +16,7 @@
 <script setup>
 import { ref } from "vue";
 import { useChatStore } from "@/stores/chat";
-import { gameStore } from "@/stores/game";
-
 const store = useChatStore();
-const gamestore = gameStore();
 const start = ref(false);
 
 console.log(start.value);
@@ -27,7 +24,6 @@ console.log(start.value);
 const gamestart = function () {
   start.value = true;
   console.log(start.value);
-  gamestore.setGameStart(start.value);
 };
 
 const plusChat = function () {

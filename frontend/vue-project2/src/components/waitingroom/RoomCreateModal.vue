@@ -6,34 +6,24 @@
           <button>몸으로 말해요</button>
           <button>뮤직큐</button>
         </div>
-        <div class="room-info">
-          <div class="room-name">방제목</div>
-          <input class="room-title" type="text" />
-        </div>
-        <div class="room-info">
-          <div class="room-password">비밀번호</div>
-          <input class="room-pwd" type="password" />
-        </div>
-        <div>
-          <button>확인</button>
-          <button @click="closeModal">취소</button>
-        </div>
+        <div class="ro"></div>
+        <button @click="closeModal">취소</button>
+        <slot></slot>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref, defineProps, defineEmits } from "vue";
-
-const props = defineProps({
-  show: Boolean,
-});
-
-const emit = defineEmits(["close"]);
-
-const closeModal = () => {
-  emit("close");
+<script>
+export default {
+  props: {
+    show: Boolean,
+  },
+  methods: {
+    closeModal() {
+      this.$emit("close");
+    },
+  },
 };
 </script>
 
@@ -55,7 +45,7 @@ const closeModal = () => {
   background-color: #0be2ff;
   text-align: center;
   width: 80%;
-  height: 70%;
+  height: 60%;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -83,64 +73,10 @@ const closeModal = () => {
   width: 30%;
   height: 100%;
   background-color: #12deff;
-  font-size: 52px;
+  font-size: 56px;
   font-family: "LABdigital";
   border-radius: 5%;
   border: 0;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.room-info {
-  display: flex; /* flexbox 레이아웃 사용 */
-  align-items: center; /* 세로 방향으로 중앙 정렬 */
-  background-color: #0594e0;
-  height: 100%;
-  border-radius: 10px;
-  margin-bottom: 1%;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.room-name {
-  margin: 1%;
-  margin-left: 7%;
-  margin-right: 5%;
-  padding: 1% 1%;
-  background-color: #00acfc;
-  font-size: 40px;
-  border-radius: 10px;
-  font-family: "DOSMyungjo"; /* 폰트 설정 */
-  color: white;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.room-password {
-  margin: 1%;
-  margin-left: 5%;
-  margin-right: 5%;
-  padding: 1% 1%;
-  background-color: #00acfc;
-  font-size: 24px;
-  border-radius: 10px;
-  font-size: 40px;
-  border-radius: 10px;
-  font-family: "DOSMyungjo"; /* 폰트 설정 */
-  color: white;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.room-title {
-  width: 60%;
-  height: 30px;
-  border-radius: 10px;
-  border: none;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.room-pwd {
-  width: 48%;
-  height: 30px;
-  border-radius: 10px;
-  border: none;
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
 }
 </style>

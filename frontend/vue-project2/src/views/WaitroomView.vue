@@ -27,13 +27,9 @@
 
 <script setup>
 import WaitingArea from "@/components/waitingroom/WaitingArea.vue";
-import { useRoomStore } from "@/stores/room";
 import { useRouter } from "vue-router";
-import { ref, onMounted } from "vue";
 
 const router = useRouter();
-const store = useRoomStore();
-const roomlist = null;
 const logMessage = () => {
   console.log(1);
 };
