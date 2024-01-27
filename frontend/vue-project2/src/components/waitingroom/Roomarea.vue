@@ -1,10 +1,9 @@
 <template>
   <div class="game_room">
     <IndividualRoom
-      v-for="number in 6"
-      :key="number"
-      itemKey="number"
-      class="welcome_itme"
+      v-for="room in roomData.slice(0, 6)"
+      :key="room.room_id"
+      :room="room"
     >
     </IndividualRoom>
   </div>
@@ -12,6 +11,9 @@
 
 <script setup>
 import IndividualRoom from "./IndividualRoom.vue";
+import { useRoomStore } from "@/stores/room";
+const store = useRoomStore(); // 피니아에서 가져옴
+const roomData = store.roomData; // 피니아에서 룸 데이터 불러옴.
 </script>
 <style>
 .game_room {

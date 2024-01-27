@@ -16,6 +16,7 @@ import Roomarea from "./Roomarea.vue";
 import RoomCreateModal from "./RoomCreateModal.vue";
 import { ref } from "vue";
 
+const { rooms } = defineProps(['rooms']);
 const showModal = ref(false);
 
 const toggleModal = () => {

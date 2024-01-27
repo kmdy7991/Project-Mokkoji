@@ -20,7 +20,7 @@
       </div>
     </div>
     <div>
-      <WaitingArea />
+      <WaitingArea/>
     </div>
   </div>
 </template>
@@ -30,16 +30,14 @@ import WaitingArea from "@/components/waitingroom/WaitingArea.vue";
 import { useRoomStore } from "@/stores/room";
 import { useRouter } from "vue-router";
 import { onMounted } from "vue";
-
 const router = useRouter();
 const store = useRoomStore();
-
 const logMessage = () => {
   console.log(1);
 };
 
 onMounted(() => {
-  store.getArticles();
+  store.getRoomlist();
 });
 
 const GoGameroom = (event) => {
@@ -47,6 +45,7 @@ const GoGameroom = (event) => {
   console.log("goTalkbodyroom" + " " + roomId);
   router.push({ name: "TalkBody", params: { id: roomId } });
 };
+
 </script>
 <style scoped>
 .title {

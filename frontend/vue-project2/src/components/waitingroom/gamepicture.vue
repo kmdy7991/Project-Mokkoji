@@ -1,11 +1,13 @@
 <template>
-  <div class ="game">
-	<img src="@/assets/bodyword.png" alt="bodyword.png" class="centered-image">
+  <div class="game">
+    <!-- 1이면 musicQ, 0이면 몸으로 말해요. -->
+    <img v-if="gameType === 1" src="@/assets/musicQ.png" alt="img1.png" class="centered-image">
+    <img v-else src="@/assets/bodyword.png" alt="img.png" class="centered-image">
   </div>
 </template>
 
 <script setup>
-
+const { gameType } = defineProps(["gameType"]);
 </script>
 
 <style scoped>

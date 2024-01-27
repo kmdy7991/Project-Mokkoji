@@ -1,12 +1,18 @@
 <template>
+<!-- 여기 코드 room_name 파트인데 왜 전체를 감싸는지..? 이름 변경 필요-->
   <div class="room_name">
     <div class="room_number">
-      <p>000</p>
+      <p>{{gameID}}</p>
+    </div>
+    <div>
+      <p>{{gameName}}</p>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const { gameName,gameID } = defineProps(["gameName", "gameID"]);
+</script>
 
 <style scoped>
 .room_name {

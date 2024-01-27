@@ -1,8 +1,8 @@
 <template>
   <div class="waiting_card">
     <div class="game_picture">
-      <gamepicture></gamepicture>
-      <roomname></roomname>
+      <gamepicture :gameType = "room.game_type"></gamepicture>
+      <roomname :gameName = "room.room_name" :gameID = "room.room_id"></roomname>
     </div>
   </div>
 </template>
@@ -10,7 +10,7 @@
 <script setup>
 import gamepicture from "./gamepicture.vue";
 import roomname from "./roomname.vue";
-const { itemKey } = defineProps(["itemKey"]);
+const { room } = defineProps(["room"]);
 </script>
 <style scoped>
 .waiting_card {
