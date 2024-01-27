@@ -29,15 +29,16 @@
 import WaitingArea from "@/components/waitingroom/WaitingArea.vue";
 import { useRoomStore } from "@/stores/room";
 import { useRouter } from "vue-router";
-import { onMounted } from "vue";
+import { onMounted,nextTick } from "vue";
 const router = useRouter();
 const store = useRoomStore();
+console.log(store.Roomlist);
 const logMessage = () => {
   console.log(1);
 };
-
-onMounted(() => {
-  store.getRoomlist();
+onMounted(async () => {
+  await store.getRoomlist(); // Assuming getRoomlist is an async function
+  await nextTick(); // Wait for the next view update cycle
 });
 
 const GoGameroom = (event) => {

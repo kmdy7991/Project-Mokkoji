@@ -11,6 +11,7 @@
 import gamepicture from "./gamepicture.vue";
 import roomname from "./roomname.vue";
 const { room } = defineProps(["room"]);
+console.log(room);
 </script>
 <style scoped>
 .waiting_card {

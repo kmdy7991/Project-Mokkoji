@@ -1,5 +1,5 @@
 import axios from "axios";
-import { computed, ref } from "vue";
+import { computed, ref , watchEffect } from "vue";
 import { defineStore } from "pinia";
 import { useRouter } from "vue-router";
 
@@ -11,9 +11,9 @@ export const useRoomStore = defineStore(
     const router = useRouter();
 
     const Roomlist = ref([]);
+    // 룸의 갯수 정보 requset => 이거 이렇게 쓰면 비동기 처리할 때 너무 힘들어요...
+    const getRoomlist = async () => {
 
-    // 룸의 갯수 정보 requset
-    const getRoomlist = function () {
       axios({
         method: "get",
         url: `${api}/api/room`,
@@ -33,13 +33,12 @@ export const useRoomStore = defineStore(
             console.log(err, "게시글 n개 Read request 오류");
           }
         });
-
-        const pData = computed(
-          Roomlist.value.map((d) => ({
-            roomId : room_id,
-          }))
-        );
     };
+    // watchEffect를 사용하여 데이터 변경 감지
+    watchEffect(() => {
+      getRoomlist();
+    });
+
     // Roomlist를 우리가 편한 형식으로 가공.
     const roomData = computed(() =>
     Roomlist.value.map((room) => ({
@@ -55,7 +54,7 @@ export const useRoomStore = defineStore(
     })
     )
     );
-    return { Roomlist, getRoomlist,roomData };
+    return { Roomlist,roomData,getRoomlist };
   },
   { persist: true }
 );

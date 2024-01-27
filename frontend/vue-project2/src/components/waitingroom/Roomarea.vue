@@ -12,7 +12,13 @@
 <script setup>
 import IndividualRoom from "./IndividualRoom.vue";
 import { useRoomStore } from "@/stores/room";
+import {onMounted ,nextTick } from "vue";
 const store = useRoomStore(); // 피니아에서 가져옴
+onMounted(async () => {
+  await store.getRoomlist(); // Assuming getRoomlist is an async function
+  await nextTick(); // Wait for the next view update cycle
+  roomData.value = store.roomData;
+});
 const roomData = store.roomData; // 피니아에서 룸 데이터 불러옴.
 </script>
 <style>
