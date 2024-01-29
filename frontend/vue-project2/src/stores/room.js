@@ -12,19 +12,19 @@ export const useRoomStore = defineStore(
 
     const Roomlist = ref([]);
     // 룸의 갯수 정보 requset => 이거 이렇게 쓰면 비동기 처리할 때 너무 힘들어요...
-    const getRoomlist = async () => {
+    const getRoomlist = async (page = 0) => {
 
       axios({
         method: "get",
-        url: `${api}/api/room`,
+        url: `${api}/api/room?page=${page}`,
         // headers: {
         //   Authorization: `Token ${token}`
         // }
       })
         .then((res) => {
-          console.log(res.data, "n 개 조회 됨");
-          Roomlist.value = res.data;
-          router.push({ name: "waitRoom" });
+          console.log(res.data.pages.content, "n 개 조회 됨");
+          Roomlist.value = res.data.pages.content;
+          router.push({ path: "/room", query: { page: page } });
         })
         .catch((err) => {
           if (err.response && err.response.status === 404) {
@@ -36,7 +36,9 @@ export const useRoomStore = defineStore(
     };
     // watchEffect를 사용하여 데이터 변경 감지
     watchEffect(() => {
-      getRoomlist();
+      const page = router.currentRoute.value.query.page || 1;
+      console.log(page);
+      getRoomlist(2);
     });
 
     // Roomlist를 우리가 편한 형식으로 가공.
@@ -58,3 +60,4 @@ export const useRoomStore = defineStore(
   },
   { persist: true }
 );
+

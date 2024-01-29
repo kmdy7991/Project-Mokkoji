@@ -5,6 +5,7 @@
     </div>
     <div>
       <Roomarea></Roomarea>
+
     </div>
     <RoomCreateModal :show="showModal" @close="showModal = false">
     </RoomCreateModal>
@@ -48,5 +49,33 @@ const toggleModal = () => {
   background-color: #dd2b14; /* 예: 파란색 배경 */
   color: #fff; /* 예: 흰색 글자 */
   cursor: click;
+}
+.spacer {
+  flex: 1; /* Grow and take available space */
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.button {
+  background-color: #12deff;
+  border: none;
+  border-radius: 10px;
+  width: 100px;
+  height: 50px;
+  font-size: 18px;
+  margin: 0 3px; /* Adjust the margin as needed */
+  font-family: "DOSMyungjo";
+  transition: background-color 0.3s ease;
+  color: white;
+}
+
+.button:hover {
+  background-color: #3498db;
+  cursor: pointer;
 }
 </style>

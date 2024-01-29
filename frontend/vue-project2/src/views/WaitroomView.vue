@@ -21,7 +21,9 @@
     </div>
     <div>
       <WaitingArea/>
+      
     </div>
+    
   </div>
 </template>
 
