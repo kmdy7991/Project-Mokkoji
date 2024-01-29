@@ -15,6 +15,7 @@
 import { useGameStore } from "@/stores/game";
 import { useWebSocketStore } from "@/stores/socket";
 import { useOpenViduStore } from "@/stores/openvidu";
+import { userStore } from "@/stores/user";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import playcomponent from "@/components/play/playcomponent.vue";
@@ -24,6 +25,7 @@ const router = useRouter();
 const store = useWebSocketStore();
 const vidustore = useOpenViduStore();
 const gamestore = useGameStore();
+const userstore = userStore();
 const props = defineProps({
   roomId: String,
 });
@@ -35,7 +37,11 @@ const goWaitRoom = () => {
   vidustore.leaveSession();
   session.value = vidustore.session;
   console.log("byebye~!");
+  if (userstore.Auth === true) {
+    router.push({ name: "Auth" });
+  } else {
   router.push({ name: "waitRoom" });
+  }
 };
 </script>
 
