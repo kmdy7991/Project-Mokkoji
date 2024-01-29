@@ -5,7 +5,7 @@ export const userStore = defineStore(
   "user",
   () => {
     const myName = ref("");
-
+    const Auth = ref(false);
     const setMyName = (name) => {
       myName.value = name;
       console.log(myName.value);
@@ -13,7 +13,7 @@ export const userStore = defineStore(
     watchEffect(() => {
       console.log("Name changed:", myName.value);
     });
-    return { myName, setMyName };
+    return { myName, setMyName, Auth };
   },
   { persist: true }
 );
