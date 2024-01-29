@@ -6,42 +6,65 @@
         <button class="button" @click="goToAuthPage">
           <img src="@/assets/gear.png" alt="gear.png" />
         </button>
-        <button class="button" @click="GoGameroom($event)" data-room-id="1">
-          <img src="@/assets/bodyword.png" alt="bodyword.png" />
+        <button class="button" @click="myfriendmodal">
+          <img src="@/assets/Friend.png" alt="Friend.png" />
         </button>
-        <button class="button" @click="GoGameroom($event)" data-room-id="2">
-          버튼3
+        <button class="button" @click="mypagemodal">
+          <img src="@/assets/mypage.png" alt="mypage.png" />
         </button>
-        <button class="redbutton">
-          <RouterLink :to="{ name: 'home' }">
-            <img src="@/assets/logout.png" alt="logout.png" />
-          </RouterLink>
+        <button class="redbutton" @click="gohome">
+          <img src="@/assets/logout.png" alt="logout.png" />
         </button>
       </div>
     </div>
     <WaitingArea v-if="!Authvalue" />
-    <AuthPick v-else />
+    <AuthPick v-else @close="AuthClose"/>
+    <MypageModal
+      v-if="mypageModalVisible"
+      @close="mypageModalVisible = false"
+    />
+    <friendModal
+      v-if="myfriendModalVisible"
+      @close="myfriendModalVisible = false"
+    />
   </div>
 </template>
 
 <script setup>
 import WaitingArea from "@/components/waitingroom/WaitingArea.vue";
 import AuthPick from "@/components/auth/AuthPick.vue";
+import MypageModal from "@/components/mypage/mypage.vue";
+import friendModal from "@/components/mainscreenbuttons/friend.vue";
+import { userStore } from "@/stores/user";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 
+const store = userStore();
 const router = useRouter();
 const Authvalue = ref(false);
+const mypageModalVisible = ref(false);
+const myfriendModalVisible = ref(false);
 
-const GoGameroom = (event) => {
-  const roomId = event.currentTarget.dataset.roomId;
-  console.log("goTalkbodyroom" + " " + roomId);
-  router.push({ name: "TalkBody", params: { id: roomId } });
-};
+const AuthClose = () => {
+  Authvalue.value = !Authvalue.value
+}
+function mypagemodal() {
+  mypageModalVisible.value = !mypageModalVisible.value;
+}
+
+function myfriendmodal() {
+  myfriendModalVisible.value = !myfriendModalVisible.value;
+}
 
 const goToAuthPage = () => {
   Authvalue.value = !Authvalue.value;
 };
+
+function gohome() {
+  store.Auth = !store.Auth
+  console.log(store.Auth)
+  router.push({ name: "home" });
+}
 </script>
 <style scoped>
 .title {
