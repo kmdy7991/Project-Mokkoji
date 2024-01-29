@@ -13,6 +13,8 @@ export const useGameStore = defineStore(
     const subscriber = ref([]);
     const publisher = ref();
     const combinedParticipants = ref([]); // New reference for combined data
+    const randomParticipant = ref('');
+    const randomIndex = ref('');
 
     const gameStart = () => {
       start.value = true;
@@ -38,6 +40,10 @@ export const useGameStore = defineStore(
                 publisher.value,
               ];
               console.log("참가자 목록:", combinedParticipants.value);
+              console.log("참가자 목록:", combinedParticipants.value);
+              randomIndex.value = Math.floor(Math.random() * combinedParticipants.value.length);
+              randomParticipant.value = combinedParticipants.value[randomIndex.value];
+              console.log("랜덤 참가자:", randomParticipant.value, randomIndex.value)
             }
           }, 1000);
         }
@@ -49,6 +55,7 @@ export const useGameStore = defineStore(
       countdown.value = 5;
       countdown2.value = 3;
       showAd.value = false;
+      randomParticipant.value = false;
     };
 
     // Vue 3 Composition API를 사용하여 mounted 시점에 로직을 실행할 수 있습니다.
@@ -64,6 +71,8 @@ export const useGameStore = defineStore(
       subscriber,
       publisher,
       combinedParticipants,
+      randomParticipant,
+      randomIndex,
       gameStart,
       gameout,
     };
