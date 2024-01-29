@@ -3,42 +3,67 @@
     <div class="title">
       <h1>모꼬지</h1>
       <div class="buttons">
-        <button class="button" @click="logMessage">
+        <button class="button" @click="rankingmodal">
           <img src="@/assets/rank.png" alt="rank.png" />
         </button>
-        <button class="button" @click="GoGameroom($event)" data-room-id="1">
-          <img src="@/assets/bodyword.png" alt="bodyword.png" />
+        <button class="button" @click="myfriendmodal">
+          <img src="@/assets/Friend.png" alt="Friend.png" />
         </button>
-        <button class="button" @click="GoGameroom($event)" data-room-id="2">
-          버튼3
+        <button class="button" @click="mypagemodal">
+          <img src="@/assets/mypage.png" alt="mypage.png" />
         </button>
-        <button class="redbutton">
-          <RouterLink :to="{ name: 'home' }">
-            <img src="@/assets/logout.png" alt="logout.png" />
-          </RouterLink>
+        <button class="redbutton" @click="gohome">
+          <img src="@/assets/logout.png" alt="logout.png" />
         </button>
       </div>
     </div>
     <div>
       <WaitingArea />
     </div>
+    <RankingModal
+      v-if="rankingModalVisible"
+      @close="rankingModalVisible = false"
+    />
+    <MypageModal
+      v-if="mypageModalVisible"
+      @close="mypageModalVisible = false"
+    />
+    <friendModal
+      v-if="myfriendModalVisible"
+      @close="myfriendModalVisible = false"
+    />
   </div>
 </template>
 
 <script setup>
 import WaitingArea from "@/components/waitingroom/WaitingArea.vue";
+import RankingModal from "@/components/mainscreenbuttons/ranking.vue";
+import MypageModal from "@/components/mypage/mypage.vue";
+import friendModal from "@/components/mainscreenbuttons/friend.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const logMessage = () => {
-  console.log(1);
-};
+import { ref } from "vue";
 
-const GoGameroom = (event) => {
-  const roomId = event.currentTarget.dataset.roomId;
-  console.log("goTalkbodyroom" + " " + roomId);
-  router.push({ name: "TalkBody", params: { id: roomId } });
-};
+const rankingModalVisible = ref(false);
+const mypageModalVisible = ref(false);
+const myfriendModalVisible = ref(false);
+
+function rankingmodal() {
+  rankingModalVisible.value = !rankingModalVisible.value;
+}
+
+function mypagemodal() {
+  mypageModalVisible.value = !mypageModalVisible.value;
+}
+
+function myfriendmodal() {
+  myfriendModalVisible.value = !myfriendModalVisible.value;
+}
+
+function gohome() {
+  router.push({ name: "home" });
+}
 </script>
 <style scoped>
 .title {
