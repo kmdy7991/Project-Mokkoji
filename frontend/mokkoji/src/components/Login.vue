@@ -26,7 +26,6 @@
         </p>
       </RouterLink>
     </div>
-    <button class="btn" @click="goToAuthView">관리자 입장</button>
   </div>
 </template>
 
@@ -53,6 +52,13 @@ const click = async () => {
     })
     .catch((error) => {
       console.error("요청 오류:", error);
+    })
+    .finally(() => {
+      if (username.value.trim() === "") {
+        store.setMyName("Participant" + Math.floor(Math.random() * 100));
+      } else {
+        store.setMyName(username.value);
+      }
     });
 };
 

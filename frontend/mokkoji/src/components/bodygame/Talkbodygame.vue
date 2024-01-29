@@ -6,32 +6,34 @@
       </button>
     </div>
     <div class="player">
-      <playcomponent :roomId="roomId" />
+      <playcomponent/>
     </div>
   </div>
 </template>
 
 <script setup>
-import playcomponent from "@/components/play/playcomponent.vue";
 import { gameStore } from "@/stores/game";
 import { useWebSocketStore } from "@/stores/socket";
-import { defineProps } from "vue";
+import { useOpenViduStore } from "@/stores/openvidu";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
+import playcomponent from "@/components/play/playcomponent.vue";
 
+const session = ref(false);
+const vidustore = useOpenViduStore();
 const gamestore = gameStore();
 const start = gamestore.start;
 const router = useRouter();
 const store = useWebSocketStore();
-
 const props = defineProps({
   roomId: String,
 });
 
-
-
 const goWaitRoom = () => {
   console.log(start)
   store.disconnectWebSocket()
+  vidustore.leaveSession();
+  session.value = vidustore.session;
   console.log('byebye~!')
   router.push({name: 'waitRoom'})
 }
@@ -40,7 +42,7 @@ const goWaitRoom = () => {
 <style scoped>
 .game {
   max-width: 100%; /* 화면의 전체 너비를 최대 너비로 설정 */
-  overflow: hidden; /* 화면 밖으로 내용이 넘어가지 않도록 설정 */
+  max-height: 100%;
 }
 .buttons {
   display: flex; /* 버튼을 위한 Flexbox 컨테이너 설정 */
@@ -77,5 +79,6 @@ const goWaitRoom = () => {
 
 .player {
   margin-left: 3%;
+  height: 95%;
 }
 </style>

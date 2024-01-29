@@ -45,7 +45,7 @@ const plusChat = function () {
 }
 .mainvidio {
   width: 100%;
-  height: 400px;
+  height: 450px;
   background-color: #12deff;
   border-radius: 10px;
   display: flex;
@@ -57,7 +57,8 @@ const plusChat = function () {
 }
 
 .gamename {
-  margin-bottom: 3%;
+  margin-top: 1%;
+  margin-bottom: 1%;
   width: 100%;
   text-align: center;
   color: white;

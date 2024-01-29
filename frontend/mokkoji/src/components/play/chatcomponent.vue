@@ -5,7 +5,7 @@
         <p>{{ roomId }}</p>
       </div>
       <div class="room-name">
-        <p>제발 초보만 와주세요</p>
+        <p>...</p>
       </div>
     </div>
     <div class="chatting-area">
@@ -30,7 +30,10 @@ import { useChatStore } from "@/stores/chat";
 import { useWebSocketStore } from "@/stores/socket";
 import { ref, onMounted } from "vue";
 import { defineProps } from "vue";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
+const roomId = route.params.id;
 const props = defineProps({
   roomId: String,
 });

@@ -1,18 +1,22 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import { useChatStore } from "@/stores/chat";
+import { userStore } from "./user";
 import sockJs from "sockjs-client/dist/sockjs";
 import Stomp from "webstomp-client";
 
 export const useWebSocketStore = defineStore('Socket' , () => {
-  const sock = ref(null);
+  const store = useChatStore();
+  const userstore = userStore();
+  const sock = ref(null); 
   const stomp = ref(null);
   const roomId = ref(null);
-  const store = useChatStore();
+  const myName = userstore.myName;
+  
 
   const initializeWebSocket = (newRoomId) => {
     roomId.value = newRoomId;
-    sock.value = new sockJs("http://localhost:8080/chat");
+    sock.value = new sockJs("https://localhost:8080/chat");
     stomp.value = Stomp.over(sock.value);
     stomp.value.connect({}, frame => {
       console.log("Connected: " + frame);
@@ -34,9 +38,10 @@ export const useWebSocketStore = defineStore('Socket' , () => {
     if (!inputChat.trim()) {
       return;
     }
+    console.log(myName)
     const messageObject = {
       sessionId: roomId.value,
-      userName: "ssafy",
+      userName: myName,
       content: inputChat,
     };
     stomp.value.send(`/pub/${roomId.value}`, JSON.stringify(messageObject), {});
@@ -54,7 +59,7 @@ export const useWebSocketStore = defineStore('Socket' , () => {
     
   };
 
-  return { sock, stomp, roomId, initializeWebSocket, subscribeToRoom, sendMessage, disconnectWebSocket };
+  return { sock, stomp, roomId, myName ,initializeWebSocket, subscribeToRoom, sendMessage, disconnectWebSocket };
 },{persist: true});  
   
 

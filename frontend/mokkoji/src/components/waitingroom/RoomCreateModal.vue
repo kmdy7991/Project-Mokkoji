@@ -13,7 +13,12 @@
             <div class="room-number">
               <div class="info">방제목</div>
               <div class="input-value">
-                <input class="roomname" v-model="roomId" type="text" required />
+                <input
+                    class="roomname"
+                    v-model="roomId"
+                    type="text"
+                    required
+                  /> 
               </div>
             </div>
           </div>
@@ -27,10 +32,12 @@
                   type="password"
                   required
                 />
-                <div v-else class="freeroom"></div>
+                <div v-else class="freeroom">
+
+                </div>
 
                 <div class="screet-room">
-                  <input type="checkbox" v-model="isPasswordEnabled" />
+                  <input type="checkbox" v-model="isPasswordEnabled">
                   비밀방 설정
                 </div>
               </div>
@@ -38,35 +45,35 @@
           </div>
         </div>
         <button class="btn btn-lg btn-success" @click="joinSession()">
-          Join!
-        </button>
-        <button @click="closeModal">취소</button>
+            Join!
+          </button>
+          <button @click="closeModal">취소</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits } from 'vue';
 import { ref, onMounted } from "vue";
 import { useOpenViduStore } from "@/stores/openvidu";
 import { useRouter } from "vue-router";
 const store = useOpenViduStore();
-const roomId = ref(`` + store.mySessionId);
+const roomId = ref(``+ store.mySessionId)
 const router = useRouter();
 const isPasswordEnabled = ref(false);
 
 // Props 정의
 const props = defineProps({
-  show: Boolean,
+  show: Boolean
 });
 
 // Emit 함수 정의
-const emit = defineEmits(["close"]);
+const emit = defineEmits(['close']);
 
 // Methods
 function closeModal() {
-  emit("close");
+  emit('close');
 }
 
 const joinSession = () => {
@@ -74,7 +81,7 @@ const joinSession = () => {
     roomId: roomId.value,
   };
   store.joinSession(payload);
-  router.push({ name: "TalkBody", params: { id: roomId.value } });
+  router.push({ name: "TalkBody", params: { id: roomId.value }});
 };
 
 onMounted(() => {
@@ -111,7 +118,7 @@ onMounted(() => {
   align-items: start; /* Center vertically */
 }
 
-.room {
+.room{
   width: 100%;
 }
 .game-info {
@@ -140,23 +147,23 @@ onMounted(() => {
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.form-group {
+.form-group{
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-.room-info {
+.room-info{
   width: 980px;
   height: 50px;
-  background-color: #0594e0;
+  background-color: #0594E0;
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   border-radius: 10px;
   margin-bottom: 10px;
 }
 
-.room-number {
+.room-number{
   width: 90%;
   margin-left: 5%;
   margin-top: 7px;
@@ -168,8 +175,8 @@ onMounted(() => {
   color: white;
 }
 
-.info {
-  background-color: #00acfc;
+.info{
+  background-color: #00ACFC;
   width: 20%;
   margin-right: 5%;
   border-radius: 10px;
@@ -177,14 +184,14 @@ onMounted(() => {
 .input-value {
   height: 35px;
   width: 80%;
-  background-color: #00acfc;
+  background-color: #00ACFC;
   border-radius: 5px;
   display: flex;
-  flex-direction: row;
+  flex-direction:row;
   align-content: center;
 }
 
-.roomname {
+.roomname{
   display: flex;
   margin: 1%;
   height: 60%;
@@ -193,20 +200,20 @@ onMounted(() => {
   border: none;
 }
 
-.freeroom {
+.freeroom{
   display: flex;
   margin: 1%;
   height: 60%;
   width: 70%;
   border-radius: 5px;
   border: none;
-  background-color: #afafaf;
+  background-color: #AFAFAF;
 }
-.screet-room {
+.screet-room{
   font-size: 24px;
 }
 
-.screet-room > input {
+.screet-room > input{
   width: 20px;
   height: 20px;
   margin-top: 5%;

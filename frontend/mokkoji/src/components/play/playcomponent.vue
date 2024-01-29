@@ -2,28 +2,43 @@
   <div class="container">
     <div class="player-wrapper">
       <div class="player">
-        <uservidiocomponent />
-        <uservidiocomponent />
-        <uservidiocomponent />
-        <uservidiocomponent />
-        <uservidiocomponent />
-        <uservidiocomponent />
+        <user-video class="people"
+          :stream-manager="vidustore.publisher"
+          @click.native="updateMainVideoStreamManager(publisher)"
+        />
+        <user-video class="people"
+          v-for="sub in vidustore.subscribers"
+          :key="sub.stream.connection.connectionId"
+          :stream-manager="sub"
+          @click.native="updateMainVideoStreamManager(sub)"
+        />
       </div>
     </div>
     <div class="mainvidio">
       <mainvidio />
     </div>
     <div class="chat">
-      <chatcomponent :roomId="roomId" />
+      <chatcomponent :room-id="roomId" />
     </div>
+    <div class="session">
+  </div>
   </div>
 </template>
 
 <script setup>
-import uservidiocomponent from "../play/uservidiocomponent.vue";
 import mainvidio from "../play/mainvidio.vue";
-import chatcomponent from "../play/chatcomponent.vue";
 import { defineProps } from "vue";
+import { ref } from "vue";
+import { useRoute } from "vue-router";
+import { useOpenViduStore } from "@/stores/openvidu";
+import UserVideo from "./UserVideo.vue";
+import chatcomponent from "./chatcomponent.vue";
+
+const vidustore = useOpenViduStore();
+const mainStreamManager = ref(null);
+const publisher = vidustore.publisher;
+const route = useRoute();
+const roomId = route.params.id; // 현재 라우트에서 roomId 파라미터를 가져옵니다.
 
 const props = defineProps({
   roomId: String,
@@ -32,27 +47,31 @@ const props = defineProps({
 
 <style scoped>
 .container {
-  height: 60%;
-
+  height: 30%;
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   align-items: flex-start;
   max-width: 100%;
 }
 
 .player-wrapper {
   width: 10%; /* 조절 가능한 너비 */
-  height: 100%;
+  height: 620px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* 요소들 사이의 간격을 균등하게 분배 */
+  
   align-items: center;
   margin-left: 3%;
   margin: 1%;
 }
 .player {
   width: 100%;
-  margin-bottom: 10%;
+}
+
+.people {
+  width: 100%;
+  height: 15%;
+  margin-bottom: 7.5%;
 }
 .mainvidio {
   flex: 1;
@@ -63,7 +82,7 @@ const props = defineProps({
 
 .chat {
   width: 30%;
-  height: 60%;
+  height: 50%;
   margin-top: 1%;
   margin-right: 1%;
 }

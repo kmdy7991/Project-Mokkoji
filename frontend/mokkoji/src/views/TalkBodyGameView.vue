@@ -1,17 +1,12 @@
-<script setup>
-import Talkbodygame from "../components/bodygame/Talkbodygame.vue";
-import { useRoute } from "vue-router";
-
-const route = useRoute();
-const roomId = route.params.id; // 현재 라우트에서 roomId 파라미터를 가져옵니다.
-</script>
-
 <template>
   <div class="background">
-    <Talkbodygame :roomId="roomId" />
+    <Talkbodygame/>
   </div>
 </template>
 
+<script setup>
+import Talkbodygame from "../components/bodygame/Talkbodygame.vue"; // 현재 라우트에서 roomId 파라미터를 가져옵니다.
+</script>
 <style scoped>
 .background {
   background-color: #0286ff;
