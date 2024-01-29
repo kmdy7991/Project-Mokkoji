@@ -4,9 +4,11 @@
     <h1 v-if="gameStore.showAd" class="gamename">제시어: 박땡땡</h1>
     <div class="mainvidio">
       <fullVidio
+        v-show="gameStore.randomParticipant"
         class="people"
-        :stream-manager="vidustore.publisher"
-        @click.native="updateMainVideoStreamManager(publisher)"
+        :stream-manager="gameStore.randomParticipant"
+        :number="gameStore.randomIndex"
+        @click.native="updateMainVideoStreamManager(gameStore.randomParticipant)"
       />
     </div>
     <div class="gamestart">
@@ -28,11 +30,8 @@
 import { ref } from "vue";
 import { useChatStore } from "@/stores/chat";
 import { useGameStore } from "@/stores/game";
-import { useOpenViduStore } from "@/stores/openvidu";
 import fullVidio from "./fullVidio.vue";
 
-const vidustore = useOpenViduStore();
-const publisher = vidustore.publisher;
 const store = useChatStore();
 const gameStore = useGameStore();
 const start = ref(false);
