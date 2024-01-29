@@ -20,11 +20,10 @@
           placeholder="방 번호를 입력해주세요"
         />
       </div>
-      <RouterLink :to="{ name: 'waitRoom' }">
-        <p class="text-center">
-          <button class="btn" @click="click()">입장</button>
-        </p>
-      </RouterLink>
+      <p class="text-center">
+        <button class="btn" @click="goTogame()">입장</button>
+        <button class="btn" @click="goToAuthView()">관리자 입장</button>
+      </p>
     </div>
   </div>
 </template>
@@ -63,8 +62,14 @@ const click = async () => {
 };
 
 const goToAuthView = () => {
+  store.Auth = !store.Auth 
+  console.log(store.Auth)
   router.push({ name: "Auth" });
 };
+
+const goTogame = () => {
+  router.push({ name: 'waitRoom' });
+}
 </script>
 
 <style scoped>
@@ -145,5 +150,9 @@ const goToAuthView = () => {
   background-color: #3498db; /* 예: 파란색 배경 */
   color: #fff; /* 예: 흰색 글자 */
   cursor: click;
+}
+
+.text-center{
+  display: flex;
 }
 </style>
