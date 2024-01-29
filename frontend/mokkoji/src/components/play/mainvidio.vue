@@ -1,13 +1,24 @@
 <template>
   <div class="container">
-    <h1 class="gamename">몸으로 말해요</h1>
-    <div class="mainvidio"></div>
+    <h1 v-if="!gameStore.showAd" class="gamename">몸으로 말해요</h1>
+    <h1 v-if="gameStore.showAd" class="gamename">제시어: 박땡땡</h1>
+    <div class="mainvidio">
+      <fullVidio
+        class="people"
+        :stream-manager="vidustore.publisher"
+        @click.native="updateMainVideoStreamManager(publisher)"
+      />
+    </div>
     <div class="gamestart">
       <div>
-        <form v-if="start === false" @click.prevent="gamestart">
+        <form v-if="!gameStore.start" @submit.prevent="gamestart">
           <button class="button">게임시작</button>
         </form>
-        <div v-else>광고판이다!!!</div>
+        <div v-else>
+          <div v-if="gameStore.countdown > 0">{{ gameStore.countdown }}</div>
+          <div v-else-if="!gameStore.showAd">게임이 시작됩니다!</div>
+          <div v-if="gameStore.showAd">여기에 광고판 컨텐츠</div>
+        </div>
       </div>
     </div>
   </div>
@@ -16,18 +27,22 @@
 <script setup>
 import { ref } from "vue";
 import { useChatStore } from "@/stores/chat";
+import { useGameStore } from "@/stores/game";
+import { useOpenViduStore } from "@/stores/openvidu";
+import fullVidio from "./fullVidio.vue";
+
+const vidustore = useOpenViduStore();
+const publisher = vidustore.publisher;
 const store = useChatStore();
+const gameStore = useGameStore();
 const start = ref(false);
 
-console.log(start.value);
-
 const gamestart = function () {
-  start.value = true;
-  console.log(start.value);
+  gameStore.gameStart();
 };
 
 const plusChat = function () {
-  if (start.value === false) {
+  if (start === false) {
     return;
   }
   store.startChat();
