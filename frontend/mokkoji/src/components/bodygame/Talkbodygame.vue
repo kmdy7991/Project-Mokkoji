@@ -6,13 +6,13 @@
       </button>
     </div>
     <div class="player">
-      <playcomponent/>
+      <playcomponent />
     </div>
   </div>
 </template>
 
 <script setup>
-import { gameStore } from "@/stores/game";
+import { useGameStore } from "@/stores/game";
 import { useWebSocketStore } from "@/stores/socket";
 import { useOpenViduStore } from "@/stores/openvidu";
 import { useRouter } from "vue-router";
@@ -20,23 +20,23 @@ import { ref } from "vue";
 import playcomponent from "@/components/play/playcomponent.vue";
 
 const session = ref(false);
-const vidustore = useOpenViduStore();
-const gamestore = gameStore();
-const start = gamestore.start;
 const router = useRouter();
 const store = useWebSocketStore();
+const vidustore = useOpenViduStore();
+const gamestore = useGameStore();
 const props = defineProps({
   roomId: String,
 });
 
 const goWaitRoom = () => {
-  console.log(start)
-  store.disconnectWebSocket()
+  gamestore.gameout();
+  console.log(gamestore.start);
+  store.disconnectWebSocket();
   vidustore.leaveSession();
   session.value = vidustore.session;
-  console.log('byebye~!')
-  router.push({name: 'waitRoom'})
-}
+  console.log("byebye~!");
+  router.push({ name: "waitRoom" });
+};
 </script>
 
 <style scoped>
