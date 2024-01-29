@@ -1,12 +1,18 @@
 <template>
-  <div class="game_room">
-    <IndividualRoom
-      v-for="room in paginatedRooms"
-      :key="room.id || `empty-${room.index}`"
-      class="welcome_itme"
-    />
-    <button @click="prevPage" :disabled="pageNumber === 0">이전</button>
-    <button @click="nextPage" :disabled="pageNumber >= maxPage">다음</button>
+  <div>
+    <div class="game_room">
+      <IndividualRoom
+        v-for="room in paginatedRooms"
+        :key="room.id || `empty-${room.index}`"
+        class="welcome_itme"
+      />
+    </div>
+    <div class="buttoncontainer">
+      <div class="page">
+        <button @click="prevPage" :class="{'disabled-button':pageNumber === 0}">◀</button>
+        <button @click="nextPage" :class="{ 'disabled-button': pageNumber >= maxPage }">▶</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -57,5 +63,48 @@ const prevPage = () => {
 .welcome_items {
   display: flex;
   flex-wrap: wrap; /* 요소들이 넘칠 경우 다음 줄로 넘어가도록 설정 */
+}
+
+.buttoncontainer {
+  display: flex;
+  justify-content: center;
+}
+.page{
+  display: flex;
+  justify-content: center;
+  background-color:  #054ca3;
+  width: 30%;
+  height: 30px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.page > button {
+  height: 75%;
+  width: 25%;
+  background-color: #00ACFC;
+  border-color: #0065fc;
+  border-radius: 3px;
+  margin: 0% 3%;
+  transition: background-color 0.3s ease;
+  color: #4DDFFB;
+  border: none;
+}
+
+.page > button:hover {
+  background-color: #0197dd;
+  cursor: click;
+}
+
+.page > button.disabled-button {
+  background-color: #ccc; /* 회색 배경색으로 변경 */
+  border: none; /* 회색 테두리로 변경 */
+  cursor: not-allowed; /* 커서를 not-allowed로 변경하여 클릭 비활성화 */
+  color: #888; /* 글자색을 회색으로 변경 */
+}
+
+.page > button.disabled-button:hover {
+  background-color: #ccc; /* hover 시 배경색도 그대로 유지 */
+  cursor: not-allowed; /* hover 시 커서도 그대로 유지 */
 }
 </style>
