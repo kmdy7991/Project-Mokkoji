@@ -5,7 +5,7 @@ import { OpenVidu } from "openvidu-browser";
 import { userStore } from "./user";
 
 // const APPLICATION_SERVER_URL = process.env.NODE_ENV === "production" ? "" : "http://192.168.31.42:5000/";
-const OPENVIDU_SERVER_URL = "https://13.54.203.42:5253";
+const OPENVIDU_SERVER_URL = "https://i10b304.p.ssafy.io:5253"; // "" <<= 싸피에 올릴것.
 const OPENVIDU_SERVER_SECRET = "SSAFY";
 
 export const useOpenViduStore = defineStore(

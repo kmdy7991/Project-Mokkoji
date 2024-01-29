@@ -2,11 +2,13 @@
   <div class="container">
     <div class="player-wrapper">
       <div class="player">
-        <user-video class="people"
+        <user-video
+          class="people"
           :stream-manager="vidustore.publisher"
           @click.native="updateMainVideoStreamManager(publisher)"
         />
-        <user-video class="people"
+        <user-video
+          class="people"
           v-for="sub in vidustore.subscribers"
           :key="sub.stream.connection.connectionId"
           :stream-manager="sub"
@@ -20,8 +22,7 @@
     <div class="chat">
       <chatcomponent :room-id="roomId" />
     </div>
-    <div class="session">
-  </div>
+    <div class="session"></div>
   </div>
 </template>
 
@@ -59,7 +60,7 @@ const props = defineProps({
   height: 620px;
   display: flex;
   flex-direction: column;
-  
+
   align-items: center;
   margin-left: 3%;
   margin: 1%;
@@ -70,7 +71,7 @@ const props = defineProps({
 
 .people {
   width: 100%;
-  height: 15%;
+  height: 100px;
   margin-bottom: 7.5%;
 }
 .mainvidio {

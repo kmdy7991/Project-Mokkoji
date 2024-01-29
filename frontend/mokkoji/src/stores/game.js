@@ -12,6 +12,7 @@ export const useGameStore = defineStore(
     const store = useOpenViduStore();
     const subscriber = ref([]);
     const publisher = ref();
+    const combinedParticipants = ref([]); // New reference for combined data
 
     const gameStart = () => {
       start.value = true;
@@ -32,6 +33,11 @@ export const useGameStore = defineStore(
               console.log("구독자 목록:", subscriber.value);
               publisher.value = store.publisher;
               console.log("구독자 목록:", publisher.value);
+              combinedParticipants.value = [
+                ...subscriber.value,
+                publisher.value,
+              ];
+              console.log("참가자 목록:", combinedParticipants.value);
             }
           }, 1000);
         }
@@ -50,7 +56,17 @@ export const useGameStore = defineStore(
       // 여기에 필요한 로직을 추가합니다.
     });
 
-    return { start, countdown, countdown2, showAd, gameStart, gameout };
+    return {
+      start,
+      countdown,
+      countdown2,
+      showAd,
+      subscriber,
+      publisher,
+      combinedParticipants,
+      gameStart,
+      gameout,
+    };
   },
   { persist: true }
 );
