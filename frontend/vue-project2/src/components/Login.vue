@@ -26,15 +26,20 @@
         </p>
       </RouterLink>
     </div>
+    <button class="btn" @click="goToAuthView">관리자 입장</button>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import { userStore } from "@/stores/user";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const roomnumber = ref("");
 const username = ref("");
+const store = userStore();
 
 const click = async () => {
   await axios
@@ -49,6 +54,10 @@ const click = async () => {
     .catch((error) => {
       console.error("요청 오류:", error);
     });
+};
+
+const goToAuthView = () => {
+  router.push({ name: "Auth" });
 };
 </script>
 
