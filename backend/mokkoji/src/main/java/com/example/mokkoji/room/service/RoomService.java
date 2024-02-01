@@ -20,7 +20,7 @@ public interface RoomService {
     int userCountMinusOne(int roomID);
     int nicknameToID(String nickname);
     int userInGame(int user_id);
-    int checkPassword(int roomID);
+    String checkPassword(int roomID);
     int gameStart(int roomID);
     int gameEnd(int roomID);
     int goOutUser(int userId);

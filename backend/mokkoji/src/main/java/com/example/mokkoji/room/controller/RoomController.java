@@ -2,6 +2,7 @@ package com.example.mokkoji.room.controller;
 
 import com.example.mokkoji.room.dto.RoomDto;
 import com.example.mokkoji.room.service.RoomService;
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,9 +30,11 @@ public class RoomController {
     //    public RoomController(JwtTokenProvider jwtTokenProvider) {
 //        this.jwtTokenProvider = jwtTokenProvider;
 //    }
-    @GetMapping("/checkpwd")
-    public ResponseEntity<Object> checkPassword(int roomId, String password) {
-        if (roomService.checkPassword(roomId) == Integer.parseInt(password)) {
+    @PostMapping("/{room_id}/checkpwd")
+    public ResponseEntity<Object> checkPassword(@PathVariable("room_id") int roomId, @RequestBody JsonNode requestBody) {
+        System.out.println(requestBody.get("password").asText());
+        System.out.println(roomService.checkPassword(roomId));
+        if (roomService.checkPassword(roomId).equals(requestBody.get("password").asText())) {
             return ResponseEntity.status(200).body("200, 입장하세요.");
         }
         return ResponseEntity.status(401).body("401 비밀번호 불일치");

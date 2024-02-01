@@ -25,7 +25,7 @@ public interface RoomMapper {
 
     int userInGame(int user_id);
 
-    int checkPassword(int roomID);
+    String checkPassword(int roomID);
 
     int gameStart(int roomID);
 

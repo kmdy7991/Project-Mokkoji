@@ -76,7 +76,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public int checkPassword(int roomID) {
+    public String checkPassword(int roomID) {
         return roomMapper.checkPassword(roomID);
     }
 

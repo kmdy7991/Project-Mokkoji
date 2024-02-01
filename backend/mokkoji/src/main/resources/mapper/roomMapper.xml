@@ -3,7 +3,7 @@
 <mapper namespace="com.example.mokkoji.room.mapper.RoomMapper">
     <!--    터지지 않은 방 리스트 출력-->
     <select id="getAllRooms" resultType="com.example.mokkoji.room.dto.RoomDto">
-        select * from gameroom
+        select room_id ,room_name, user_count,is_private,is_explosion,is_active,game_type, owner from gameroom
         where is_explosion = 0;
     </select>
     <select id="list" parameterType="map" resultType="com.example.mokkoji.room.dto.RoomDto">
@@ -53,7 +53,7 @@
         select count(*)as userInGame from participant
         where id = #{user_id};
     </select>
-    <select id="checkPassword" parameterType="String" resultType="int">
+    <select id="checkPassword" parameterType="int" resultType="String">
         select room_password from gameroom
         where room_id = #{room_id};
     </select>
