@@ -22,6 +22,8 @@ import { ref, onBeforeUnmount, onMounted } from "vue";
 import playcomponent from "@/components/play/playcomponent.vue";
 
 const session = ref(false);
+const route = useRoute();
+const roomId = route.params.id;
 const router = useRouter();
 const store = useWebSocketStore();
 const vidustore = useOpenViduStore();
@@ -37,29 +39,32 @@ const handlePageRefresh = (event) => {
   event.returnValue = "";
 };
 
-onMounted(() => {
-  window.addEventListener("beforeunload", handlePageRefresh);
-});
+// onMounted(() => {
+//   window.addEventListener("beforeunload", handlePageRefresh);
+// });
 
-onBeforeUnmount(() => {
-  window.removeEventListener("beforeunload", handlePageRefresh);
-  // Existing goWaitRoom functionality
-  goWaitRoom();
-});
+// onBeforeUnmount(() => {
+//   window.removeEventListener("beforeunload", handlePageRefresh);
+//   // Existing goWaitRoom functionality
+//   goWaitRoom();
+// });
 
 const goWaitRoom = () => {
   if (!gamestore.start) {
+    const payload = {
+      roomId: Number(roomId),
+      nickname: userstore.myName,
+    };
     gamestore.gameout();
-    console.log(gamestore.start);
     store.disconnectWebSocket();
     vidustore.leaveSession();
-    roomstore.getRoomlist();
     session.value = vidustore.session;
-    console.log("byebye~!");
+    roomstore.getRoomlist();
+    roomstore.exitRoom(payload);
     if (userstore.Auth === true) {
-      router.push({ name: "Auth" });
+      router.replace({ name: "Auth" });
     } else {
-      router.push({ name: "waitRoom" });
+      router.replace({ name: "waitRoom" });
     }
   }
 };

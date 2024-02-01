@@ -6,7 +6,7 @@
         :key="room.room_id || `empty-${room.index}`"
         class="welcome_itme"
         :room="room"
-        @click.native="joinRoomDirectly(room.room_id)"
+        @click.native="joinRoomDirectly(room.room_id, room._private)"
       />
     </div>
     <div class="buttoncontainer">
@@ -25,6 +25,9 @@
         </button>
       </div>
     </div>
+    <!-- <div>
+      <checkpwd />
+    </div> -->
   </div>
 </template>
 
@@ -34,36 +37,38 @@ import { useRouter } from "vue-router";
 import { useOpenViduStore } from "@/stores/openvidu";
 import { useRoomStore } from "@/stores/room";
 import IndividualRoom from "./IndividualRoom.vue";
+import checkpwd from "./checkpwd.vue";
 
 const router = useRouter();
 const store = useOpenViduStore();
 const roomStore = useRoomStore();
-
-const joinRoomDirectly = (roomId) => {
-  // roomId가 존재할 때만 세션에 참여
-  const roomIdString = roomId ? roomId.toString() : null;
-
-  if (roomIdString) {
-    const payload = {
-      roomId: roomIdString,
-    };
-    store.joinSession(payload);
-    // console.log(roomIdString)
-    router.push({ name: "TalkBody", params: { id: roomIdString } });
-  }
-}; // 프론트만 돌릴때 (더미데이터 존재시).
+const checkpassword = ref(false);
 
 // const joinRoomDirectly = (roomId) => {
 //   // roomId가 존재할 때만 세션에 참여
-//   const roomIdNumber = typeof roomId === "number" ? roomId : null;
+//   const roomIdString = roomId ? roomId.toString() : null;
 
-//   console.log(typeof roomIdNumber);
-//   if (roomIdNumber !== null) {
-//     roomStore.entranceRoom(roomIdNumber);
-//     console.log(roomIdNumber);
-//     // router.push({ name: "TalkBody", params: { id: roomIdString } });
+//   if (roomIdString) {
+//     const payload = {
+//       roomId: roomIdString,
+//     };
+//     store.joinSession(payload);
+//     // console.log(roomIdString)
+//     router.replace({ name: "TalkBody", params: { id: roomIdString } });
 //   }
-// }; //백엔드 연결 코드
+// }; // 프론트만 돌릴때 (더미데이터 존재시).
+
+const joinRoomDirectly = (roomId) => {
+  // roomId가 존재할 때만 세션에 참여
+  const roomIdNumber = typeof roomId === "number" ? roomId : null;
+
+  console.log(typeof roomIdNumber);
+  if (roomIdNumber !== null) {
+    roomStore.entranceRoom(roomIdNumber);
+    console.log(roomIdNumber);
+    // router.push({ name: "TalkBody", params: { id: roomIdString } });
+  }
+}; //백엔드 연결 코드 (성공 확인)
 
 const rooms = roomStore.Roomlist;
 

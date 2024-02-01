@@ -59,9 +59,9 @@ const goToAuthView = () => {
     store.setMyName(username.value);
   }
   store.Auth = !store.Auth;
-  roomStore.getRoomlist()
+  roomStore.getRoomlist();
   console.log(store.Auth);
-  router.push({ name: "Auth" });
+  router.replace({ name: "Auth" });
 };
 
 const goTogame = () => {
@@ -70,8 +70,8 @@ const goTogame = () => {
   } else {
     store.setMyName(username.value);
   }
-  roomStore.getRoomlist()
-  router.push({ name: "waitRoom" });
+  roomStore.getRoomlist();
+  router.replace({ name: "waitRoom" });
 };
 </script>
 

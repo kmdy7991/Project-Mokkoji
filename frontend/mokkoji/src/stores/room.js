@@ -83,7 +83,7 @@ export const useRoomStore = defineStore(
             roomId: createdRoomId,
           };
           vidustore.joinSession(payload);
-          router.push({ path: `/TalkBody/${createdRoomId}` });
+          router.replace({ path: `/TalkBody/${createdRoomId}` });
         })
         .catch((err) => {
           console.log(err, "방 create request 오류");
@@ -98,22 +98,36 @@ export const useRoomStore = defineStore(
       })
         .then((res) => {
           console.log(res.data, "게임방 입장");
-          // store.joinSession(payload);
-          router.push({ path: `/TalkBody/${roomId}` }); // entranceRoom  함수에서 받아올 예정
+          roomIdNumber = String(roomIdNumber);
+          const payload = {
+            roomId: roomIdNumber,
+          };
+          vidustore.joinSession(payload);
+          router.replace({ path: `/TalkBody/${roomIdNumber}` }); // entranceRoom  함수에서 받아올 예정
         })
         .catch((err) => {
           console.log(err);
         });
     };
 
-    const exitRoom = function () {
-      axios({
-        method: "get",
-        url: `${API_URL}/posts/articles/${id}`,
-      });
+    const exitRoom = function (payload) {
+      const { roomId } = payload;
+      console.log(typeof payload.roomId);
+      axios
+        .get(`${API_URL}/api/room/delete/${roomId}`)
+        .then((res) => {
+          // 성공적인 응답 처리
+          console.log(res);
+          console.log(`성공!`);
+        })
+        .catch((error) => {
+          // 에러 처리
+          console.log(error);
+          console.log(`실패!`);
+        });
     };
 
-    return { Roomlist, getRoomlist, createRoom, entranceRoom };
+    return { Roomlist, getRoomlist, createRoom, entranceRoom, exitRoom };
   },
   { persist: true }
 );
