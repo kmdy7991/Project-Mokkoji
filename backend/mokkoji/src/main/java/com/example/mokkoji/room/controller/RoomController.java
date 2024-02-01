@@ -40,17 +40,19 @@ public class RoomController {
         return ResponseEntity.status(401).body("401 비밀번호 불일치");
     }
 
-    @GetMapping("/start/{room_id}")
+//    @GetMapping("/start/{room_id}")
+    @GetMapping("/{room_id}/start")
     public ResponseEntity<Object> gameStart(@PathVariable("room_id") int roomId, HttpServletRequest request) {
         try {
-            System.out.println("aaa");
-            int gs = roomService.gameStart(roomId);
+//            게임이 폭파된 경우 실행 안되게 한다.
+            if(roomService.isExplosion(roomId) == 1){
+                return ResponseEntity.status(300).body("300, 방이 이미 터졌습니다. -> room으로 리다이렉트되게");
+            }
+            int gs = roomService.gameStart(roomId); // gs -> game_start
             System.out.println(gs);
             if (gs == 1) {
-                System.out.println("bbb");
                 return ResponseEntity.status(200).body("게임 시작 성공");
             } else {
-                System.out.println("ccc");
                 return ResponseEntity.status(HttpStatus.FOUND)
                         .location(UriComponentsBuilder.fromPath("/api/room/{room_id}")
                                 .buildAndExpand(roomId).toUri())
@@ -59,6 +61,21 @@ public class RoomController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(404).body("404 게임 시작 실패!");
+        }
+    }
+    @GetMapping("/{room_id}/end")
+    public ResponseEntity<Object> gameEnd(@PathVariable("room_id") int roomId, HttpServletRequest request){
+        try{
+            int game_end = roomService.gameEnd(roomId);
+            if(game_end == 1){
+                return ResponseEntity.status(200).body("게임 끝 성공");
+            }
+            else{
+                return ResponseEntity.status(300).body("게임나가기 실패 -> 있던 곳으로 리다이렉트 해주세요");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(404).body("404 게임 끝 실패1");
         }
     }
 
@@ -84,12 +101,12 @@ public class RoomController {
                 }
             }
             int user_id = roomService.nicknameToID(nickname);
-            int user_in_the_room_number = roomService.userRoomID(user_id);
-            System.out.println("aaa" + user_in_the_room_number);
+//            int user_in_the_room_number = roomService.userRoomID(user_id); // url 변경으로 인해 사용 x
+            System.out.println("aaa" + roomId);
 //        나가는 유저
             int is_go_out_user = roomService.goOutUser(user_id);
             if (is_go_out_user == 1) {
-                int count_down_user_count = roomService.userCountMinusOne(user_in_the_room_number);
+                int count_down_user_count = roomService.userCountMinusOne(roomId);
                 if (count_down_user_count >= 1) {
                     return ResponseEntity.status(200).body("나가기 성공");
                 } else {

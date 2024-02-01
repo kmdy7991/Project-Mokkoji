@@ -71,4 +71,9 @@
         select room_id from participant
         where id = #{user_id};
     </select>
+<!--    게임이 폭파됐는지 확인-->
+    <select id="isExplosion" parameterType="int" resultType="int">
+        select gameroom.is_explosion from gameroom
+        where room_id = #{room_id}
+    </select>
 </mapper>

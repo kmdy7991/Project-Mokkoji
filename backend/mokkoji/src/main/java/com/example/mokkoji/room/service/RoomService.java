@@ -25,4 +25,6 @@ public interface RoomService {
     int gameEnd(int roomID);
     int goOutUser(int userId);
     int userRoomID(int userID);
+
+    int isExplosion(int roomID);
 }

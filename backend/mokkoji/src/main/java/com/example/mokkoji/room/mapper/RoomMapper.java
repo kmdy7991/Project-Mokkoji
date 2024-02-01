@@ -34,4 +34,6 @@ public interface RoomMapper {
     int goOutUser(int userId);
 
     int userRoomID(int userID);
+
+    int isExplosion(int roomID);
 }

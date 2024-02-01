@@ -99,4 +99,9 @@ public class RoomServiceImpl implements RoomService {
     public int userRoomID(int userID) {
         return roomMapper.userRoomID(userID);
     }
+
+    @Override
+    public int isExplosion(int roomID) {
+        return roomMapper.isExplosion(roomID);
+    }
 }
