@@ -3,10 +3,6 @@
     <div v-if="streamManager && gameStore.showAd" id="video-show">
       <fullMainVidoo :stream-manager="streamManager" />
     </div>
-    <div v-if="streamManager">
-      <p>{{ clientData }}</p>
-      <p>{{ props.number }}</p>
-    </div>
   </div>
 </template>
 
@@ -18,7 +14,6 @@ const gameStore = useGameStore();
 // props 정의
 const props = defineProps({
   streamManager: Object,
-  number: Number
 });
 
 const clientData = computed(() => {
@@ -28,9 +23,7 @@ const clientData = computed(() => {
 </script>
 <style scoped>
 #video-show {
-  background-color: #08beff;
-  margin-top: 8%;
   width: 100%;
-  height: 82%;
+  height: 100%;
 }
 </style>

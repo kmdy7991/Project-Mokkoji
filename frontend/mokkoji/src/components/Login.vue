@@ -11,15 +11,6 @@
           placeholder="별명을 입력해주세요"
         />
       </div>
-      <div class="form-group">
-        <label class="label-color">방 번호</label>
-        <input
-          v-model="roomnumber"
-          class="form-control"
-          type="text"
-          placeholder="방 번호를 입력해주세요"
-        />
-      </div>
       <p class="text-center">
         <button class="btn" @click="goTogame()">입장</button>
         <button class="btn" @click="goToAuthView()">관리자 입장</button>
@@ -30,46 +21,58 @@
 
 <script setup>
 import { ref } from "vue";
-import axios from "axios";
+import { useRoomStore } from "@/stores/room";
 import { userStore } from "@/stores/user";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const roomnumber = ref("");
+const roomStore = useRoomStore();
 const username = ref("");
 const store = userStore();
 
-const click = async () => {
-  await axios
-    .post("http://192.168.31.42:8080/info", {
-      // nickname: "사용자 닉네임",
-      roomId: roomnumber.value,
-      userId: username.value,
-    })
-    .then((response) => {
-      console.log("서버 응답:", response.data);
-    })
-    .catch((error) => {
-      console.error("요청 오류:", error);
-    })
-    .finally(() => {
-      if (username.value.trim() === "") {
-        store.setMyName("Participant" + Math.floor(Math.random() * 100));
-      } else {
-        store.setMyName(username.value);
-      }
-    });
-};
+// const click = async () => {
+//   await axios
+//     .post("http://192.168.31.42:8080/info", {
+//       // nickname: "사용자 닉네임",
+//       roomId: roomnumber.value,
+//       userId: username.value,
+//     })
+//     .then((response) => {
+//       console.log("서버 응답:", response.data);
+//     })
+//     .catch((error) => {
+//       console.error("요청 오류:", error);
+//     })
+//     .finally(() => {
+//       if (username.value.trim() === "") {
+//         store.setMyName("Participant" + Math.floor(Math.random() * 100));
+//       } else {
+//         store.setMyName(username.value);
+//       }
+//     });
+// };
 
 const goToAuthView = () => {
-  store.Auth = !store.Auth 
-  console.log(store.Auth)
+  if (username.value.trim() === "") {
+    store.setMyName("Participant" + Math.floor(Math.random() * 100));
+  } else {
+    store.setMyName(username.value);
+  }
+  store.Auth = !store.Auth;
+  roomStore.getRoomlist()
+  console.log(store.Auth);
   router.push({ name: "Auth" });
 };
 
 const goTogame = () => {
-  router.push({ name: 'waitRoom' });
-}
+  if (username.value.trim() === "") {
+    store.setMyName("Participant" + Math.floor(Math.random() * 100));
+  } else {
+    store.setMyName(username.value);
+  }
+  roomStore.getRoomlist()
+  router.push({ name: "waitRoom" });
+};
 </script>
 
 <style scoped>
@@ -138,7 +141,7 @@ const goTogame = () => {
   height: 50px; /* 버튼의 높이 */
   /* 추가 스타일링이 필요하면 여기에 추가 */
   display: block; /* 버튼을 블록 레벨 요소로 만들어 줄바꿈을 만듭니다. */
-  margin: 20px auto; /* 버튼을 수평 중앙에 배치 */
+  margin: 20px; /* 버튼을 수평 중앙에 배치 */
   background-color: #00acfc;
   border-color: #00acfc;
   border-radius: 10px;
@@ -152,7 +155,7 @@ const goTogame = () => {
   cursor: click;
 }
 
-.text-center{
+.text-center {
   display: flex;
 }
 </style>

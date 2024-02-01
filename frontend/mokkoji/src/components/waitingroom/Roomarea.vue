@@ -3,24 +3,69 @@
     <div class="game_room">
       <IndividualRoom
         v-for="room in paginatedRooms"
-        :key="room.id || `empty-${room.index}`"
+        :key="room.room_id || `empty-${room.index}`"
         class="welcome_itme"
+        :room="room"
+        @click.native="joinRoomDirectly(room.room_id)"
       />
     </div>
     <div class="buttoncontainer">
       <div class="page">
-        <button @click="prevPage" :class="{'disabled-button':pageNumber === 0}">◀</button>
-        <button @click="nextPage" :class="{ 'disabled-button': pageNumber >= maxPage }">▶</button>
+        <button
+          @click="prevPage"
+          :class="{ 'disabled-button': pageNumber === 0 }"
+        >
+          ◀
+        </button>
+        <button
+          @click="nextPage"
+          :class="{ 'disabled-button': pageNumber >= maxPage }"
+        >
+          ▶
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch, watchEffect } from "vue";
+import { useRouter } from "vue-router";
+import { useOpenViduStore } from "@/stores/openvidu";
+import { useRoomStore } from "@/stores/room";
 import IndividualRoom from "./IndividualRoom.vue";
 
-const rooms = ref([1, 2, 3, 4, 5, 6, 7, 8]);
+const router = useRouter();
+const store = useOpenViduStore();
+const roomStore = useRoomStore();
+
+const joinRoomDirectly = (roomId) => {
+  // roomId가 존재할 때만 세션에 참여
+  const roomIdString = roomId ? roomId.toString() : null;
+
+  if (roomIdString) {
+    const payload = {
+      roomId: roomIdString,
+    };
+    store.joinSession(payload);
+    // console.log(roomIdString)
+    router.push({ name: "TalkBody", params: { id: roomIdString } });
+  }
+}; // 프론트만 돌릴때 (더미데이터 존재시).
+
+// const joinRoomDirectly = (roomId) => {
+//   // roomId가 존재할 때만 세션에 참여
+//   const roomIdNumber = typeof roomId === "number" ? roomId : null;
+
+//   console.log(typeof roomIdNumber);
+//   if (roomIdNumber !== null) {
+//     roomStore.entranceRoom(roomIdNumber);
+//     console.log(roomIdNumber);
+//     // router.push({ name: "TalkBody", params: { id: roomIdString } });
+//   }
+// }; //백엔드 연결 코드
+
+const rooms = roomStore.Roomlist;
 
 const perPage = 6; // 한 페이지당 방 갯수
 const pageNumber = ref(0);
@@ -28,7 +73,7 @@ const pageNumber = ref(0);
 const paginatedRooms = computed(() => {
   const start = pageNumber.value * perPage;
   const end = start + perPage;
-  let pageRooms = rooms.value.slice(start, end);
+  let pageRooms = rooms.slice(start, end);
 
   while (pageRooms.length < perPage) {
     pageRooms.push({ id: null, index: pageRooms.length + 1 });
@@ -38,7 +83,7 @@ const paginatedRooms = computed(() => {
 });
 
 const maxPage = computed(() => {
-  return Math.ceil(rooms.value.length / perPage) - 1;
+  return Math.ceil(rooms.length / perPage) - 1;
 });
 
 const nextPage = () => {
@@ -48,10 +93,14 @@ const nextPage = () => {
 const prevPage = () => {
   if (pageNumber.value > 0) pageNumber.value--;
 };
+
+watchEffect(() => {
+  // console.log("Paginated Rooms Updated:", paginatedRooms);
+});
 </script>
 <style>
 .game_room {
-  width: 100%;
+  width: 95%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -69,10 +118,10 @@ const prevPage = () => {
   display: flex;
   justify-content: center;
 }
-.page{
+.page {
   display: flex;
   justify-content: center;
-  background-color:  #054ca3;
+  background-color: #054ca3;
   width: 30%;
   height: 30px;
   border-bottom-right-radius: 10px;
@@ -82,12 +131,12 @@ const prevPage = () => {
 .page > button {
   height: 75%;
   width: 25%;
-  background-color: #00ACFC;
+  background-color: #00acfc;
   border-color: #0065fc;
   border-radius: 3px;
   margin: 0% 3%;
   transition: background-color 0.3s ease;
-  color: #4DDFFB;
+  color: #4ddffb;
   border: none;
 }
 
@@ -97,14 +146,14 @@ const prevPage = () => {
 }
 
 .page > button.disabled-button {
-  background-color: #ccc; /* 회색 배경색으로 변경 */
+  background-color: #19adfc; /* 회색 배경색으로 변경 */
   border: none; /* 회색 테두리로 변경 */
   cursor: not-allowed; /* 커서를 not-allowed로 변경하여 클릭 비활성화 */
   color: #888; /* 글자색을 회색으로 변경 */
 }
 
 .page > button.disabled-button:hover {
-  background-color: #ccc; /* hover 시 배경색도 그대로 유지 */
+  background-color: #19adfc; /* hover 시 배경색도 그대로 유지 */
   cursor: not-allowed; /* hover 시 커서도 그대로 유지 */
 }
 </style>

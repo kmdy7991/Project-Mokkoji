@@ -11,7 +11,7 @@ export const userStore = defineStore(
       console.log(myName.value);
     };
     watchEffect(() => {
-      console.log("Name changed:", myName.value);
+      // console.log("Name changed:", myName.value);
     });
     return { myName, setMyName, Auth };
   },

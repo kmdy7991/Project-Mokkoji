@@ -16,8 +16,9 @@ import { useGameStore } from "@/stores/game";
 import { useWebSocketStore } from "@/stores/socket";
 import { useOpenViduStore } from "@/stores/openvidu";
 import { userStore } from "@/stores/user";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { useRoomStore } from "@/stores/room";
+import { useRouter, useRoute } from "vue-router";
+import { ref, onBeforeUnmount, onMounted } from "vue";
 import playcomponent from "@/components/play/playcomponent.vue";
 
 const session = ref(false);
@@ -26,21 +27,40 @@ const store = useWebSocketStore();
 const vidustore = useOpenViduStore();
 const gamestore = useGameStore();
 const userstore = userStore();
-const props = defineProps({
-  roomId: String,
+const roomstore = useRoomStore();
+
+const handlePageRefresh = (event) => {
+  gamestore.gameout();
+  console.log(gamestore.start);
+  // Prevent default action and display a confirmation dialog
+  event.preventDefault();
+  event.returnValue = "";
+};
+
+onMounted(() => {
+  window.addEventListener("beforeunload", handlePageRefresh);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("beforeunload", handlePageRefresh);
+  // Existing goWaitRoom functionality
+  goWaitRoom();
 });
 
 const goWaitRoom = () => {
-  gamestore.gameout();
-  console.log(gamestore.start);
-  store.disconnectWebSocket();
-  vidustore.leaveSession();
-  session.value = vidustore.session;
-  console.log("byebye~!");
-  if (userstore.Auth === true) {
-    router.push({ name: "Auth" });
-  } else {
-  router.push({ name: "waitRoom" });
+  if (!gamestore.start) {
+    gamestore.gameout();
+    console.log(gamestore.start);
+    store.disconnectWebSocket();
+    vidustore.leaveSession();
+    roomstore.getRoomlist();
+    session.value = vidustore.session;
+    console.log("byebye~!");
+    if (userstore.Auth === true) {
+      router.push({ name: "Auth" });
+    } else {
+      router.push({ name: "waitRoom" });
+    }
   }
 };
 </script>

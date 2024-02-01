@@ -104,7 +104,7 @@ function closeModal() {
 .save {
   border : 0;
   height : 40px;
-  width: 50%;
+  width: 60%;
   background-color: #00ACFC;
   border-radius: 10px;
   color: white;

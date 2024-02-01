@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="mainvidio">
-      <mainvidio />
+      <mainvidio/>
     </div>
     <div class="chat">
       <chatcomponent :room-id="roomId" />
@@ -28,7 +28,6 @@
 
 <script setup>
 import mainvidio from "../play/mainvidio.vue";
-import { defineProps } from "vue";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { useOpenViduStore } from "@/stores/openvidu";
@@ -41,9 +40,6 @@ const publisher = vidustore.publisher;
 const route = useRoute();
 const roomId = route.params.id; // 현재 라우트에서 roomId 파라미터를 가져옵니다.
 
-const props = defineProps({
-  roomId: String,
-});
 </script>
 
 <style scoped>
@@ -71,8 +67,8 @@ const props = defineProps({
 
 .people {
   width: 100%;
-  height: 100px;
-  margin-bottom: 7.5%;
+  height: 120px;
+  margin-bottom: 10%;
 }
 .mainvidio {
   flex: 1;

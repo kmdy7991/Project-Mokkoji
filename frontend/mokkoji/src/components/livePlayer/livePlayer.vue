@@ -1,29 +1,31 @@
 <template>
-  <div>
+  <div class="container">
     <div class="levelarae">
-      <div class="level">
-        레벨
-      </div>
+      <div class="level">레벨</div>
     </div>
     <div>
-      <myinfo/>
+      <myinfo />
     </div>
     <div class="players">
-      <otherplayer/>
+      <otherplayer />
     </div>
   </div>
 </template>
 
 <script setup>
-import myinfo from './myinfo.vue';
-import otherplayer from './otherplayer.vue';
-
+import myinfo from "./myinfo.vue";
+import otherplayer from "./otherplayer.vue";
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 .levelarae {
   width: 100%;
-  background-color: #015DBA;
+  background-color: #015dba;
   height: 30px;
   border-top-left-radius: 10px; /* 왼쪽 상단 모서리 */
   border-top-right-radius: 10px;
@@ -33,10 +35,9 @@ import otherplayer from './otherplayer.vue';
   padding-top: 2%;
   font-family: "DOSMyungjo";
 }
-.players{
+.players {
   margin: 2% 5%;
   height: 50%;
-  background-color: #052B68;
   border-radius: 10px;
 }
 </style>

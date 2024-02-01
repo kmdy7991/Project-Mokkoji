@@ -1,16 +1,25 @@
 <template>
   <div class="waiting_card">
     <div class="game_picture">
-      <gamepicture></gamepicture>
-      <roomname></roomname>
+      <gamepicture :gameType="room.game_type" />
+      <roomname
+        :roomId="room.room_id"
+        :roomName="room.room_name"
+        :private="room._private"
+      />
     </div>
+    {{ room }}
   </div>
 </template>
 
 <script setup>
+import { defineProps } from "vue";
 import gamepicture from "./gamepicture.vue";
 import roomname from "./roomname.vue";
-const { itemKey } = defineProps(["itemKey"]);
+
+const props = defineProps({
+  room: Object,
+});
 </script>
 <style scoped>
 .waiting_card {

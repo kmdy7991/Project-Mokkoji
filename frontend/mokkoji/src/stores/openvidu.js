@@ -21,20 +21,20 @@ export const useOpenViduStore = defineStore(
 
     const joinSession = (payload) => {
       const { roomId } = payload;
-      // console.log(`ㅋㅋㅋㅋㅋㅋ` + payload.mySessionId + payload.myUserName);
+      // console.log("in Js 24 = " + payload.roomId) 테스트 완료
+      // console.log(`ㅋㅋㅋㅋㅋㅋ` + payload.mySessionId + payload.myUserName); 테스트 완료
       // 1) Get an OpenVidu object
       OV.value = new OpenVidu();
       // 2) Init a session
       session.value = OV.value.initSession();
-      console.log("in Js 28 = " + session.value);
+      // console.log("in Js 28 = " + session.value); 테스트 일단 완료.
       // console.log(session.value);
       // 3) Specify the actions when events take place in the session
       // On every new Stream received...
       session.value.on("streamCreated", ({ stream }) => {
         const subscriber = session.value.subscribe(stream);
-        console.log();
         subscribers.value.push(subscriber);
-        console.log("in Js 35" + subscriber);
+        // console.log("in Js 37" + subscriber);
       });
 
       // On every Stream destroyed...
@@ -61,14 +61,14 @@ export const useOpenViduStore = defineStore(
               videoSource: undefined, // The source of video. If undefined default webcam
               publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
               publishVideo: true, // Whether you want to start publishing with your video enabled or not
-              resolution: "640x480", // The resolution of your video
+              resolution: "800x600", // The resolution of your video
               frameRate: 30, // The frame rate of your video
               insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
               mirror: false, // Whether to mirror your local video or not
             });
 
             publisher.value = newPublisher;
-            console.log("in Js 69 = " + publisher);
+            // console.log("in Js 69 = " + publisher);
             session.value.publish(newPublisher);
           })
           .catch((error) => {
@@ -93,7 +93,7 @@ export const useOpenViduStore = defineStore(
       try {
         // Await the resolution of createSession before moving to createToken
         const sessionId = await createSession(mySessionId);
-        console.log("in Js 94 = " + sessionId);
+        // console.log("in Js 94 = " + sessionId);
         return await createToken(sessionId);
       } catch (error) {
         // Handle any errors that might occur during createSession or createToken
@@ -122,8 +122,8 @@ export const useOpenViduStore = defineStore(
           );
 
         let test = await response();
-        console.log("in Js 123 = " + test);
-        console.log("in Js 124 = " + test.data);
+        // console.log("in Js 123 = " + test);
+        // console.log("in Js 124 = " + test.data);
         return test.data.id;
       } catch (error) {
         console.log(error);

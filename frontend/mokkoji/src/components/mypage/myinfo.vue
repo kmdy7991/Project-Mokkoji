@@ -21,12 +21,12 @@ import myinfomation from './myinfomation.vue'
 	width:100%
 }
 .mypicture {
-	width: 250px;
+	width: 300px;
 	margin-right: 5%;
 }
 
 .myinfo {
-	width : 720px;
+	width : 900px;
 }
 
 </style>

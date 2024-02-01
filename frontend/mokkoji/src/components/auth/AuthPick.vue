@@ -72,7 +72,8 @@ const goBack = () => {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding-bottom: 10%;
+  padding-top: 8%;
+  padding-bottom: 8%;
 }
 
 .button {
@@ -89,6 +90,12 @@ const goBack = () => {
   /* 기본 버튼 스타일링 */
   color: white; /* 기본 글자색 */
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.button:hover {
+  background-color: #dd2b14; /* 예: 파란색 배경 */
+  color: #fff; /* 예: 흰색 글자 */
+  cursor: click;
 }
 
 
@@ -108,7 +115,9 @@ const goBack = () => {
   border-radius: 20px;
   font-size: 40px;
   font-family: "LABdigital";
+  transition: background-color 0.3s ease;
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+  border: none;
 }
 
 .button2{
@@ -116,13 +125,19 @@ const goBack = () => {
 }
 
 .button1 {
-  background-color: orange;
+  background-color: #F68D12;
 }
 
+.button1:hover {
+  background-color: #f68c12cb;
+}
 .button2 {
-  background-color: blue;
+  background-color: #3F46EA;
 }
 
+.button2:hover {
+  background-color: #3f45eacb;
+}
 .button1 p {
   margin: 2px; /* 각 <p> 태그 아래에 간격 추가 */
 }

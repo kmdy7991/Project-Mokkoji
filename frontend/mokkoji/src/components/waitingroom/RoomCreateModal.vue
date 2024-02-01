@@ -4,8 +4,18 @@
       <div class="room">
         <div class="game-info">
           <div class="game-buttons">
-            <button>몸으로 말해요</button>
-            <button>뮤직큐</button>
+            <button
+              :class="{ selected: gameType === 0, unselected: gameType !== 0 }"
+              @click="selectGameType(0)"
+            >
+              몸으로 말해요
+            </button>
+            <button
+              :class="{ selected: gameType === 1, unselected: gameType !== 1 }"
+              @click="selectGameType(1)"
+            >
+              뮤직큐
+            </button>
           </div>
         </div>
         <div class="form-group">
@@ -13,12 +23,7 @@
             <div class="room-number">
               <div class="info">방제목</div>
               <div class="input-value">
-                <input
-                    class="roomname"
-                    v-model="roomId"
-                    type="text"
-                    required
-                  /> 
+                <input class="roomname" v-model="roomId" type="text" required />
               </div>
             </div>
           </div>
@@ -28,16 +33,15 @@
               <div class="input-value">
                 <input
                   v-if="isPasswordEnabled"
+                  v-model="roomPwd"
                   class="roomname"
                   type="password"
                   required
                 />
-                <div v-else class="freeroom">
-
-                </div>
+                <div v-else class="freeroom"></div>
 
                 <div class="screet-room">
-                  <input type="checkbox" v-model="isPasswordEnabled">
+                  <input type="checkbox" v-model="isPasswordEnabled" />
                   비밀방 설정
                 </div>
               </div>
@@ -45,35 +49,44 @@
           </div>
         </div>
         <button class="btn btn-lg btn-success" @click="joinSession()">
-            Join!
-          </button>
-          <button @click="closeModal">취소</button>
+          Join!
+        </button>
+        <button @click="closeModal">취소</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits } from "vue";
 import { ref, onMounted } from "vue";
 import { useOpenViduStore } from "@/stores/openvidu";
+import { useRoomStore } from "@/stores/room";
 import { useRouter } from "vue-router";
 const store = useOpenViduStore();
-const roomId = ref(``+ store.mySessionId)
+const Roomstore = useRoomStore();
+const roomId = ref("");
+const roomPwd = ref(null);
 const router = useRouter();
 const isPasswordEnabled = ref(false);
+const gameType = ref(0);
 
+const selectGameType = (type) => {
+  gameType.value = type; // 선택된 게임 유형 업데이트
+  console.log(gameType.value);
+  console.log(typeof gameType.value);
+};
 // Props 정의
 const props = defineProps({
-  show: Boolean
+  show: Boolean,
 });
 
 // Emit 함수 정의
-const emit = defineEmits(['close']);
+const emit = defineEmits(["close"]);
 
 // Methods
 function closeModal() {
-  emit('close');
+  emit("close");
 }
 
 const joinSession = () => {
@@ -81,13 +94,20 @@ const joinSession = () => {
     roomId: roomId.value,
   };
   store.joinSession(payload);
-  router.push({ name: "TalkBody", params: { id: roomId.value }});
-};
+  router.push({ name: "TalkBody", params: { id: roomId.value } });
+}; // 프론트에서만 돌리는 코드
 
-onMounted(() => {
-  roomId.value = store.mySessionId;
-  console.log(store.subscribers);
-});
+//테스트 코드
+// const joinSession = () => {
+//   const payload = {
+//     room_name: roomId.value,
+//     room_password: roomPwd.value,
+//     _private: isPasswordEnabled.value,
+//     game_type: 0,
+//   };
+//   Roomstore.createRoom(payload);
+//   Roomstore.getRoomlist();
+// }; //백엔드 연결시 돌리는 코드  (연결 성공)
 </script>
 
 <style scoped>
@@ -118,7 +138,7 @@ onMounted(() => {
   align-items: start; /* Center vertically */
 }
 
-.room{
+.room {
   width: 100%;
 }
 .game-info {
@@ -135,35 +155,42 @@ onMounted(() => {
   align-items: center;
 }
 
-.game-buttons > button {
+.unselected,
+.selected {
   width: 250px;
   height: 250px;
   margin: 0% 5%;
-  background-color: #12deff;
   font-size: 72px;
   font-family: "LABdigital";
   border-radius: 5%;
   border: 0;
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease, color 0.5s ease;
+}
+.unselected {
+  background-color: #12deff;
 }
 
-.form-group{
+.selected {
+  background-color: #fdc909; /* 예시 색상, 원하는 색상으로 변경 가능 */
+}
+.form-group {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-.room-info{
+.room-info {
   width: 980px;
   height: 50px;
-  background-color: #0594E0;
+  background-color: #0594e0;
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   border-radius: 10px;
   margin-bottom: 10px;
 }
 
-.room-number{
+.room-number {
   width: 90%;
   margin-left: 5%;
   margin-top: 7px;
@@ -175,8 +202,8 @@ onMounted(() => {
   color: white;
 }
 
-.info{
-  background-color: #00ACFC;
+.info {
+  background-color: #00acfc;
   width: 20%;
   margin-right: 5%;
   border-radius: 10px;
@@ -184,14 +211,14 @@ onMounted(() => {
 .input-value {
   height: 35px;
   width: 80%;
-  background-color: #00ACFC;
+  background-color: #00acfc;
   border-radius: 5px;
   display: flex;
-  flex-direction:row;
+  flex-direction: row;
   align-content: center;
 }
 
-.roomname{
+.roomname {
   display: flex;
   margin: 1%;
   height: 60%;
@@ -200,20 +227,20 @@ onMounted(() => {
   border: none;
 }
 
-.freeroom{
+.freeroom {
   display: flex;
   margin: 1%;
   height: 60%;
   width: 70%;
   border-radius: 5px;
   border: none;
-  background-color: #AFAFAF;
+  background-color: #afafaf;
 }
-.screet-room{
+.screet-room {
   font-size: 24px;
 }
 
-.screet-room > input{
+.screet-room > input {
   width: 20px;
   height: 20px;
   margin-top: 5%;
