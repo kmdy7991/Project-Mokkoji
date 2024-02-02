@@ -45,11 +45,11 @@ export const useGameStore = defineStore(
         //     });
         // } //백엔드 할때 테스 연결 부분 API 명세서.
         if (countdown.value === 0) {
-          clearInterval(interval);// 게임 시작 로직
+          clearInterval(interval); // 게임 시작 로직
           // 게임 시작 후 추가 카운트다운 시작
           const adInterval = setInterval(() => {
             countdown2.value--;
-            console.log(countdown2.value)
+            console.log(countdown2.value);
             if (countdown2.value === 0) {
               clearInterval(adInterval);
               showAd.value = true; // 광고판 표시
@@ -87,27 +87,17 @@ export const useGameStore = defineStore(
                 updateParticipant();
               } else {
                 gameend.value = true;
+                nowParticipant.value = "";
                 setTimeout(() => {
+                  gameend.value = false;
                   gameresult.value = true;
                 }, 10000);
               }
             }, 1200); // 두 번째 2분 120000
           }, 300); // 3초 여유 시간 3000
         }, 1200); // 첫 번째 2분 120000
-      } else {
-        console.log("끝~~~!!")
-        nowParticipant.value = ""
-        gameend.value = true
-        setTimeout(() => {
-          gameend.value = false;
-          gameresult.value = true;
-          console.log(gameend.value)
-          console.log(gameresult.value)
-        }, 1000);
       }
     }
-
-
 
     const gameout = () => {
       start.value = false;
