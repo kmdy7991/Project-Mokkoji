@@ -6,7 +6,7 @@ import axios from "axios";
 export const useGameStore = defineStore(
   "game",
   () => {
-    const API_URL = "http://127.0.0.1:8080"; // 로컬단 서버로 올릴시 수정할것!
+    const API_URL = "https://192.168.31.58:443"; // 로컬단 서버로 올릴시 수정할것!
     const start = ref(false);
     const countdown = ref(5);
     const countdown2 = ref(3);
@@ -20,55 +20,40 @@ export const useGameStore = defineStore(
     const gameend = ref(false);
     const gameresult = ref(false);
 
-    const gameStart = async (payload) => {
+    const gameStart = (payload) => {
       const { roomId } = payload;
-      start.value = true;
-      const isRequestSent = ref(false);
-      const interval = setInterval(() => {
-        countdown.value--;
-        // if (!isRequestSent) {
-        //   isRequestSent.value = true; // 요청을 보냈다는 표시를 합니다.
+      axios
+        .get(`${API_URL}/api/room/${roomId}/start`)
+        .then(() => {
+          start.value = true; // 게임 시작 플래그 활성화
+          beginCountdown(); // 별도의 카운트다운 함수 호출
+        })
+        .catch((err) => {
+          console.error("게임 시작 오류:", err);
+        });
+    };
 
-        //   // 여기서 GET 요청을 보냅니다.
-        //   axios
-        //     .get(`${API_URL}/api/room/start/${roomId}`)
-        //     .then(async (response) => {
-        //       console.log("첫 번째 서버 응답:", response.data);
-        //       // 서버로부터 받은 데이터를 처리합니다.
-        //       const secondResponse = await axios.get(
-        //         `${API_URL}/api/room/second-request`
-        //       );
-        //       console.log("두 번째 서버 응답:", secondResponse.data);
-        //     })
-        //     .catch((error) => {
-        //       console.error("요청 중 에러 발생:", error);
-        //     });
-        // } //백엔드 할때 테스 연결 부분 API 명세서.
+    function beginCountdown() {
+      const countdownInterval = setInterval(() => {
+        countdown.value--;
         if (countdown.value === 0) {
-          clearInterval(interval); // 게임 시작 로직
-          // 게임 시작 후 추가 카운트다운 시작
-          const adInterval = setInterval(() => {
-            countdown2.value--;
-            console.log(countdown2.value);
-            if (countdown2.value === 0) {
-              clearInterval(adInterval);
-              showAd.value = true; // 광고판 표시
-              // console.log("광고판 표시 상태:", showAd.value); // 상태 확인
-              subscriber.value = store.subscribers; // 예시: store에 subscribers 상태가 있다고 가정
-              // console.log("구독자 목록:", subscriber.value);
-              publisher.value = store.publisher;
-              // console.log("구독자 목록:", publisher.value);
-              combinedParticipants.value = [
-                ...subscriber.value,
-                publisher.value,
-              ];
-              updateParticipant();
-              // console.log("전체 참가자 목록:", combinedParticipants.value);
-            }
-          }, 1000);
+          clearInterval(countdownInterval); // 첫 번째 카운트다운 종료
+          startGameLogic(); // 게임 로직 시작
         }
       }, 1000);
-    };
+    }
+
+    function startGameLogic() {
+      // 게임 시작 로직
+      const adCountdownInterval = setInterval(() => {
+        countdown2.value--;
+        if (countdown2.value === 0) {
+          clearInterval(adCountdownInterval); // 광고 카운트다운 종료
+          showAd.value = true; // 광고 표시
+          updateParticipant(); // 참가자 목록 업데이트
+        }
+      }, 1000);
+    }
 
     function updateParticipant() {
       if (combinedParticipants.value.length > nowIndex.value) {

@@ -27,7 +27,7 @@ import { useRoomStore } from "@/stores/room";
 
 const store = useRoomStore();
 
-const passwordworng = store.worngPassWord;
+const passwordworng = ref(false);
 
 const myinput = ref("");
 
@@ -45,7 +45,9 @@ const joinRoomDirectly = (roomId, secret) => {
   store.entranceSecretRoom(payload);
   if (!store.worngPassWord) {
     emit("close");
-    store.worngPassWord = false;
+    passwordworng.value = false;
+  } else {
+    passwordworng.value = true;
   }
 };
 
@@ -53,6 +55,7 @@ const emit = defineEmits(["close"]);
 
 function closeModal() {
   emit("close");
+  passwordworng.value = false;
 }
 </script>
 
@@ -127,6 +130,8 @@ function closeModal() {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
   width: 80%;
 }
 
@@ -148,7 +153,7 @@ function closeModal() {
   background-color: #fdc909;
 }
 .worng {
-  margin-top: 3%;
+  margin-top: 2%;
   margin-bottom: 1%;
   font-size: 16px;
   display: flex;

@@ -14,7 +14,7 @@
               :class="{ selected: gameType === 1, unselected: gameType !== 1 }"
               @click="selectGameType(1)"
             >
-              뮤직큐
+              딴따라
             </button>
           </div>
         </div>
@@ -49,9 +49,7 @@
           </div>
         </div>
         <div class="checkbuttons">
-          <button class="checkbutton" @click="joinSession()">
-            확인
-          </button>
+          <button class="checkbutton" @click="joinSession()">확인</button>
           <button class="checkbutton" @click="closeModal">취소</button>
         </div>
       </div>
@@ -248,7 +246,7 @@ const joinSession = () => {
   margin-top: 5%;
 }
 
-.checkbuttons{
+.checkbuttons {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -256,11 +254,10 @@ const joinSession = () => {
   width: 90%;
 }
 
-
 .checkbutton {
   width: 160px;
   height: 50px;
-  background-color: #00ACFC;
+  background-color: #00acfc;
   margin-left: 10%;
   border: #0082fc;
   border-radius: 10px;

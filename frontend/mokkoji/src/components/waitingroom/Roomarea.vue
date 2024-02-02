@@ -164,6 +164,7 @@ watchEffect(() => {
 .buttoncontainer {
   display: flex;
   justify-content: center;
+  width: 95%;
 }
 .page {
   display: flex;

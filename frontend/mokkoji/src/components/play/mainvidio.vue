@@ -2,13 +2,13 @@
   <div class="container">
     <h1 v-if="!gameStore.showAd" class="gamename">몸으로 말해요</h1>
     <h1
-      v-if="gameStore.showAd && nowuser?.clientData === playernaem"
+      v-if="gameStore.showAd && nowuser?.clientData === playername"
       class="gamename"
     >
       제시어: 박땡땡
     </h1>
     <h1
-      v-if="gameStore.showAd && !(nowuser?.clientData === playernaem)"
+      v-if="gameStore.showAd && !(nowuser?.clientData === playername)"
       class="gamename"
     >
       카테고리: 인물
@@ -37,7 +37,7 @@
     </div>
     <div v-if="gameStore.gameend">
       <resultloading />
-    </div>  
+    </div>
   </div>
 </template>
 
@@ -55,7 +55,7 @@ const roomId = route.params.id;
 const store = useChatStore();
 const gameStore = useGameStore();
 const userstore = userStore();
-const playernaem = userstore.myName;
+const playername = userstore.myName;
 const myindex = ref(0);
 const now = ref();
 const nowkey = ref();
