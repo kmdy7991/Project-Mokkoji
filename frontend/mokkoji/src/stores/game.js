@@ -45,9 +45,7 @@ export const useGameStore = defineStore(
         //     });
         // } //백엔드 할때 테스 연결 부분 API 명세서.
         if (countdown.value === 0) {
-          clearInterval(interval);
-          // 게임 시작 로직
-
+          clearInterval(interval);// 게임 시작 로직
           // 게임 시작 후 추가 카운트다운 시작
           const adInterval = setInterval(() => {
             countdown2.value--;
@@ -66,13 +64,6 @@ export const useGameStore = defineStore(
               ];
               updateParticipant();
               // console.log("전체 참가자 목록:", combinedParticipants.value);
-              if (gameend.value === false) {
-                const participantInterval = setInterval(updateParticipant, 1230);
-              } else {
-                clearInterval(adInterval);
-                console.log('게임 종료')
-              }
-              return;
             }
           }, 1000);
         }
@@ -86,14 +77,23 @@ export const useGameStore = defineStore(
         nowIndex.value++;
 
         setTimeout(() => {
-          // 2분 후 화면 종료 로직
-          console.log("화면 종료");
-          
+          // 2분 후, 3초간 여유 시간
           setTimeout(() => {
-            // 3초 후에 다시 화면 시작
-            console.log("화면 시작");
-          }, 300); // 3초 대기
-        }, 1200); // 2분 대기
+            // 두 번째 2분 동안 활동
+            setTimeout(() => {
+              // 다음 참가자로 넘어가거나 게임 종료 처리
+              if (nowIndex.value < combinedParticipants.value.length) {
+                nowIndex.value++;
+                updateParticipant();
+              } else {
+                gameend.value = true;
+                setTimeout(() => {
+                  gameresult.value = true;
+                }, 10000);
+              }
+            }, 1200); // 두 번째 2분 120000
+          }, 300); // 3초 여유 시간 3000
+        }, 1200); // 첫 번째 2분 120000
       } else {
         console.log("끝~~~!!")
         nowParticipant.value = ""
@@ -101,8 +101,9 @@ export const useGameStore = defineStore(
         setTimeout(() => {
           gameend.value = false;
           gameresult.value = true;
-        }, 10000);
-        return;
+          console.log(gameend.value)
+          console.log(gameresult.value)
+        }, 1000);
       }
     }
 
@@ -110,6 +111,8 @@ export const useGameStore = defineStore(
 
     const gameout = () => {
       start.value = false;
+      gameend.value = false;
+      gameresult.value = false;
       countdown.value = 5;
       countdown2.value = 3;
       showAd.value = false;

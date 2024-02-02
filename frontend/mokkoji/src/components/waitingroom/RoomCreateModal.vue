@@ -48,10 +48,12 @@
             </div>
           </div>
         </div>
-        <button class="btn btn-lg btn-success" @click="joinSession()">
-          Join!
-        </button>
-        <button @click="closeModal">취소</button>
+        <div class="checkbuttons">
+          <button class="checkbutton" @click="joinSession()">
+            확인
+          </button>
+          <button class="checkbutton" @click="closeModal">취소</button>
+        </div>
       </div>
     </div>
   </div>
@@ -89,25 +91,25 @@ function closeModal() {
   emit("close");
 }
 
-// const joinSession = () => {
-//   const payload = {
-//     roomId: roomId.value,
-//   };
-//   store.joinSession(payload);
-//   router.replace({ name: "TalkBody", params: { id: roomId.value } });
-// }; // 프론트에서만 돌리는 코드
-
-//테스트 코드
 const joinSession = () => {
   const payload = {
-    room_name: roomId.value,
-    room_password: roomPwd.value,
-    _private: isPasswordEnabled.value,
-    game_type: 0,
+    roomId: roomId.value,
   };
-  Roomstore.createRoom(payload);
-  Roomstore.getRoomlist();
-}; //백엔드 연결시 돌리는 코드  (연결 성공)
+  store.joinSession(payload);
+  router.replace({ name: "TalkBody", params: { id: roomId.value } });
+}; // 프론트에서만 돌리는 코드
+
+//테스트 코드
+// const joinSession = () => {
+//   const payload = {
+//     room_name: roomId.value,
+//     room_password: roomPwd.value,
+//     _private: isPasswordEnabled.value,
+//     game_type: 0,
+//   };
+//   Roomstore.createRoom(payload);
+//   Roomstore.getRoomlist();
+// }; //백엔드 연결시 돌리는 코드  (연결 성공)
 </script>
 
 <style scoped>
@@ -244,5 +246,32 @@ const joinSession = () => {
   width: 20px;
   height: 20px;
   margin-top: 5%;
+}
+
+.checkbuttons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3%;
+  width: 90%;
+}
+
+
+.checkbutton {
+  width: 160px;
+  height: 50px;
+  background-color: #00ACFC;
+  margin-left: 10%;
+  border: #0082fc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: white;
+  font-size: 24px;
+  transition: background-color 0.3s ease;
+  font-family: "DOSMyungjo";
+}
+
+.checkbutton:hover {
+  background-color: #fdc909;
 }
 </style>

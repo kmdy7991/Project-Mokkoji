@@ -44,20 +44,6 @@ export const useRoomStore = defineStore(
     });
     // 테스트 코드
 
-    const roomData = computed(() =>
-      Roomlist.value.map((room) => ({
-        room_id: room.room_id,
-        room_name: room.room_name,
-        room_password: room.room_password,
-        user_count: room.user_count,
-        _private: room.is_private,
-        _explosion: room.is_explosion,
-        _active: room.is_active,
-        game_type: room.game_type,
-        owner: room.owner,
-      }))
-    );
-
     const createRoom = function (payload) {
       const { room_name, room_password, _private, game_type } = payload;
 
@@ -97,6 +83,30 @@ export const useRoomStore = defineStore(
         url: `${API_URL}/api/room/enter/${roomIdNumber}`,
       })
         .then((res) => {
+          // console.log(res.data, "게임방 입장"); 테스트 완료
+          roomIdNumber = String(roomIdNumber);
+          const payload = {
+            roomId: roomIdNumber,
+          };
+          vidustore.joinSession(payload);
+          router.replace({ path: `/TalkBody/${roomIdNumber}` }); // entranceRoom  함수에서 받아올 예정
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    const entranceSecretRoom = function (payload) {
+      const { roomId, secret } = payload;
+      const data = JSON.stringify({ password: secret });
+      console.log(typeof roomId);
+      console.log(typeof data);
+      axios({
+        method: "post",
+        url: `${API_URL}/api/room/${roomId}/checkpwd`,
+        data: data,
+      })
+        .then((res) => {
           console.log(res.data, "게임방 입장");
           roomIdNumber = String(roomIdNumber);
           const payload = {
@@ -117,8 +127,8 @@ export const useRoomStore = defineStore(
         .get(`${API_URL}/api/room/delete/${roomId}`)
         .then((res) => {
           // 성공적인 응답 처리
-          console.log(res);
-          console.log(`성공!`);
+          // console.log(res);
+          // console.log(`성공!`); 성공 완료
         })
         .catch((error) => {
           // 에러 처리
@@ -127,7 +137,14 @@ export const useRoomStore = defineStore(
         });
     };
 
-    return { Roomlist, getRoomlist, createRoom, entranceRoom, exitRoom };
+    return {
+      Roomlist,
+      getRoomlist,
+      createRoom,
+      entranceRoom,
+      exitRoom,
+      entranceSecretRoom,
+    };
   },
   { persist: true }
 );

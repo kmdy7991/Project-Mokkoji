@@ -35,14 +35,14 @@
         </div>
       </div>
     </div>
-    <!-- <div>
+    <div v-if="gameStore.gameend">
       <resultloading />
-    </div>  현재 테스트 중 -->
+    </div>  
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch, defineProps } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useChatStore } from "@/stores/chat";
 import { useGameStore } from "@/stores/game";
@@ -56,7 +56,6 @@ const store = useChatStore();
 const gameStore = useGameStore();
 const userstore = userStore();
 const playernaem = userstore.myName;
-const start = ref(false);
 const myindex = ref(0);
 const now = ref();
 const nowkey = ref();
@@ -85,6 +84,16 @@ const gamestart = () => {
     roomId: roomId,
   };
   gameStore.gameStart(payload);
+};
+
+onMounted(() => {
+  gameStartOnLoad();
+});
+
+const gameStartOnLoad = () => {
+  gameStore.start = false; // gameStore의 start 상태를 true로 설정
+  gameStore.gameend = false;
+  gameStore.gameresult = false;
 };
 
 const plusChat = function () {

@@ -47,7 +47,7 @@ function closeModal() {
   background-color: #10C2DF;
   text-align: center;
   width: 80%;
-  height: 80%;
+  height: 70%;
   padding: 20px;
   font-family: "DOSMyungjo";
   border-radius: 5px;
