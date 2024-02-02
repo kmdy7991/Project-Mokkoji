@@ -11,7 +11,6 @@
 </template>
 
 <script setup>
-import { stringify } from "sockjs-client/dist/sockjs";
 import { defineProps } from "vue";
 
 const props = defineProps({

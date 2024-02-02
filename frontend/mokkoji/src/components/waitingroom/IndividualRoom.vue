@@ -8,7 +8,6 @@
         :private="room._private"
       />
     </div>
-    {{ room }}
   </div>
 </template>
 

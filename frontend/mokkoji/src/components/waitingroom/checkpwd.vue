@@ -2,45 +2,52 @@
   <div v-if="check" class="result">
     <div class="roading">
       <div class="pwd">
-        <div class="password">
-          비밀번호
-        </div>
+        <div class="password">비밀번호</div>
         <div class="pwdinput">
-          <input type="password" class="inputpass" v-model="myinput">
+          <input type="password" class="inputpass" v-model="myinput" />
         </div>
+      </div>
+      <div v-if="passwordworng">
+        <p>! 비밀번호가 틀렸습니다!</p>
       </div>
       <div class="checkbuttons">
-        <button @click.native="joinRoomDirectly(roomId, myinput)" class="checkbutton">확인</button>
+        <button
+          @click.native="joinRoomDirectly(roomId, myinput)"
+          class="checkbutton"
+        >
+          확인
+        </button>
         <button @click="closeModal" class="checkbutton">취소</button>
       </div>
-      </div>
-      
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, defineEmits, defineProps } from "vue";
-import { useRoomStore }from "@/stores/room";
+import { useRoomStore } from "@/stores/room";
 
-const store = useRoomStore()
+const store = useRoomStore();
 
-const myinput = ref('')
+const passwordworng = store.worngPassWord;
+
+const myinput = ref("");
 
 const props = defineProps({
   check: Boolean,
-  roomId: Number
+  roomId: Number,
 });
 
 const joinRoomDirectly = (roomId, secret) => {
   // roomId가 존재할 때만 세션에 참여
   const payload = {
-    roomId : roomId,
-    secret : secret,
+    roomId: roomId,
+    secret: secret,
+  };
+  store.entranceSecretRoom(payload);
+  if (!store.worngPassWord) {
+    emit("close");
   }
-  console.log(roomId)
-  store.entranceSecretRoom(payload)
-  console.log(secret)
-  emit("close");
 };
 
 const emit = defineEmits(["close"]);
@@ -70,7 +77,7 @@ function closeModal() {
   align-items: center;
   width: 50%;
   height: 30%;
-  background-color: #10C2DF;
+  background-color: #10c2df;
   font-size: 48px;
   font-family: "DOSMyungjo";
 }
@@ -81,7 +88,7 @@ function closeModal() {
   width: 80%;
   height: 20%;
   margin-top: 10%;
-  background-color: #0594E0;
+  background-color: #0594e0;
   border-radius: 10px;
 }
 
@@ -93,19 +100,19 @@ function closeModal() {
   height: 80%;
   margin-left: 5%;
   border-radius: 10px;
-  background-color: #00ACFC;
+  background-color: #00acfc;
   font-size: 28px;
   color: white;
 }
-.pwdinput{
+.pwdinput {
   width: 60%;
   height: 80%;
   margin-left: 2%;
   border-radius: 10px;
-  background-color: #00ACFC;
+  background-color: #00acfc;
 }
 
-.inputpass{
+.inputpass {
   width: 90%;
   height: 80%;
   display: flex;
@@ -117,7 +124,7 @@ function closeModal() {
   border: none;
   font-size: 24px;
 }
-.checkbuttons{
+.checkbuttons {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -128,7 +135,7 @@ function closeModal() {
 .checkbutton {
   width: 160px;
   height: 50px;
-  background-color: #00ACFC;
+  background-color: #00acfc;
   margin-left: 5%;
   border: #0082fc;
   border-radius: 10px;

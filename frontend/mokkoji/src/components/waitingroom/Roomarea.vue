@@ -69,10 +69,10 @@ const joinRoomDirectly = (roomId, secret) => {
     console.log(selectedRoomId.value);
     if (secret === true) {
       checkpassword.value = !checkpassword.value;
-      console.log(checkpassword.value);
+      // console.log(checkpassword.value);
     } else {
       roomStore.entranceRoom(roomIdNumber);
-      console.log(roomIdNumber);
+      // console.log(roomIdNumber);
     }
 
     // router.push({ name: "TalkBody", params: { id: roomIdString } });

@@ -13,6 +13,7 @@ export const useRoomStore = defineStore(
     const vidustore = useOpenViduStore();
     const Roomlist = ref([]);
     const prevRoomlistLength = ref(Roomlist.value.length);
+    const worngPassWord = ref(false);
 
     const getRoomlist = () => {
       axios({
@@ -98,7 +99,8 @@ export const useRoomStore = defineStore(
 
     const entranceSecretRoom = function (payload) {
       const { roomId, secret } = payload;
-      const data = JSON.stringify({ password: secret });
+      // const data = JSON.stringify({ password: secret });
+      const data = { password: secret };
       console.log(typeof roomId);
       console.log(typeof data);
       axios({
@@ -108,7 +110,7 @@ export const useRoomStore = defineStore(
       })
         .then((res) => {
           console.log(res.data, "게임방 입장");
-          roomIdNumber = String(roomIdNumber);
+          const roomIdNumber = String(roomId);
           const payload = {
             roomId: roomIdNumber,
           };
@@ -116,7 +118,10 @@ export const useRoomStore = defineStore(
           router.replace({ path: `/TalkBody/${roomIdNumber}` }); // entranceRoom  함수에서 받아올 예정
         })
         .catch((err) => {
-          console.log(err);
+          if (err.response.status === 401) {
+            console.log(`비밀번호 틀림!`);
+            worngPassWord.value = true;
+          }
         });
     };
 
@@ -139,6 +144,7 @@ export const useRoomStore = defineStore(
 
     return {
       Roomlist,
+      worngPassWord,
       getRoomlist,
       createRoom,
       entranceRoom,
