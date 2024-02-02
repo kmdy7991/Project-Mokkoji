@@ -7,9 +7,7 @@
           <input type="password" class="inputpass" v-model="myinput" />
         </div>
       </div>
-      <div v-if="passwordworng">
-        <p>! 비밀번호가 틀렸습니다!</p>
-      </div>
+      <div v-if="passwordworng" class="worng">! 비밀번호가 틀렸습니다!</div>
       <div class="checkbuttons">
         <button
           @click.native="joinRoomDirectly(roomId, myinput)"
@@ -47,6 +45,7 @@ const joinRoomDirectly = (roomId, secret) => {
   store.entranceSecretRoom(payload);
   if (!store.worngPassWord) {
     emit("close");
+    store.worngPassWord = false;
   }
 };
 
@@ -128,7 +127,6 @@ function closeModal() {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 5%;
   width: 80%;
 }
 
@@ -148,5 +146,12 @@ function closeModal() {
 
 .checkbutton:hover {
   background-color: #fdc909;
+}
+.worng {
+  margin-top: 3%;
+  margin-bottom: 1%;
+  font-size: 16px;
+  display: flex;
+  justify-content: start;
 }
 </style>
