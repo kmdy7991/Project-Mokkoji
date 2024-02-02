@@ -33,9 +33,9 @@ const toggleModal = () => {
   background-color: #f9e01e;
   border: none;
   border-radius: 10px;
-  width: 150px;
-  height: 75px;
-  font-size: 28px;
+  width: 220px;
+  height: 110px;
+  font-size: 40px;
   font-family: "DOSMyungjo";
   transition: background-color 0.3s ease;
   color: white;
@@ -47,7 +47,8 @@ const toggleModal = () => {
   cursor: click;
 }
 
-.room-select, .roomCreateModal {
+.room-select,
+.roomCreateModal {
   width: 100%; /* 전체 너비를 사용 */
   display: block; /* 블록 레벨 요소로 설정 */
 }

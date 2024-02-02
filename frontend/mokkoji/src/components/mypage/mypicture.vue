@@ -15,22 +15,14 @@
 <style scoped>
 .my-picture{
 	width: 100%;
-	height: 250px;
+	height: 300px;
 	margin-bottom: 10%;
 	background-color: #12DEFF;
 	border-radius: 10px;
 	box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
 }
-
-.picture-change {
-	width: 250px;
-	height: 50px;
-	border-radius: 5px;
-	background-color: #00ACFC;
-	box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
-}
 .picture-change{
-	width: 250px;
+	width: 300px;
 	height: 50px;
 	border-radius: 5px;
 	background-color: #00ACFC;
@@ -39,6 +31,7 @@
 	color: white;
 	font-family: "DOSMyungjo";
 	font-size: 20px;
+	box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .picture-change:hover {

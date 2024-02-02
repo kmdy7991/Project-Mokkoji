@@ -1,12 +1,25 @@
 <template>
   <div class="room_name">
     <div class="room_number">
-      <p>000</p>
+      <p>{{ roomId }}</p>
+    </div>
+    {{ roomName }}
+    <div v-if="private" class="screet">
+      <img src="@/assets/screetroom.png" alt="비밀방" />
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { stringify } from "sockjs-client/dist/sockjs";
+import { defineProps } from "vue";
+
+const props = defineProps({
+  roomId: Number,
+  roomName: String,
+  private: Boolean,
+});
+</script>
 
 <style scoped>
 .room_name {
@@ -16,6 +29,7 @@
   width: 70%;
   height: 15%;
   background-color: #0594e0;
+  font-family: "DOSMyungjo";
   border-radius: 10px;
   margin: 1% 3%;
 }
@@ -25,15 +39,29 @@
   justify-content: center;
   margin: 3% 3%;
   width: 20%;
-  height: 70%;
+  height: 20px;
   background-color: #00acfc;
   text-align: center;
   border-radius: 10px;
+  font-family: "LABdigital";
   color: white;
 }
 
 .room_number > p {
   margin: 3%;
+  object-fit: contain;
+}
+
+.screet {
+  display: flex;
+  width: 60%;
+  height: 20px;
+  justify-content: end;
+  height: 100%;
+}
+
+.screet > img {
+  height: 40px;
   object-fit: contain;
 }
 </style>

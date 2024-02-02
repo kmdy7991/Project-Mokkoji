@@ -34,7 +34,7 @@ const getConnectionData = () => {
 #video-show {
   background-color: #08beff;
   width: 100%;
-  height: 80px;
+  height: 100px;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
 }

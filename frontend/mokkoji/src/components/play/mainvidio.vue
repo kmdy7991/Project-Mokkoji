@@ -1,43 +1,99 @@
 <template>
   <div class="container">
     <h1 v-if="!gameStore.showAd" class="gamename">몸으로 말해요</h1>
-    <h1 v-if="gameStore.showAd" class="gamename">제시어: 박땡땡</h1>
+    <h1
+      v-if="gameStore.showAd && nowuser?.clientData === playernaem"
+      class="gamename"
+    >
+      제시어: 박땡땡
+    </h1>
+    <h1
+      v-if="gameStore.showAd && !(nowuser?.clientData === playernaem)"
+      class="gamename"
+    >
+      카테고리: 인물
+    </h1>
     <div class="mainvidio">
       <fullVidio
-        v-show="gameStore.randomParticipant"
+        v-show="now"
+        :key="nowkey"
         class="people"
-        :stream-manager="gameStore.randomParticipant"
-        :number="gameStore.randomIndex"
-        @click.native="updateMainVideoStreamManager(gameStore.randomParticipant)"
+        :stream-manager="now"
+        @click.native="updateMainVideoStreamManager(now)"
       />
     </div>
+    <p>{{ nowuser?.clientData }}</p>
     <div class="gamestart">
       <div>
         <form v-if="!gameStore.start" @submit.prevent="gamestart">
           <button class="button">게임시작</button>
         </form>
-        <div v-else>
+        <div v-else class="showAD">
           <div v-if="gameStore.countdown > 0">{{ gameStore.countdown }}</div>
           <div v-else-if="!gameStore.showAd">게임이 시작됩니다!</div>
           <div v-if="gameStore.showAd">여기에 광고판 컨텐츠</div>
         </div>
       </div>
     </div>
+    <div v-if="gameStore.gameend">
+      <resultloading />
+    </div>  
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import { useChatStore } from "@/stores/chat";
 import { useGameStore } from "@/stores/game";
+import { userStore } from "@/stores/user";
 import fullVidio from "./fullVidio.vue";
+import resultloading from "./resultloading.vue";
 
+const route = useRoute();
+const roomId = route.params.id;
 const store = useChatStore();
 const gameStore = useGameStore();
-const start = ref(false);
+const userstore = userStore();
+const playernaem = userstore.myName;
+const myindex = ref(0);
+const now = ref();
+const nowkey = ref();
+const nowuserjson = ref();
+const nowuser = ref();
+watch(
+  () => gameStore.nowParticipant,
+  (newVal, oldVal) => {
+    // console.log("New Participant:", newVal, "myindex.value:", myindex.value);
+    myindex.value += 1;
+    now.value = newVal;
+    // console.log(now.value.stream.connection.connectionId);
+    nowkey.value = now.value.stream?.connection.connectionId;
+    nowuserjson.value = now.value.stream?.connection.data;
+    console.log(nowuserjson.value);
+    if (nowuserjson.value !== undefined) {
+      nowuser.value = JSON.parse(nowuserjson.value);
+      console.log(nowuser.value);
+    }
+  },
+  { deep: true }
+);
 
-const gamestart = function () {
-  gameStore.gameStart();
+const gamestart = () => {
+  const payload = {
+    roomId: roomId,
+  };
+  gameStore.gameStart(payload);
+};
+
+onMounted(() => {
+  gameStartOnLoad();
+});
+
+const gameStartOnLoad = () => {
+  gameStore.start = false; // gameStore의 start 상태를 true로 설정
+  gameStore.gameend = false;
+  gameStore.gameresult = false;
 };
 
 const plusChat = function () {
@@ -59,7 +115,7 @@ const plusChat = function () {
 }
 .mainvidio {
   width: 100%;
-  height: 450px;
+  height: 650px;
   background-color: #12deff;
   border-radius: 10px;
   display: flex;
@@ -71,7 +127,7 @@ const plusChat = function () {
 }
 
 .gamename {
-  margin-top: 1%;
+  margin-top: 0%;
   margin-bottom: 1%;
   width: 100%;
   text-align: center;
@@ -104,8 +160,12 @@ const plusChat = function () {
   display: flex; /* Flexbox 레이아웃 사용 */
   justify-content: center; /* 가로 방향으로 중앙 정렬 */
   align-items: center; /* 세로 방향으로 중앙 정렬 */
-  margin-top: 5%; /* 위쪽 여백 설정 */
   color: white;
+  margin-top: 3%;
   font-family: "LABdigital";
+}
+
+.showAD {
+  font-size: 48px;
 }
 </style>

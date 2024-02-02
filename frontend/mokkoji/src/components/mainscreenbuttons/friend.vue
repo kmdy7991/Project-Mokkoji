@@ -1,7 +1,7 @@
 <template>
   <div class="ranking-modal">
     <div class="modal-content">
-      <h1>dmdjdjddjdjdjd</h1>
+      <h1>친구 목록(개발중)</h1>
       <button @click="closeModal">Close</button>
       <div class="ranking-list">
       </div>

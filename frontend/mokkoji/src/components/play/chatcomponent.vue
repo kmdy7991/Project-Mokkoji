@@ -29,7 +29,6 @@
 import { useChatStore } from "@/stores/chat";
 import { useWebSocketStore } from "@/stores/socket";
 import { ref, onMounted } from "vue";
-import { defineProps } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -144,7 +143,7 @@ function sendMessage() {
 }
 .chatting-area {
   width: 100%;
-  height: 540px;
+  height: 750px;
   background-color: #0877d1;
   overflow-y: auto;
 }
