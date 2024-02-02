@@ -36,4 +36,8 @@ public interface RoomMapper {
     int userRoomID(int userID);
 
     int isExplosion(int roomID);
+
+    int gameExplosion(int roomID);
+
+    int countInGame(int roomID);
 }

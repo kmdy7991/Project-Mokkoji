@@ -40,12 +40,12 @@ public class RoomController {
         return ResponseEntity.status(401).body("401 비밀번호 불일치");
     }
 
-//    @GetMapping("/start/{room_id}")
+    //    @GetMapping("/start/{room_id}")
     @GetMapping("/{room_id}/start")
     public ResponseEntity<Object> gameStart(@PathVariable("room_id") int roomId, HttpServletRequest request) {
         try {
 //            게임이 폭파된 경우 실행 안되게 한다.
-            if(roomService.isExplosion(roomId) == 1){
+            if (roomService.isExplosion(roomId) == 1) {
                 return ResponseEntity.status(300).body("300, 방이 이미 터졌습니다. -> room으로 리다이렉트되게");
             }
             int gs = roomService.gameStart(roomId); // gs -> game_start
@@ -63,17 +63,17 @@ public class RoomController {
             return ResponseEntity.status(404).body("404 게임 시작 실패!");
         }
     }
+
     @GetMapping("/{room_id}/end")
-    public ResponseEntity<Object> gameEnd(@PathVariable("room_id") int roomId, HttpServletRequest request){
-        try{
+    public ResponseEntity<Object> gameEnd(@PathVariable("room_id") int roomId, HttpServletRequest request) {
+        try {
             int game_end = roomService.gameEnd(roomId);
-            if(game_end == 1){
+            if (game_end == 1) {
                 return ResponseEntity.status(200).body("게임 끝 성공");
-            }
-            else{
+            } else {
                 return ResponseEntity.status(300).body("게임나가기 실패 -> 있던 곳으로 리다이렉트 해주세요");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(404).body("404 게임 끝 실패1");
         }
@@ -115,11 +115,23 @@ public class RoomController {
             } else {
                 return ResponseEntity.status(300).body("실패");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500)
                     .body("500, Server Error");
         }
     }
 
+    @GetMapping("/{room_id}/explosion")
+    public ResponseEntity<Object> roomExplosion(HttpServletRequest request, @PathVariable("room_id") int roomId) {
+        if (roomService.countInGame(roomId) == 0) {
+            int room_is_explosion = roomService.isExplosion(roomId);
+            if (room_is_explosion == 1) {
+                return ResponseEntity.status(200).body("200 성공");
+            }
+            return ResponseEntity.status(404).body("방폭파 실패");
+        } else {
+            return ResponseEntity.status(404).body("사람이 1명 이상이라 방 폭파 실패");
+        }
+    }
 }

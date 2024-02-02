@@ -104,4 +104,14 @@ public class RoomServiceImpl implements RoomService {
     public int isExplosion(int roomID) {
         return roomMapper.isExplosion(roomID);
     }
+
+    @Override
+    public int gameExplosion(int roomID) {
+        return roomMapper.gameExplosion(roomID);
+    }
+
+    @Override
+    public int countInGame(int roomID) {
+        return roomMapper.countInGame(roomID);
+    }
 }

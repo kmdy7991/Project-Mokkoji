@@ -31,7 +31,7 @@ public class MongoClientConnectionExample {
                 // Send a ping to confirm a successful connection
                 MongoDatabase database = mongoClient.getDatabase("admin");
                 database.runCommand(new Document("ping", 1));
-                System.out.println(database.getCollection("Mokkoji").find());
+                System.out.println(database.getCollection("talkbodyInGame").find());
                 System.out.println("Pinged your deployment. You successfully connected to MongoDB!");
             } catch (MongoException e) {
                 e.printStackTrace();
@@ -42,7 +42,7 @@ public class MongoClientConnectionExample {
             try {
                 // Send a ping to confirm a successful connection
                 MongoDatabase database = mongoClient.getDatabase("S10P13B304");
-                MongoCollection<Document> collection = database.getCollection("Mokkoji");
+                MongoCollection<Document> collection = database.getCollection("talkbodyInGame");
 
                 // Find all documents in the collection
                 FindIterable<Document> documents = collection.find();
