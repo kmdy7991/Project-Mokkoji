@@ -71,6 +71,7 @@ const prevPage = () => {
 .buttoncontainer {
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
 .page {
