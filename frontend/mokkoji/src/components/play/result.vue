@@ -17,8 +17,8 @@
         <div class="rankingpoint">{{ rank.point || "" }}</div>
       </div>
       <div class="buttons">
-        <button class="button">한번더!</button>
-        <button class="button" @click="close">나가기</button>
+        <button class="button" @click="close">한번더!</button>
+        <button class="button" @click="gameout()">나가기 {{ countdown }}</button>
       </div>
     </div>
   </div>
@@ -27,14 +27,41 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useGameStore } from "@/stores/game";
+import { useWebSocketStore } from "@/stores/socket";
+import { useOpenViduStore } from "@/stores/openvidu";
+import { userStore } from "@/stores/user";
+import { useRoomStore } from "@/stores/room";
+import { useRouter, useRoute } from "vue-router";
 
 const usegamestore = useGameStore();
+const route = useRoute();
+const roomId = route.params.id;
+const router = useRouter();
+const store = useWebSocketStore();
+const vidustore = useOpenViduStore();
+const userstore = userStore();
+const roomstore = useRoomStore();
+const countdown = ref(7); // 카운트다운 시작 숫자
+let countdownInterval; 
 
 const ranks = ref([
   { nickname: "누구", point: 50 },
   { nickname: "나두", point: 20 },
   { nickname: "궁금", point: -50 },
 ]);
+
+onMounted(() => {
+  countdownInterval = setInterval(() => {
+    countdown.value--;
+    if (countdown.value === 0) {
+      gameout(); // 카운트다운이 0에 도달하면 gameout 함수 실행
+    }
+  }, 1000);
+});
+
+onUnmounted(() => {
+  clearInterval(countdownInterval); // 컴포넌트 언마운트 시 인터벌 정리
+});
 
 const adjustedRanks = computed(() => {
   const filledArray = ranks.value.slice(); // ranks 배열 복사
@@ -45,9 +72,31 @@ const adjustedRanks = computed(() => {
 });
 
 function close() {
-  usegamestore.gameresult = false;
-  usegamestore.start = false;
-  usegamestore.showAd = false;
+  clearInterval(countdownInterval);
+  usegamestore.gameout()
+}
+
+const gameout = async () => {
+
+  clearInterval(countdownInterval);
+
+  const payload = {
+    roomId: Number(roomId),
+    nickname: userstore.myName,
+  };
+
+  await usegamestore.gameout();
+  await store.disconnectWebSocket();
+  await vidustore.leaveSession();
+  await roomstore.getRoomlist(); // 이 함수가 비동기 함수라고 가정
+  await roomstore.exitRoom(payload); // 비동기 처리가 필요한 함수라고 가정
+
+  // 페이지 전환은 모든 비동기 작업이 완료된 후 실행
+  if (userstore.Auth === true) {
+    router.replace({ name: "Auth" });
+  } else {
+    router.replace({ name: "waitRoom" });
+  }
 }
 </script>
 
@@ -119,7 +168,18 @@ function close() {
 
 .button {
   width: 15%;
-  height: 80%;
+  height: 70%;
   margin: 0% 10%;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: rgba(20, 224, 255, 0.39);
+  transition: background-color 0.5s ease;
+  font-size: 32px;
+  font-family: "DOSMyungjo";
+}
+
+.button:hover {
+  background-color: rgba(253, 200, 9, 0.39);
 }
 </style>

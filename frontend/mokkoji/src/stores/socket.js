@@ -31,20 +31,20 @@ export const useWebSocketStore = defineStore(
     const subscribeToRoom = () => {
       if (roomId.value && stomp.value) {
         stomp.value.subscribe(`/topic/${roomId.value}`, (message) => {
-          console.log("구독받은 메세지 = " + message.body);
+          // console.log("구독받은 메세지 = " + message.body);
           const messageObject = JSON.parse(message.body);
-          store.addChat(messageObject);
+          // store.addChat(messageObject);
           // 메시지 유형에 따른 조건 처리
-          // switch (messageObject.type) {
-          //   case "CHAT":
-          //     // CHAT 유형의 메시지 처리
-          //     store.addChat(messageObject);
-          //     break;
-          //   case "START":
-          //     // START 유형의 메시지 처리
-          //     console.log("채팅이 시작되었습니다.");
-          //     // 여기에 START 유형에 대한 처리 로직 추가
-          //     break;
+          switch (messageObject.type) {
+            case "CHAT":
+              // CHAT 유형의 메시지 처리
+              store.addChat(messageObject);
+              break;
+            case "START":
+              // START 유형의 메시지 처리
+              console.log("채팅이 시작되었습니다.");
+              // 여기에 START 유형에 대한 처리 로직 추가
+              break;
           //   case "TURN":
           //     // TURN 유형의 메시지 처리
           //     console.log("차례가 변경되었습니다.");
@@ -59,8 +59,8 @@ export const useWebSocketStore = defineStore(
           //     // 알 수 없는 메시지 유형 처리
           //     console.log(
           //       "알 수 없는 메시지 유형입니다: " + messageObject.type
-          //     );
-          // }
+              // );
+          }
         });
       }
     };

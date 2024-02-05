@@ -88,6 +88,7 @@ export const useGameStore = defineStore(
     function endGame() {
       gameend.value = true;
       nowParticipant.value = "";
+      nowIndex.value = 0;
       setTimeout(() => {
         gameend.value = false;
         gameresult.value = true; // 결과 표시 시 광고 비활성화
@@ -101,7 +102,7 @@ export const useGameStore = defineStore(
       countdown.value = 5;
       countdown2.value = 3;
       showAd.value = false;
-      nowParticipant.value = false;
+      nowParticipant.value = "";
       nowIndex.value = 0;
     };
 

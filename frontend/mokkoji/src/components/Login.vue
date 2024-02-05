@@ -54,9 +54,9 @@ const store = userStore();
 
 const goToAuthView = () => {
   if (username.value.trim() === "") {
-    store.setMyName("Participant" + Math.floor(Math.random() * 100));
+    store.myName = "Participant" + Math.floor(Math.random() * 100);
   } else {
-    store.setMyName(username.value);
+    store.myName = username.value
   }
   store.Auth = !store.Auth;
   roomStore.getRoomlist();
@@ -66,9 +66,9 @@ const goToAuthView = () => {
 
 const goTogame = () => {
   if (username.value.trim() === "") {
-    store.setMyName("Participant" + Math.floor(Math.random() * 100));
+    store.myName = "Participant" + Math.floor(Math.random() * 100);
   } else {
-    store.setMyName(username.value);
+    store.myName = username.value
   }
   roomStore.getRoomlist();
   router.replace({ name: "waitRoom" });
