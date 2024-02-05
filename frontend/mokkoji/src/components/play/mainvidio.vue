@@ -38,7 +38,7 @@
     <div v-if="gameStore.gameend">
       <resultloading />
     </div>
-    <div>
+    <div v-if="gameStore.gameresult">
       <result />
     </div>
   </div>

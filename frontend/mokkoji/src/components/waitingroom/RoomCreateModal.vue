@@ -10,11 +10,10 @@
             >
               몸으로 말해요
             </button>
-            <button
-              :class="{ selected: gameType === 1, unselected: gameType !== 1 }"
-              @click="selectGameType(1)"
-            >
-              뮤직큐
+            <button class="unselected">
+              <!-- :class="{ selected: gameType === 1, unselected: gameType !== 1 }"
+              @click="selectGameType(1)" -->
+              미출시
             </button>
           </div>
         </div>

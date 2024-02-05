@@ -46,73 +46,73 @@ const store = useOpenViduStore();
 const roomStore = useRoomStore();
 const checkpassword = ref(false);
 const selectedRoomId = ref(null);
-// const joinRoomDirectly = (roomId) => {
-//   // roomId가 존재할 때만 세션에 참여
-//   const roomIdString = roomId ? roomId.toString() : null;
-
-//   if (roomIdString) {
-//     const payload = {
-//       roomId: roomIdString,
-//     };
-//     store.joinSession(payload);
-//     // console.log(roomIdString)
-//     router.replace({ name: "TalkBody", params: { id: roomIdString } });
-//   }
-// }; // 프론트만 돌릴때 (더미데이터 존재시).
-
-const joinRoomDirectly = (roomId, secret) => {
+const joinRoomDirectly = (roomId) => {
   // roomId가 존재할 때만 세션에 참여
-  const roomIdNumber = typeof roomId === "number" ? roomId : null;
+  const roomIdString = roomId ? roomId.toString() : null;
 
-  if (roomIdNumber !== null) {
-    selectedRoomId.value = roomIdNumber;
-    console.log(selectedRoomId.value);
-    if (secret === true) {
-      checkpassword.value = !checkpassword.value;
-      // console.log(checkpassword.value);
-    } else {
-      roomStore.entranceRoom(roomIdNumber);
-      // console.log(roomIdNumber);
-    }
-
-    // router.push({ name: "TalkBody", params: { id: roomIdString } });
+  if (roomIdString) {
+    const payload = {
+      roomId: roomIdString,
+    };
+    store.joinSession(payload);
+    // console.log(roomIdString)
+    router.replace({ name: "TalkBody", params: { id: roomIdString } });
   }
-}; //백엔드 연결 코드 (성공 확인)
+}; // 프론트만 돌릴때 (더미데이터 존재시).
 
-const rooms = roomStore.Roomlist;
-// const rooms = ref([{
-//         "room_id": 8,
-//         "room_name": "abc",
-//         "room_password": null,
-//         "user_count": 1,
-//         "game_type": 1,
-//         "owner": "ssafy",
-//         "_active": false,
-//         "_explosion": false,
-//         "_private": false
-//     },
-//     {
-//         "room_id": 9,
-//         "room_name": "abc",
-//         "room_password": null,
-//         "user_count": 1,
-//         "game_type": 1,
-//         "owner": "ssafy",
-//         "_active": false,
-//         "_explosion": false,
-//         "_private": false
-//     },
-//     {
-//         "room_id": 10,
-//         "room_name": "abc",
-//         "room_password": null,
-//         "user_count": 1,
-//         "game_type": 1,
-//         "owner": "ssafy",
-//         "_active": false,
-//         "_explosion": false,
-//         "_private": true
-//     }])  // 테스트 더미 데이터
+// const joinRoomDirectly = (roomId, secret) => {
+//   // roomId가 존재할 때만 세션에 참여
+//   const roomIdNumber = typeof roomId === "number" ? roomId : null;
+
+//   if (roomIdNumber !== null) {
+//     selectedRoomId.value = roomIdNumber;
+//     console.log(selectedRoomId.value);
+//     if (secret === true) {
+//       checkpassword.value = !checkpassword.value;
+//       // console.log(checkpassword.value);
+//     } else {
+//       roomStore.entranceRoom(roomIdNumber);
+//       // console.log(roomIdNumber);
+//     }
+
+//     // router.push({ name: "TalkBody", params: { id: roomIdString } });
+//   }
+// }; //백엔드 연결 코드 (성공 확인)
+
+// const rooms = roomStore.Roomlist; // 백엔드 연결 
+const rooms = ref([{
+        "room_id": 8,
+        "room_name": "abc",
+        "room_password": null,
+        "user_count": 1,
+        "game_type": 0,
+        "owner": "ssafy",
+        "_active": false,
+        "_explosion": false,
+        "_private": false
+    },
+    {
+        "room_id": 9,
+        "room_name": "abc",
+        "room_password": null,
+        "user_count": 1,
+        "game_type": 1,
+        "owner": "ssafy",
+        "_active": false,
+        "_explosion": false,
+        "_private": false
+    },
+    {
+        "room_id": 10,
+        "room_name": "abc",
+        "room_password": 1234,
+        "user_count": 1,
+        "game_type": 1,
+        "owner": "ssafy",
+        "_active": false,
+        "_explosion": false,
+        "_private": true
+    }])  // 테스트 더미 데이터
 
 const perPage = 6; // 한 페이지당 방 갯수
 const pageNumber = ref(0);
@@ -120,8 +120,8 @@ const pageNumber = ref(0);
 const paginatedRooms = computed(() => {
   const start = pageNumber.value * perPage;
   const end = start + perPage;
-  // let pageRooms = rooms.value.slice(start, end); // 더미데이터 진행시
-  let pageRooms = rooms.slice(start, end); // 백엔드 연결시
+  let pageRooms = rooms.value.slice(start, end); // 더미데이터 진행시
+  // let pageRooms = rooms.slice(start, end); // 백엔드 연결시
   while (pageRooms.length < perPage) {
     pageRooms.push({ id: null, index: pageRooms.length + 1 });
   }
