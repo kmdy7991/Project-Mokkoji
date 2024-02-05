@@ -44,27 +44,33 @@ const roomIdRef = ref(props.roomId);
 // 서버로 메시지 보내는 함
 
 onMounted(() => {
-  store.setRoomId(props.roomId);
-  webSocketStore.initializeWebSocket(props.roomId);
-  // sock.value = new sockJs("http://localhost:8080/chat");
-  // stomp.value = Stomp.over(sock.value);
-  // stomp.value.connect({}, (frame) => {
-  //   console.log("Connected: " + frame);
-  //   stomp.value.subscribe(`/topic/${roomIdRef.value}`, (message) => {
-  //     // 메시지 수신 처리
-  //     // console.log("구독받은 메세지 = " + message.body);
-  //     const messageObject = JSON.parse(message.body);
+  store.setRoomId(roomId);
+  store.clearChats(); // 채팅방에 들어올 때 이전 채팅 내용을 초기화
+  webSocketStore.initializeWebSocket(roomId);
+});
 
-  //     // userName 속성에 접근
-  //     console.log(messageObject);
-  //     store.addChat(messageObject);
-    });
-//   });
-// });
+// onMounted(() => {
+//   store.setRoomId(props.roomId);
+//   webSocketStore.initializeWebSocket(props.roomId);
+//   // sock.value = new sockJs("http://localhost:8080/chat");
+//   // stomp.value = Stomp.over(sock.value);
+//   // stomp.value.connect({}, (frame) => {
+//   //   console.log("Connected: " + frame);
+//   //   stomp.value.subscribe(`/topic/${roomIdRef.value}`, (message) => {
+//   //     // 메시지 수신 처리
+//   //     // console.log("구독받은 메세지 = " + message.body);
+//   //     const messageObject = JSON.parse(message.body);
+
+//   //     // userName 속성에 접근
+//   //     console.log(messageObject);
+//   //     store.addChat(messageObject);
+//     });
+// //   });
+// // });
 
 function sendMessage() {
   webSocketStore.sendMessage(inputChat.value);
-  inputChat.value = '';
+  inputChat.value = "";
   // if (inputChat.value === "") {
   //   // 입력란이 비어있거나 공백만 있는 경우 함수 실행 중단
   //   return;
@@ -106,7 +112,7 @@ function sendMessage() {
   margin-bottom: 2%;
 }
 
-.chat> p {
+.chat > p {
   margin: 1%;
 }
 .room-number {

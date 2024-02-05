@@ -39,15 +39,25 @@ const handlePageRefresh = (event) => {
   event.returnValue = "";
 };
 
-// onMounted(() => {
-//   window.addEventListener("beforeunload", handlePageRefresh);
-// });
+onMounted(() => {
+  window.addEventListener("beforeunload", handlePageRefresh);
+  window.addEventListener("keydown", handleKeyPress);
+});
 
-// onBeforeUnmount(() => {
-//   window.removeEventListener("beforeunload", handlePageRefresh);
-//   // Existing goWaitRoom functionality
-//   goWaitRoom();
-// });
+onBeforeUnmount(() => {
+  window.removeEventListener("beforeunload", handlePageRefresh);
+  window.removeEventListener("keydown", handleKeyPress);
+});
+
+// F5 및 Ctrl+R 차단 함수
+const handleKeyPress = (event) => {
+  if (event.keyCode === 116 || (event.ctrlKey && event.keyCode === 82)) {
+    event.preventDefault(); // 기본 동작 차단
+    alert("새로고침이 차단되었습니다.");
+  }
+  // 브라우저 뒤로 가기 버튼 차단은 특정 키 조합에 대응하여 구현하거나,
+  // 사용자에게 경고를 표시하는 방법을 고려할 수 있습니다.
+};
 
 const goWaitRoom = () => {
   if (!gamestore.start) {

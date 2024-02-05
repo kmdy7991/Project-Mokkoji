@@ -65,8 +65,12 @@ export const useGameStore = defineStore(
 
     function updateParticipant() {
       if (combinedParticipants.value.length > nowIndex.value) {
+        // 유저 데이터 값을 백엔드에서 받아올 예정.
         nowParticipant.value = combinedParticipants.value[nowIndex.value];
-        console.log("현재 참가자:", nowParticipant.value);
+        console.log(
+          "현재 참가자: game.js 71",
+          nowParticipant.value.stream.connection.data
+        );
         // 2분 후, 3초간 여유 시간
         setTimeout(() => {
           // 두 번째 2분 동안 활동

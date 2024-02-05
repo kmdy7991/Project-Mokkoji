@@ -6,16 +6,10 @@ export const useChatStore = defineStore(
   () => {
     let id = 0;
     const roomId = ref("");
+    const chats = ref([]);
     const setRoomId = (newRoomId) => {
       roomId.value = newRoomId;
     };
-    const chats = ref([
-      {
-        sessionId: roomId.value,
-        name: "시스템",
-        text: "게임에 참가하였습니다.",
-      },
-    ]);
 
     const addChat = function (inputChat) {
       chats.value.push({
@@ -25,17 +19,18 @@ export const useChatStore = defineStore(
       });
     };
 
-    function startChat() {
-      let counter = 5;
-      const intervalId = setInterval(() => {
-        console.log(counter);
-        counter--;
-        if (counter === 0) {
-          clearInterval(intervalId);
-        }
-      }, 1000);
-    }
-    return { chats, setRoomId, addChat, startChat };
+    const clearChats = () => {
+      // 초기 메시지 설정이 필요하다면 여기서 추가
+      chats.value = [
+        {
+          sessionId: roomId.value,
+          name: "시스템",
+          text: "게임에 참가하였습니다.",
+        },
+      ];
+    };
+
+    return { chats, setRoomId, addChat, clearChats };
   },
   { persist: true }
 );

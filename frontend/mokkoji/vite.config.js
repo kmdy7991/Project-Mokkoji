@@ -16,10 +16,10 @@ export default defineConfig({
   server: {
     https: {
       key: fs.readFileSync(
-        "C:/Users/pc/localhost-key.pem"
+        "C:/Users/SSAFY/Desktop/localhostkey/localhost-key.pem"
       ),
       cert: fs.readFileSync(
-        "C:/Users/pc/localhost.pem"
+        "C:/Users/SSAFY/Desktop/localhostkey/localhost.pem"
       ),
     },
   },

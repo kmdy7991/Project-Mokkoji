@@ -110,12 +110,7 @@ export const useRoomStore = defineStore(
       })
         .then((res) => {
           console.log(res.data, "게임방 입장");
-          const roomIdNumber = String(roomId);
-          const payload = {
-            roomId: roomIdNumber,
-          };
-          vidustore.joinSession(payload);
-          router.replace({ path: `/TalkBody/${roomIdNumber}` }); // entranceRoom  함수에서 받아올 예정
+          entranceRoom(roomId); // entranceRoom  함수에서 받아올 예정
         })
         .catch((err) => {
           if (err.response.status === 401) {

@@ -7,14 +7,18 @@
         <div class="nickname">별명</div>
         <div class="rankingpoint">승점</div>
       </div>
-      <div class="rankinginfo" v-for="(rank, index) in adjustedRanks" :key="index">
+      <div
+        class="rankinginfo"
+        v-for="(rank, index) in adjustedRanks"
+        :key="index"
+      >
         <div class="rank">{{ index + 1 }}</div>
-        <div class="nickname">{{ rank.nickname || ''}}</div>
-        <div class="rankingpoint">{{ rank.point || '' }}</div>
+        <div class="nickname">{{ rank.nickname || "" }}</div>
+        <div class="rankingpoint">{{ rank.point || "" }}</div>
       </div>
       <div class="buttons">
-        <button>한번더!</button>
-        <button @click="close">나가기</button>
+        <button class="button">한번더!</button>
+        <button class="button" @click="close">나가기</button>
       </div>
     </div>
   </div>
@@ -24,19 +28,13 @@
 import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useGameStore } from "@/stores/game";
 
-const usegamestore = useGameStore()
+const usegamestore = useGameStore();
 
 const ranks = ref([
-  { nickname : '누구',
-    point : 50
-  },
-  { nickname : '나두',
-    point : 20
-  },
-  { nickname : '궁금',
-    point : -50
-  }
-])
+  { nickname: "누구", point: 50 },
+  { nickname: "나두", point: 20 },
+  { nickname: "궁금", point: -50 },
+]);
 
 const adjustedRanks = computed(() => {
   const filledArray = ranks.value.slice(); // ranks 배열 복사
@@ -47,9 +45,9 @@ const adjustedRanks = computed(() => {
 });
 
 function close() {
-  usegamestore.gameresult = false
-  usegamestore.start = false
-  usegamestore.showAd = false
+  usegamestore.gameresult = false;
+  usegamestore.start = false;
+  usegamestore.showAd = false;
 }
 </script>
 
@@ -79,7 +77,7 @@ function close() {
   font-family: "DOSMyungjo";
 }
 
-.gameresult{
+.gameresult {
   margin: 3% 5%;
   width: 90%;
   height: 10;
@@ -106,14 +104,22 @@ function close() {
   justify-content: center;
 }
 
-.rankingpoint{
+.rankingpoint {
   width: 30%;
   display: flex;
   justify-content: center;
 }
 .buttons {
-  margin-top: 2%;
   display: flex;
-  align-self:end,
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  width: 15%;
+  height: 80%;
+  margin: 0% 10%;
 }
 </style>

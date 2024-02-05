@@ -22,7 +22,6 @@
         @click.native="updateMainVideoStreamManager(now)"
       />
     </div>
-    <p>{{ nowuser?.clientData }}</p>
     <div class="gamestart">
       <div>
         <form v-if="!gameStore.start" @submit.prevent="gamestart">
@@ -50,6 +49,7 @@ import { useRoute } from "vue-router";
 import { useChatStore } from "@/stores/chat";
 import { useGameStore } from "@/stores/game";
 import { userStore } from "@/stores/user";
+import { useWebSocketStore } from "@/stores/socket";
 import fullVidio from "./fullVidio.vue";
 import resultloading from "./resultloading.vue";
 import result from "./result.vue";
@@ -59,6 +59,7 @@ const roomId = route.params.id;
 const store = useChatStore();
 const gameStore = useGameStore();
 const userstore = userStore();
+const usesocketstore = useWebSocketStore();
 const playernaem = userstore.myName;
 const myindex = ref(0);
 const now = ref();
@@ -73,6 +74,7 @@ watch(
     now.value = newVal;
     // console.log(now.value.stream.connection.connectionId);
     nowkey.value = now.value.stream?.connection.connectionId;
+    console.log(nowkey.value);
     nowuserjson.value = now.value.stream?.connection.data;
     console.log(nowuserjson.value);
     if (nowuserjson.value !== undefined) {
@@ -88,6 +90,7 @@ const gamestart = () => {
     roomId: roomId,
   };
   gameStore.gameStart(payload);
+  usesocketstore.gameStart();
 };
 
 onMounted(() => {
