@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f68b749c-4da2-4015-884b-d1772af60e50" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/MokkojiApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/administrator/controller/AdminController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/administrator/controller/MongoClientConnectionExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/administrator/dto/TalkBodyDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/administrator/repository/AdminBodyRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/administrator/service/AdminService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/chat/aop/ChattingAspect.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/chat/config/SslConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/chat/config/WebSocketConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/chat/config/kafka/KafkaListenerConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/chat/config/kafka/KafkaProducerConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/chat/controller/ChatController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/chat/dto/MessageDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/chat/dto/RoomDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/chat/propeties/KafkaProperties.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/chat/service/ChatService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/chat/service/kafka/KafkaListen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/chat/service/kafka/KafkaSend.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/chat/util/ConstantUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/chat/util/InjectionSecure.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/common/ApiResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/common/ApiResponseHeader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/api/controller/auth/AuthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/api/controller/user/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/api/entity/auth/AuthReqModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/api/entity/user/UserRefreshToken.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/api/entity/user/Users.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/api/repository/user/UserRefreshTokenRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/api/repository/user/UserRegistrationRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/api/repository/user/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/api/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/config/properties/AppProperties.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/config/properties/CorsProperties.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/config/security/HikariConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/config/security/JwtConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/config/security/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/entity/ProviderType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/entity/RoleType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/entity/UserPrincipal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/exception/OAuthProviderMissMatchException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/exception/RestAuthenticationEntryPoint.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/exception/TokenValidFailedException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/filter/TokenAuthenticationFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/handler/OAuth2AuthenticationFailureHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/handler/OAuth2AuthenticationSuccessHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/handler/TokenAccessDeniedHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/info/OAuth2UserInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/info/impl/GoogleOAuth2UserInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/info/impl/KakaoOAuth2UserInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/info/impl/NaverOAuth2UserInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/info/impl/OAuth2UserInfoFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/repository/OAuth2AuthorizationRequestBasedOnCookieRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/service/CustomOAuth2UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/service/CustomUserDetailsService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/token/AuthToken.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/oauth/token/AuthTokenProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/utils/CookieUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/member/utils/HeaderUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/room/controller/WaitingRoomController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/room/dto/RoomDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/talkbody/dto/TalkBodyDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/talkbody/repository/TalkkBodyRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/java/com/example/mokkoji/talkbody/service/TalkBodyService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/resources/application-oauth.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/resources/localhost.p12" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/resources/ssafy-ssl.jks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/resources/templates/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/resources/templates/joinForm.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/main/resources/templates/loginForm.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mokkoji/src/test/java/com/example/mokkoji/MokkojiApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../산출물/B304 2차 산출물.pdf" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="2bvRM6rDClzyENXJTg57TCg45kv" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feature/backend",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/SSAFY/Desktop/repo/S10P12B304/backend",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.9-corretto-17.0.9-f644763e9732-ebaef533" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f68b749c-4da2-4015-884b-d1772af60e50" name="Changes" comment="" />
+      <created>1707093514678</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1707093514678</updated>
+      <workItem from="1707093515662" duration="9000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
