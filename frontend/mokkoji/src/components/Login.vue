@@ -2,29 +2,12 @@
   <div id="join-dialog" class="jumbotron vertical-center">
     <h1>모꼬지</h1>
     <div class="form-container">
-      <div class="form-group">
-        <label class="label-color">별명</label>
-        <input
-          v-model="username"
-          class="form-control"
-          type="text"
-          placeholder="별명을 입력해주세요"
-        />
-      </div>
-      <div v-if="store.double" class="doublename">
-        ! 닉네임이 중복되었습니다!
-      </div>
-      <div v-if="specialChar" class="doublename">
-        ! 별명에는 특수문자를 사용하실수 없습니다!
-      </div>
-      <div v-if="fuckword" class="doublename">
-        ! 부적절한 단어가 사용되었습니다!
-      </div>
       <p class="text-center">
         <button class="btn" @click="goTogame()">비회원 입장</button>
         <button class="btn" @click="goToAuthView()">관리자 입장</button>
       </p>
     </div>
+    <inputnickname />
   </div>
 </template>
 
@@ -33,7 +16,8 @@ import { ref } from "vue";
 import { useRoomStore } from "@/stores/room";
 import { userStore } from "@/stores/user";
 import profanities from "@/assets/profanities";
-import { useRouter } from "vue-router";
+import inputnickname from "./inputnickname.vue";
+
 
 const roomStore = useRoomStore();
 const username = ref("");
@@ -73,23 +57,28 @@ const containsProfanity = (name) => {
 };
 
 const goToAuthView = () => {
+  username.value = ""
   specialChar.value = false
   fuckword.value = false
   console.log(username);
   if (username.value.trim() === "") {
-    store.myName = "Participant" + Math.floor(Math.random() * 100);
+    username.value = "Participant" + Math.floor(Math.random() * 10000);
+    store.myName = username.value;
+    console.log(username.value);
   } else {
     store.myName = username.value;
+    console.log(username.value);
   }
   store.Auth = true;
-  // roomStore.getRoomlist();
-  // store.createuser();
+  
   if (isValidUsername(username)) {
     specialChar.value = false; 
     if (containsProfanity(username)) {
       console.log(`욕단어 감지 `)
       fuckword.value = true
     } else {
+      // roomStore.getRoomlist();
+      // store.createuser();
       console.log(`통과`)
     }
   } else {
@@ -100,24 +89,29 @@ const goToAuthView = () => {
 };
 
 const goTogame = () => {
+  username.value = ""
   specialChar.value = false
   fuckword.value = false
   if (username.value.trim() === "") {
-    store.myName = "Participant" + Math.floor(Math.random() * 100);
+    username.value = "Participant" + Math.floor(Math.random() * 10000);
+    store.myName = username.value;
+    console.log(username.value);
   } else {
     console.log(username.value);
     store.myName = username.value;
+    console.log(username.value);
   }
 
   
-  // roomStore.getRoomlist();
-  // store.createuser();
+  
   if (isValidUsername(username)) {
     specialChar.value = false; 
     if (containsProfanity(username)) {
       console.log(`욕단어 감지`)
       fuckword.value = true
     } else {
+      // roomStore.getRoomlist();
+      // store.createuser();
       console.log(`통과`)
     }
   } else {
