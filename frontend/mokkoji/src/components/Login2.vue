@@ -58,11 +58,11 @@ const fuckword = ref(false);
 //     });
 // };
 
-// const isValidUsername = (name) => {
-//   // 영어, 한글, 숫자만을 허용하는 정규표현식
-//   const regex = /^[A-Za-z가-힣0-9]+$/;
-//   return regex.test(name);
-// };
+const isValidUsername = (name) => {
+  // 영어, 한글, 숫자만을 허용하는 정규표현식
+  const regex = /^[A-Za-z가-힣0-9]+$/;
+  return regex.test(name);
+};
 
 const goToAuthView = () => {
   console.log(username);
@@ -71,28 +71,31 @@ const goToAuthView = () => {
   } else {
     store.myName = username.value;
   }
-  store.Auth = !store.Auth;
-  roomStore.getRoomlist();
-  store.createuser();
+
+  if (isValidUsername(username.value)) {
+    store.Auth = !store.Auth;
+    roomStore.getRoomlist();
+    store.createuser();
+  } else {
+    specialChar.value = true;
+  }
 };
 
 const goTogame = () => {
   if (username.value.trim() === "") {
     store.myName = "Participant" + Math.floor(Math.random() * 100);
   } else {
-    console.log(username.value);
     store.myName = username.value;
   }
 
-  store.Auth = !store.Auth;
-  roomStore.getRoomlist();
-  store.createuser();
-  // if (isValidUsername(username)) {
-
-  // } else {
-  //   // 유효성 검사를 통과하지 못하면 경고 메시지 출력
-  //   specialChar.value = true;
-  // }
+  if (isValidUsername(username)) {
+    store.Auth = !store.Auth;
+    roomStore.getRoomlist();
+    store.createuser();
+  } else {
+    // 유효성 검사를 통과하지 못하면 경고 메시지 출력
+    specialChar.value = true;
+  }
 };
 </script>
 

@@ -26,6 +26,7 @@ export const userStore = defineStore(
           }
         })
         .catch((err) => {
+          console.log(myName);
           console.log(err);
           if (err.response.status === 409) {
             double.value = true;
