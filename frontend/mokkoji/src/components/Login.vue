@@ -11,6 +11,9 @@
           placeholder="별명을 입력해주세요"
         />
       </div>
+      <div v-if="store.double" class="doublename">
+        ! 닉네임이 중복되었습니다!
+      </div>
       <p class="text-center">
         <button class="btn" @click="goTogame()">입장</button>
         <button class="btn" @click="goToAuthView()">관리자 입장</button>
@@ -25,7 +28,6 @@ import { useRoomStore } from "@/stores/room";
 import { userStore } from "@/stores/user";
 import { useRouter } from "vue-router";
 
-const router = useRouter();
 const roomStore = useRoomStore();
 const username = ref("");
 const store = userStore();
@@ -71,7 +73,6 @@ const goTogame = () => {
   }
   roomStore.getRoomlist();
   store.createuser();
-  router.replace({ name: "waitRoom" });
 };
 </script>
 
@@ -157,5 +158,11 @@ const goTogame = () => {
 
 .text-center {
   display: flex;
+}
+
+.doublename {
+  color: red;
+  font-size: 28px;
+  font-family: "DOSMyungjo";
 }
 </style>

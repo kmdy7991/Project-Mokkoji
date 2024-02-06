@@ -1,4 +1,5 @@
-import { ref, computed, onMounted, watchEffect } from "vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
 import axios from "axios";
 
@@ -7,7 +8,9 @@ export const userStore = defineStore(
   () => {
     const API_URL = "https://192.168.31.58:443";
     const myName = ref("");
+    const router = useRouter();
     const Auth = ref(false);
+    const double = ref(false);
     const createuser = () => {
       axios({
         method: "get",
@@ -15,14 +18,21 @@ export const userStore = defineStore(
       })
         .then((res) => {
           console.log(res.data);
+          double.value = false;
           if (Auth.value === true) {
+            router.replace({ name: "Auth" });
+          } else {
+            router.replace({ name: "waitRoom" });
           }
         })
         .catch((err) => {
           console.log(err);
+          if (err.response.status === 409) {
+            double.value = true;
+          }
         });
     };
-    return { myName, Auth, createuser };
+    return { myName, Auth, double, createuser };
   },
   { persist: true }
 );
