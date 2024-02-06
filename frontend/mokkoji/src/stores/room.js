@@ -10,6 +10,7 @@ export const useRoomStore = defineStore(
   () => {
     const API_URL = "https://192.168.31.58:443"; // 로컬단 서버로 올릴시 수정할것!
     const store = userStore();
+    const name = store.myName;
     const vidustore = useOpenViduStore();
     const Roomlist = ref([]);
     const prevRoomlistLength = ref(Roomlist.value.length);
@@ -51,6 +52,7 @@ export const useRoomStore = defineStore(
       const jsonData = {
         room_name: payload.room_name,
         room_password: payload.room_password,
+        owner: store.myName,
         _private: payload._private,
         _explosion: false,
         _active: false,
@@ -81,10 +83,11 @@ export const useRoomStore = defineStore(
       console.log(typeof roomIdNumber);
       axios({
         method: "get",
-        url: `${API_URL}/api/room/enter/${roomIdNumber}`,
+        url: `${API_URL}/api/room/enter/${roomIdNumber}/${name}`,
       })
         .then((res) => {
           // console.log(res.data, "게임방 입장"); 테스트 완료
+          console.log(res.data.participants);
           roomIdNumber = String(roomIdNumber);
           const payload = {
             roomId: roomIdNumber,
@@ -123,9 +126,12 @@ export const useRoomStore = defineStore(
     const exitRoom = function (payload) {
       const { roomId } = payload;
       console.log(typeof payload.roomId);
-      axios
-        .get(`${API_URL}/api/room/delete/${roomId}`)
+      axios({
+        method: "delete",
+        url: `${API_URL}/api/room/delete/${roomId}/${name}`,
+      })
         .then((res) => {
+          console.log(res);
           // 성공적인 응답 처리
           // console.log(res);
           // console.log(`성공!`); 성공 완료

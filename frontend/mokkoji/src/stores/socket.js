@@ -19,12 +19,20 @@ export const useWebSocketStore = defineStore(
 
     const initializeWebSocket = (newRoomId) => {
       roomId.value = newRoomId;
-      sock.value = new sockJs("https://192.168.31.58:443/chat"); // 로컬단 서버로 올릴시 수정할것!
+      sock.value = new sockJs("https://192.168.31.58:443/chat"); // 로컬단 서버로 올릴시 수정할것! 58 예진님 42 대영
       stomp.value = Stomp.over(sock.value);
 
       stomp.value.connect({}, (frame) => {
         console.log("Connected: " + frame);
         subscribeToRoom();
+        stomp.value.send(
+          `/pub/${roomId.value}`,
+          JSON.stringify({
+            roomId: roomId.value,
+            type: "ENTER",
+            user_nickname: myName,
+          })
+        );
       });
     };
 
@@ -42,24 +50,27 @@ export const useWebSocketStore = defineStore(
               break;
             case "START":
               // START 유형의 메시지 처리
-              console.log("채팅이 시작되었습니다.");
+              store.addChat(messageObject);
+              usegamestore.gameStart(messageObject.roomId);
               // 여기에 START 유형에 대한 처리 로직 추가
               break;
-          //   case "TURN":
-          //     // TURN 유형의 메시지 처리
-          //     console.log("차례가 변경되었습니다.");
-          //     // 여기에 TURN 유형에 대한 처리 로직 추가
-          //     break;
-          //   case "END":
-          //     // END 유형의 메시지 처리
-          //     console.log("채팅이 종료되었습니다.");
-          //     // 여기에 END 유형에 대한 처리 로직 추가
-          //     break;
-          //   default:
-          //     // 알 수 없는 메시지 유형 처리
-          //     console.log(
-          //       "알 수 없는 메시지 유형입니다: " + messageObject.type
-              // );
+            case "ENTER":
+              store.addChat(messageObject);
+            // case "TURN":
+            //   // TURN 유형의 메시지 처리
+            //   console.log("차례가 변경되었습니다.");
+            //   // 여기에 TURN 유형에 대한 처리 로직 추가
+            //   break;
+            // case "END":
+            //   // END 유형의 메시지 처리
+            //   console.log("채팅이 종료되었습니다.");
+            //   // 여기에 END 유형에 대한 처리 로직 추가
+            //   break;
+            //   default:
+            //     // 알 수 없는 메시지 유형 처리
+            //     console.log(
+            //       "알 수 없는 메시지 유형입니다: " + messageObject.type
+            // );
           }
         });
       }
@@ -71,8 +82,8 @@ export const useWebSocketStore = defineStore(
       }
       console.log(myName);
       const messageObject = {
-        sessionId: roomId.value,
-        userName: myName,
+        roomId: roomId.value,
+        user_nickname: myName,
         content: inputChat,
         type: "CHAT",
       };
@@ -84,12 +95,12 @@ export const useWebSocketStore = defineStore(
     };
 
     const gameStart = () => {
-      const messageObject = {
-        type: "START",
-      };
       stomp.value.send(
         `/pub/${roomId.value}`,
-        JSON.stringify(messageObject),
+        JSON.stringify({
+          roomId: roomId.value,
+          type: "START",
+        }),
         {}
       );
     };

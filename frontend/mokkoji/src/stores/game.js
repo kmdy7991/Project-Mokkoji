@@ -6,7 +6,7 @@ import axios from "axios";
 export const useGameStore = defineStore(
   "game",
   () => {
-    const API_URL = "http://127.0.0.1:8080"; // 로컬단 서버로 올릴시 수정할것!
+    const API_URL = "https://192.168.31.58:443"; // 로컬단 서버로 올릴시 수정할것!
     const start = ref(false);
     const countdown = ref(5);
     const countdown2 = ref(3);

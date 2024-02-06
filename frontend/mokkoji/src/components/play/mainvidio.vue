@@ -2,7 +2,7 @@
   <div class="container">
     <h1 v-if="!gameStore.showAd" class="gamename">몸으로 말해요</h1>
     <h1
-      v-if="gameStore.showAd && (nowuser?.clientData === playername)"
+      v-if="gameStore.showAd && nowuser?.clientData === playername"
       class="gamename"
     >
       제시어: 박땡땡
@@ -89,7 +89,7 @@ const gamestart = () => {
   const payload = {
     roomId: roomId,
   };
-  gameStore.gameStart(payload);
+  console.log(typeof roomId);
   usesocketstore.gameStart();
 };
 

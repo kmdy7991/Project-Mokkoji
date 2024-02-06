@@ -36,17 +36,19 @@ const handlePageRefresh = (event) => {
   console.log(gamestore.start);
   // Prevent default action and display a confirmation dialog
   event.preventDefault();
-  event.returnValue = "";
+  event.returnValue = "정말로 페이지를 벗어나시겠습니까?";
 };
 
 onMounted(() => {
   window.addEventListener("beforeunload", handlePageRefresh);
   window.addEventListener("keydown", handleKeyPress);
+  window.addEventListener("beforeunload", handlePageRefresh);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener("beforeunload", handlePageRefresh);
   window.removeEventListener("keydown", handleKeyPress);
+  window.removeEventListener("beforeunload", handlePageRefresh);
 });
 
 // F5 및 Ctrl+R 차단 함수

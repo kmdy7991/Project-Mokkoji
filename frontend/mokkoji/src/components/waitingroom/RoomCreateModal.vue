@@ -88,25 +88,25 @@ function closeModal() {
   emit("close");
 }
 
-const joinSession = () => {
-  const payload = {
-    roomId: roomId.value,
-  };
-  store.joinSession(payload);
-  router.replace({ name: "TalkBody", params: { id: roomId.value } });
-}; // 프론트에서만 돌리는 코드
-
-//테스트 코드
 // const joinSession = () => {
 //   const payload = {
-//     room_name: roomId.value,
-//     room_password: roomPwd.value,
-//     _private: isPasswordEnabled.value,
-//     game_type: 0,
+//     roomId: roomId.value,
 //   };
-//   Roomstore.createRoom(payload);
-//   Roomstore.getRoomlist();
-// }; //백엔드 연결시 돌리는 코드  (연결 성공)
+//   store.joinSession(payload);
+//   router.replace({ name: "TalkBody", params: { id: roomId.value } });
+// }; // 프론트에서만 돌리는 코드
+
+//테스트 코드
+const joinSession = () => {
+  const payload = {
+    room_name: roomId.value,
+    room_password: roomPwd.value,
+    _private: isPasswordEnabled.value,
+    game_type: 0,
+  };
+  Roomstore.createRoom(payload);
+  Roomstore.getRoomlist();
+}; //백엔드 연결시 돌리는 코드  (연결 성공)
 </script>
 
 <style scoped>

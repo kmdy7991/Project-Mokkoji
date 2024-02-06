@@ -10,7 +10,7 @@
     </div>
     <div class="chatting-area">
       <div class="chat" v-for="chat in store.chats" :key="chat.id" :chat="chat">
-        <p v-if="chat.sessionId === roomIdRef || chat.sessionId == null">
+        <p v-if="chat.roomId === roomIdRef">
           {{ chat.name }} : {{ chat.text }}
         </p>
       </div>
@@ -28,6 +28,7 @@
 <script setup>
 import { useChatStore } from "@/stores/chat";
 import { useWebSocketStore } from "@/stores/socket";
+import { useRoomStore } from "@/stores/room";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
@@ -39,6 +40,7 @@ const props = defineProps({
 
 const store = useChatStore();
 const webSocketStore = useWebSocketStore();
+const roomstore = useRoomStore();
 const inputChat = ref("");
 const roomIdRef = ref(props.roomId);
 // 서버로 메시지 보내는 함

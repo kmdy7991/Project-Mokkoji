@@ -13,21 +13,15 @@ export const useChatStore = defineStore(
 
     const addChat = function (inputChat) {
       chats.value.push({
-        sessionId: inputChat.sessionId,
-        name: inputChat.userName,
+        roomId: inputChat.roomId,
+        name: inputChat.user_nickname,
         text: inputChat.content,
       });
     };
 
     const clearChats = () => {
       // 초기 메시지 설정이 필요하다면 여기서 추가
-      chats.value = [
-        {
-          sessionId: roomId.value,
-          name: "시스템",
-          text: "게임에 참가하였습니다.",
-        },
-      ];
+      chats.value = [{}];
     };
 
     return { chats, setRoomId, addChat, clearChats };
