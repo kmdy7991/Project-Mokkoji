@@ -68,14 +68,14 @@ public class UserController {
 
 
 // 익명 유저 등록
-    @GetMapping("/register/{user_nickname}")
-    public ResponseEntity<?> registerGuest(@PathVariable("user_nickname") String user_nickname){
+    @GetMapping("/register/{userNickname}")
+    public ResponseEntity<?> registerGuest(@PathVariable("userNickname") String userNickname){
         try{
-            if(userService.isSameNickname(user_nickname) == 1){
+            if(userService.isSameNickname(userNickname) == 1){
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Nickname is already taken.");
             }
             // 사용자 등록
-            if(userService.guestInput(user_nickname) == 1){
+            if(userService.guestInput(userNickname) == 1){
                 return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully.");
             }
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User registered failed.");
@@ -84,5 +84,4 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error registering user.");
         }
     }
-
 }

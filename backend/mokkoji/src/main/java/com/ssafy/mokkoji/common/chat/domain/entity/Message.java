@@ -1,4 +1,4 @@
-package com.ssafy.mokkoji.common.chat.domain.model;
+package com.ssafy.mokkoji.common.chat.domain.entity;
 
 //import lombok.*;
 // 1 대 1 채팅 저장 entity 사용 예정

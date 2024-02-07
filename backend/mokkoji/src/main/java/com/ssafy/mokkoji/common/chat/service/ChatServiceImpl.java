@@ -17,5 +17,4 @@ public class ChatServiceImpl implements ChatService {
     public void sendMessage(MessageResponse message) {
         sender.send(ConstantUtil.KAFKA_GAME_TOPIC, message);
     }
-
 }

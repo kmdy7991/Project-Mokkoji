@@ -26,13 +26,13 @@ public class LogAspect {
     *
     * */
 
-    @Pointcut("execution(* com.example.mokkoji.common.chat.controller..*.*(..))")
+    @Pointcut("execution(* com.ssafy.mokkoji.common.chat.controller..*.*(..))")
     public void chatBeforeExecute() {}
 
-    @Pointcut("execution(* com.example.mokkoji.member.*.controller..*.*(..))")
+    @Pointcut("execution(* com.ssafy.mokkoji.member.*.controller..*.*(..))")
     public void memberBeforeExecute() {}
 
-    @Pointcut("execution(* com.example.mokkoji.game.*.controller..*.*(..))")
+    @Pointcut("execution(* com.ssafy.mokkoji.game.*.controller..*.*(..))")
     public void gameBeforeExecute() {}
 
     // 실행되기전 동작
@@ -56,7 +56,6 @@ public class LogAspect {
                 log.info("PARAMETER VALUE => {}", object);
             }
         }
-
     }
 
     // 실행 종료 시점에서 동작
