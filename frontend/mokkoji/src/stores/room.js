@@ -8,7 +8,7 @@ import router from "@/router";
 export const useRoomStore = defineStore(
   "room",
   () => {
-    const API_URL = "https://192.168.31.58:443"; // 로컬단 서버로 올릴시 수정할것!
+    const API_URL = "http://192.168.31.58:8080"; // 로컬단 서버로 올릴시 수정할것! http://192.168.31.58:8080 예진님 코드
     const store = userStore();
     const name = store.myName;
     const vidustore = useOpenViduStore();

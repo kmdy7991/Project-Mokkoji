@@ -14,6 +14,7 @@ import Login from "../components/Login.vue";
   background-size: cover; /* 배경 이미지가 div를 전체적으로 커버하도록 설정 */
   background-position: center;
   height: 100%;
+  width: 100%;
   border-radius: 10px;
 }
 </style>

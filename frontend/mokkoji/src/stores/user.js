@@ -6,7 +6,7 @@ import axios from "axios";
 export const userStore = defineStore(
   "user",
   () => {
-    const API_URL = "https://192.168.31.58:443";
+    const API_URL = `http://192.168.31.58:8080`; //http://192.168.31.42:8080 대영이 로컬 호스트 주소
     const myName = ref("");
     const router = useRouter();
     const Auth = ref(false);
@@ -14,10 +14,9 @@ export const userStore = defineStore(
     const createuser = () => {
       axios({
         method: "get",
-        url: `${API_URL}/api/v1/users/register/${myName.value}`,
+        url: `${API_URL}/api/guest/register/${myName.value}`,
       })
         .then((res) => {
-          console.log(res.data);
           double.value = false;
           if (Auth.value === true) {
             router.replace({ name: "Auth" });
@@ -26,11 +25,10 @@ export const userStore = defineStore(
           }
         })
         .catch((err) => {
-          console.log(myName);
           console.log(err);
-          if (err.response.status === 409) {
-            double.value = true;
-          }
+          // if (err.response.status === 409) {
+          double.value = true;
+          // }
         });
     };
     return { myName, Auth, double, createuser };

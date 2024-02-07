@@ -1,6 +1,6 @@
 <template>
   <div class="otherlive">
-    <div>ㅋㅋㅋㅋ</div>
+    <div></div>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 .otherlive {
   display: flex;
   width: 90%;
-  height: 55%;
+  height: 52px;
   background-color: #015dba;
   margin: 3% 0%;
   margin-left: 18px;

@@ -14,7 +14,7 @@ export const useChatStore = defineStore(
     const addChat = function (inputChat) {
       chats.value.push({
         roomId: inputChat.roomId,
-        name: inputChat.user_nickname,
+        name: inputChat.userNickname,
         text: inputChat.content,
       });
     };

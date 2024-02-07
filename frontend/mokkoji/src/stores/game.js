@@ -1,17 +1,19 @@
 import { ref, onMounted } from "vue";
 import { defineStore } from "pinia";
 import { useOpenViduStore } from "./openvidu";
+import { useWebSocketStore } from "./socket";
 import axios from "axios";
 
 export const useGameStore = defineStore(
   "game",
   () => {
-    const API_URL = "https://192.168.31.58:443"; // 로컬단 서버로 올릴시 수정할것!
+    const API_URL = "http://192.168.31.42:8080"; // 로컬단 서버로 올릴시 수정할것!
     const start = ref(false);
     const countdown = ref(5);
     const countdown2 = ref(3);
     const showAd = ref(false);
     const store = useOpenViduStore();
+    const socketstore = useWebSocketStore();
     const subscriber = ref([]);
     const publisher = ref();
     const combinedParticipants = ref([]); // New reference for combined data
@@ -73,13 +75,14 @@ export const useGameStore = defineStore(
         );
         // 2분 후, 3초간 여유 시간
         setTimeout(() => {
-          // 두 번째 2분 동안 활동
+          socketstore.getTHEME();
           setTimeout(() => {
             // 다음 참가자로 넘어가거나 게임 종료 처리
+            nowParticipant.value = "";
             nowIndex.value++;
             updateParticipant();
-          }, 3000); // 두 번째 2분 120000
-        }, 10000); // 3초 여유 시간 3000
+          }, 3000); // 3초동안 정지
+        }, 10000); // 게임진행 2분
       } else {
         endGame();
       }

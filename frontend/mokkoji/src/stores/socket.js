@@ -19,7 +19,7 @@ export const useWebSocketStore = defineStore(
 
     const initializeWebSocket = (newRoomId) => {
       roomId.value = newRoomId;
-      sock.value = new sockJs("https://192.168.31.58:443/chat"); // 로컬단 서버로 올릴시 수정할것! 58 예진님 42 대영
+      sock.value = new sockJs("http://192.168.31.42:8080/chat"); // 로컬단 서버로 올릴시 수정할것! 58 예진님 42 대영
       stomp.value = Stomp.over(sock.value);
 
       stomp.value.connect({}, (frame) => {
@@ -56,6 +56,10 @@ export const useWebSocketStore = defineStore(
               break;
             case "ENTER":
               store.addChat(messageObject);
+            case "THEME":
+              console.log(messageObject);
+            case "OWNER":
+              console.log(messageObject);
             // case "TURN":
             //   // TURN 유형의 메시지 처리
             //   console.log("차례가 변경되었습니다.");
@@ -105,8 +109,20 @@ export const useWebSocketStore = defineStore(
       );
     };
 
+    const getTHEME = () => {
+      stomp.value.send(
+        `/pub/${roomId.value}`,
+        JSON.stringify({
+          roomId: roomId.value,
+          type: "THEME",
+        }),
+        {}
+      );
+    };
+
     const disconnectWebSocket = () => {
       if (stomp.value && stomp.value.connected) {
+        // if () {}
         stomp.value.disconnect(() => {
           console.log("Disconnected");
         });
@@ -125,6 +141,7 @@ export const useWebSocketStore = defineStore(
       subscribeToRoom,
       sendMessage,
       gameStart,
+      getTHEME,
       disconnectWebSocket,
     };
   },
