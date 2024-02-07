@@ -1,6 +1,7 @@
 package com.ssafy.mokkoji.member.users.dto;
 
 
+import com.ssafy.mokkoji.member.users.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,5 +17,6 @@ public class UserResponseDto {
         private Long accessTokenExpirationTime;
         private String refreshToken;
         private Long refreshTokenExpirationTime;
+        private Role role;
     }
 }

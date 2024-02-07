@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 // Spring Security 환경 설정을 구성하기 위한 클래스
 // 웹 서비스가 로드될 때 Spring Container 의해 관리가 되는 클래스
-// 사용자에 대한 ‘인증’과 ‘인가’에 대한 구성을 Bean 메서드로 주입
+// 사용자에 대한 인증, 인가에 대한 구성을 Bean 메서드로 주입
 @Configuration
 @RequiredArgsConstructor  // 생성자의 파라미터 순서가 클래스에 선언된 순서와 일치해야 함
 // @AllArgsConstructor
@@ -60,39 +60,41 @@ public class WebSecurityConfigure {
                 //요청에 대한 권한 설정
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                                 authorizeHttpRequests
+                                        // /user/로 시작되는 주소는 USER 권한을 가진 사용자만 접근 가능
                                         .requestMatchers("/user/*").hasAnyAuthority("ROLE_USER")
-//                                .anyRequest().permitAll()
+                                        .anyRequest().permitAll()
 //                                 .requestMatchers("/oauth2/*").permitAll()
-                                        .anyRequest().authenticated()  // 나머지 요청은 인증 필요
+//                                        .anyRequest().authenticated()  // 나머지 요청은 인증 필요
                 )
 
 
                 .oauth2Login(oauth2Login ->
-                                oauth2Login
-                                        .loginPage("http://192.168.31.57:5173")
+                        oauth2Login
+                                // Oauth2가 제공하는 로그인 페이지를 사용하지 않고 프론트 주소로 보냄
+                                // 프론트는 '로그인 버튼'을 클릭할 때 href를 '/oauth2/authorization/{provider}' 여기로 보내야 하고
+                                // developer 사이트에서 서비스 주소를 프론트, 콜백주소를 백으로 해야함(인가코드를 받아야 하니까)
+                                .loginPage("http://192.168.31.57:5173")
 
-                                        .authorizationEndpoint(authorizationEndpoint ->
-                                                authorizationEndpoint
-                                                        // .baseUri("/oauth2/authorization/{provider}")
-                                                        // .baseUri("/oauth2/authorize")
-                                                        // .baseUri("https://192.168.31.57:5173/")
-                                                        // .baseUri("${oauth.authorizedRedirectUri}")
-                                                        .authorizationRequestRepository(cookieAuthorizationRequestRepository)
-                                        )
+                                .authorizationEndpoint(authorizationEndpoint ->
+                                        authorizationEndpoint
+                                                // .baseUri("/oauth2/authorization/{provider}")  // 소셜 로그인창
+                                                // .baseUri("/oauth2/authorize")
+                                                .authorizationRequestRepository(cookieAuthorizationRequestRepository)
+                                )
 
-                                        .redirectionEndpoint(redirectionEndpoint ->
-                                                        redirectionEndpoint
-                                                                .baseUri("/login/oauth2/code/{provider}")
-                                                // .baseUri("/oauth2/code/{provider}")
-                                                // .baseUri("/oauth2/callback/*")
-                                        )
+                                .redirectionEndpoint(redirectionEndpoint ->
+                                                redirectionEndpoint
+                                                        .baseUri("/login/oauth2/code/{provider}")
+                                        // .baseUri("/oauth2/code/{provider}")
+                                        // .baseUri("/oauth2/callback/*")
+                                )
 
-                                        .userInfoEndpoint(userInfoEndpoint ->
-                                                userInfoEndpoint
-                                                        .userService(customOAuth2UserService)  // 회원 저장
-                                        )
-                                        .successHandler(oAuth2AuthenticationSuccessHandler)
-                                        .failureHandler(oAuth2AuthenticationFailureHandler)
+                                .userInfoEndpoint(userInfoEndpoint ->
+                                        userInfoEndpoint
+                                                .userService(customOAuth2UserService)  // 회원 저장
+                                )
+                                .successHandler(oAuth2AuthenticationSuccessHandler)  // jwt 생성
+                                .failureHandler(oAuth2AuthenticationFailureHandler)
                 );
 
         System.out.println("로긴성공");
@@ -110,9 +112,4 @@ public class WebSecurityConfigure {
         System.out.println("끝");
         return http.build();
     }
-
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//    }
 }

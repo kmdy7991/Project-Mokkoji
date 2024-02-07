@@ -26,3 +26,4 @@ public class NaverOAuth2User extends OAuth2UserInfo {
         return (String) attributes.get("name");
     }
 }
+
