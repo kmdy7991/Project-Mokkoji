@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+// 구글, 카카오, 네이버에서 가져오는 정보가 달라서 필요한 정보만 하나의 객체(UserPrincipal)로 묶음
 @Getter
 @AllArgsConstructor
 public class UserPrincipal implements OAuth2User, UserDetails {
