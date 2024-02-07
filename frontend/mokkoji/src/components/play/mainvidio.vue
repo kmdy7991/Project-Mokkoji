@@ -24,10 +24,7 @@
     </div>
     <div class="gamestart">
       <div>
-        <form
-          v-if="!gameStore.start && roomStore.owner.matchAll(userStore.myName)"
-          @submit.prevent="gamestart"
-        >
+        <form v-if="roomowner && !gameStore.start" @submit.prevent="gamestart">
           <button class="button">게임시작</button>
         </form>
         <div v-else class="showAD">
@@ -77,10 +74,10 @@ const now = ref();
 const nowkey = ref();
 const nowuserjson = ref();
 const nowuser = ref();
-const roomowner = roomStore.owner === userStore.myName;
+const roomowner = roomStore.owner === userstore.myName;
 
-console.log(typeof roomStore.owner);
-console.log(typeof userstore.myName);
+console.log(roomStore.owner);
+console.log(userstore.myName);
 console.log(gameStore.start);
 console.log(roomowner);
 

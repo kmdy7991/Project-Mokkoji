@@ -94,13 +94,14 @@ export const useRoomStore = defineStore(
       })
         .then((res) => {
           // console.log(res.data, "게임방 입장"); 테스트 완료
-          console.log(res.data.participants);
+          // console.log(res.data.participants);
           players.value = res.data.participants;
           roomIdNumber = String(roomIdNumber);
           const payload = {
             roomId: roomIdNumber,
           };
           owner.value = res.data.room.owner;
+          // console.log(res.data.room.owner);
           console.log(owner.value);
           vidustore.joinSession(payload);
           router.replace({ path: `/TalkBody/${roomIdNumber}` }); // entranceRoom  함수에서 받아올 예정
