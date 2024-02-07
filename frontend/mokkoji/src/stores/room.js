@@ -17,6 +17,7 @@ export const useRoomStore = defineStore(
     const players = ref([]);
     const roomId = ref();
     const prevRoomlistLength = ref(Roomlist.value.length);
+    const preplayers = ref(players.value.length);
     const worngPassWord = ref(false);
 
     const getRoomlist = () => {
@@ -93,7 +94,8 @@ export const useRoomStore = defineStore(
       })
         .then((res) => {
           // console.log(res.data, "게임방 입장"); 테스트 완료
-          console.log(res.data);
+          console.log(res.data.participants);
+          players.value = res.data.participants;
           roomIdNumber = String(roomIdNumber);
           const payload = {
             roomId: roomIdNumber,
@@ -131,20 +133,21 @@ export const useRoomStore = defineStore(
         });
     };
 
-    const getplayer = function () {
+    const getplayer = function (roomId) {
+      const myroomId = Number(roomId);
+      console.log(typeof myroomId);
       axios({
         method: "get",
-        url: `${API_URL}/api/room/${roomId.value}/participants`,
+        url: `${API_URL}/api/room/${myroomId}/participants`,
       })
         .then((res) => {
           console.log(res.data, "게임방 입장");
-          entranceRoom(roomId); // entranceRoom  함수에서 받아올 예정
+          players.value = res.data;
+          console.log(players.value + `++++++++152`);
+          console.log(players.value);
         })
         .catch((err) => {
-          if (err.response.status === 401) {
-            console.log(`비밀번호 틀림!`);
-            worngPassWord.value = true;
-          }
+          console.log(`최신화 실패`);
         });
     };
 
@@ -157,7 +160,9 @@ export const useRoomStore = defineStore(
       })
         .then((res) => {
           console.log(res);
+          players.value = res.data;
           owner.value = "";
+          console.log(players.value);
           // 성공적인 응답 처리
           // console.log(res);
           // console.log(`성공!`); 성공 완료
@@ -173,10 +178,12 @@ export const useRoomStore = defineStore(
       Roomlist,
       worngPassWord,
       owner,
+      players,
       getRoomlist,
       createRoom,
       entranceRoom,
       exitRoom,
+      getplayer,
       entranceSecretRoom,
     };
   },

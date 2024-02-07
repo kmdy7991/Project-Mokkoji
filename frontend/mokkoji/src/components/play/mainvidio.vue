@@ -79,9 +79,10 @@ const nowuserjson = ref();
 const nowuser = ref();
 const roomowner = roomStore.owner === userStore.myName;
 
-console.log(roomStore.owner);
-console.log(userstore.myName);
+console.log(typeof roomStore.owner);
+console.log(typeof userstore.myName);
 console.log(gameStore.start);
+console.log(roomowner);
 
 watch(
   () => gameStore.nowParticipant,

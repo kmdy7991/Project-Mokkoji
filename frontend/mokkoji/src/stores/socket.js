@@ -2,6 +2,7 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import { useChatStore } from "@/stores/chat";
 import { useGameStore } from "./game";
+import { useRoomStore } from "./room";
 import { userStore } from "./user";
 import sockJs from "sockjs-client/dist/sockjs";
 import Stomp from "webstomp-client";
@@ -12,6 +13,7 @@ export const useWebSocketStore = defineStore(
     const store = useChatStore();
     const userstore = userStore();
     const usegamestore = useGameStore();
+    const roomstore = useRoomStore();
     const sock = ref(null);
     const stomp = ref(null);
     const roomId = ref(null);
@@ -56,6 +58,7 @@ export const useWebSocketStore = defineStore(
               break;
             case "ENTER":
               store.addChat(messageObject);
+              roomstore.getplayer(roomId.value);
             case "THEME":
               console.log(messageObject);
             // case "OWNER":
@@ -122,7 +125,6 @@ export const useWebSocketStore = defineStore(
 
     const disconnectWebSocket = () => {
       if (stomp.value && stomp.value.connected) {
-        // if (나가는 사람 === 해당방의 주인)
         stomp.value.disconnect(() => {
           console.log("Disconnected");
         });
