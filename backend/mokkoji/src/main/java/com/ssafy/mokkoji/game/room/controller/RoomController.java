@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
-
+import com.ssafy.mokkoji.common.chat.domain.request.MessageDto;
 import java.net.URI;
 import java.util.List;
 
@@ -104,7 +104,7 @@ public class RoomController {
                     }
                     // 방장이 나가면 방 터짐 (소켓 활용)
                     if (roomService.checkOwner(roomId).equals(user_nickname)) {
-//                        Message ownerMessage = Message.builder().content("방장이 나가 방이 터졌습니다.").type(Message.type.OWNER).build();
+//                        MessageDto ownerMessage = Message.builder().content("방장이 나가 방이 터졌습니다.").type(Message.type.OWNER).build();
 //                        messagingTemplate.convertAndSend("/topic/" + roomId, ownerMessage);
                         HttpHeaders headers = new HttpHeaders();
                         // 한 번 봐보기
