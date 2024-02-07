@@ -3,13 +3,14 @@ import { ref, watch, computed } from "vue";
 import { userStore } from "./user";
 import { useOpenViduStore } from "./openvidu";
 import axios from "axios";
-import router from "@/router";
+import { useRouter } from "vue-router";
 
 export const useRoomStore = defineStore(
   "room",
   () => {
     const API_URL = "http://192.168.31.58:8080"; // 로컬단 서버로 올릴시 수정할것! http://192.168.31.58:8080 예진님 코드
     const store = userStore();
+    const router = useRouter();
     const name = store.myName;
     const vidustore = useOpenViduStore();
     const Roomlist = ref([]);
@@ -153,11 +154,12 @@ export const useRoomStore = defineStore(
     };
 
     const exitRoom = function (payload) {
-      const { roomId } = payload;
+      const { roomId, nickname } = payload;
       console.log(typeof payload.roomId);
+      console.log(payload.nickname);
       axios({
         method: "delete",
-        url: `${API_URL}/api/room/delete/${roomId}/${name}`,
+        url: `${API_URL}/api/room/delete/${payload.roomId}/${payload.nickname}`,
       })
         .then((res) => {
           console.log(res);

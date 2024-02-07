@@ -23,9 +23,6 @@ export const useGameStore = defineStore(
     const gameresult = ref(false);
     const gameStart = async (payload) => {
       const { roomId } = payload;
-      subscriber.value = store.subscribers;
-      publisher.value = store.publisher;
-      combinedParticipants.value = [...subscriber.value, publisher.value];
       start.value = true;
       countdown.value = 5;
       const interval = setInterval(() => {
@@ -34,40 +31,41 @@ export const useGameStore = defineStore(
         if (countdown.value === 0) {
           clearInterval(interval);
           showAd.value = false; // 게임 시작 직전 광고 비활성화
-          initGame(payload);
+          initGame();
         }
       }, 1000);
     };
-    function initGame(payload) {
-      axios.get();
-
-      // 첫 참가자 시작을 3초 후로 지연
-      setTimeout(() => {
-        showAd.value = true;
-        updateParticipant(payload); // 첫 참가자 시작
-      }, 3000); // 프론트 만 접속시
-    }
-
-    function updateParticipant(payload) {
-      // axios.get();
-      // axios
-      // .get(`${API_URL}/api/room/start/${roomId}`)
-      // .then((response) => {
-      //   console.log("서버 응답:", response.data);
-      //   // 참가자 정보 업데이트 등 초기화 로직
-      //   subscriber.value = store.subscribers;
-      //   publisher.value = store.publisher;
-      //   combinedParticipants.value = [...subscriber.value, publisher.value];
+    function initGame() {
+      subscriber.value = store.subscribers;
+      publisher.value = store.publisher;
+      combinedParticipants.value = [...subscriber.value, publisher.value];
 
       // 첫 참가자 시작을 3초 후로 지연
       setTimeout(() => {
         showAd.value = true;
         updateParticipant(); // 첫 참가자 시작
-      }, 3000);
-      // })
-      // .catch((error) => {
-      //   console.error("게임 시작 요청 에러:", error);
-      // }); //
+      }, 3000); // 프론트 만 접속시
+      // axios
+      //   .get(`${API_URL}/api/room/start/${roomId}`)
+      //   .then((response) => {
+      //     console.log("서버 응답:", response.data);
+      //     // 참가자 정보 업데이트 등 초기화 로직
+      //     subscriber.value = store.subscribers;
+      //     publisher.value = store.publisher;
+      //     combinedParticipants.value = [...subscriber.value, publisher.value];
+
+      //     // 첫 참가자 시작을 3초 후로 지연
+      //     setTimeout(() => {
+      //       showAd.value = true;
+      //       updateParticipant(); // 첫 참가자 시작
+      //     }, 3000);
+      //   })
+      //   .catch((error) => {
+      //     console.error("게임 시작 요청 에러:", error);
+      //   }); // 백엔드 요청시
+    }
+
+    function updateParticipant() {
       if (combinedParticipants.value.length > nowIndex.value) {
         // 유저 데이터 값을 백엔드에서 받아올 예정.
         nowParticipant.value = combinedParticipants.value[nowIndex.value];
@@ -77,7 +75,6 @@ export const useGameStore = defineStore(
         );
         // 2분 후, 3초간 여유 시간
         setTimeout(() => {
-          socketstore.getTHEME();
           setTimeout(() => {
             // 다음 참가자로 넘어가거나 게임 종료 처리
             nowParticipant.value = "";
