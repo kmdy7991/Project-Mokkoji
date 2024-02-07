@@ -13,6 +13,9 @@ export const useRoomStore = defineStore(
     const name = store.myName;
     const vidustore = useOpenViduStore();
     const Roomlist = ref([]);
+    const owner = ref("");
+    const players = ref([]);
+    const roomId = ref();
     const prevRoomlistLength = ref(Roomlist.value.length);
     const worngPassWord = ref(false);
 
@@ -22,7 +25,7 @@ export const useRoomStore = defineStore(
         url: `${API_URL}/api/room`,
       })
         .then((res) => {
-          //console.log(res.data, "게임방 n 개 조회 됨"); //확인 완료. getmapping 성공
+          console.log(res.data, "게임방 n 개 조회 됨"); //확인 완료. getmapping 성공
           Roomlist.value = res.data.filter(
             (room) => !room._active && !room._explosion
           );
@@ -66,6 +69,9 @@ export const useRoomStore = defineStore(
       })
         .then((res) => {
           console.log(res.data, "방 생성됨");
+          owner.value = res.data.owner;
+          console.log(owner.value);
+          roomId.value = res.data.room_id;
           const createdRoomId = String(res.data.room_id);
           console.log(createdRoomId);
           const payload = {
@@ -80,18 +86,20 @@ export const useRoomStore = defineStore(
     };
 
     const entranceRoom = function (roomIdNumber) {
-      console.log(typeof roomIdNumber);
+      roomId.value = roomIdNumber;
       axios({
         method: "get",
         url: `${API_URL}/api/room/enter/${roomIdNumber}/${name}`,
       })
         .then((res) => {
           // console.log(res.data, "게임방 입장"); 테스트 완료
-          console.log(res.data.participants);
+          console.log(res.data);
           roomIdNumber = String(roomIdNumber);
           const payload = {
             roomId: roomIdNumber,
           };
+          owner.value = res.data.room.owner;
+          console.log(owner.value);
           vidustore.joinSession(payload);
           router.replace({ path: `/TalkBody/${roomIdNumber}` }); // entranceRoom  함수에서 받아올 예정
         })
@@ -123,6 +131,23 @@ export const useRoomStore = defineStore(
         });
     };
 
+    const getplayer = function () {
+      axios({
+        method: "get",
+        url: `${API_URL}/api/room/${roomId.value}/participants`,
+      })
+        .then((res) => {
+          console.log(res.data, "게임방 입장");
+          entranceRoom(roomId); // entranceRoom  함수에서 받아올 예정
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            console.log(`비밀번호 틀림!`);
+            worngPassWord.value = true;
+          }
+        });
+    };
+
     const exitRoom = function (payload) {
       const { roomId } = payload;
       console.log(typeof payload.roomId);
@@ -132,6 +157,7 @@ export const useRoomStore = defineStore(
       })
         .then((res) => {
           console.log(res);
+          owner.value = "";
           // 성공적인 응답 처리
           // console.log(res);
           // console.log(`성공!`); 성공 완료
@@ -146,6 +172,7 @@ export const useRoomStore = defineStore(
     return {
       Roomlist,
       worngPassWord,
+      owner,
       getRoomlist,
       createRoom,
       entranceRoom,

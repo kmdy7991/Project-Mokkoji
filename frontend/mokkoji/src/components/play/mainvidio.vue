@@ -24,13 +24,22 @@
     </div>
     <div class="gamestart">
       <div>
-        <form v-if="!gameStore.start" @submit.prevent="gamestart">
+        <form
+          v-if="!gameStore.start && roomStore.owner.matchAll(userStore.myName)"
+          @submit.prevent="gamestart"
+        >
           <button class="button">게임시작</button>
         </form>
         <div v-else class="showAD">
-          <div v-if="gameStore.countdown > 0">{{ gameStore.countdown }}</div>
-          <div v-else-if="!gameStore.showAd">게임이 시작됩니다!</div>
-          <div v-if="gameStore.showAd">여기에 광고판 컨텐츠</div>
+          <div v-if="gameStore.countdown > 0 && gameStore.start">
+            {{ gameStore.countdown }}
+          </div>
+          <div v-else-if="!gameStore.showAd && gameStore.start">
+            게임이 시작됩니다!
+          </div>
+          <div v-if="gameStore.showAd || roomStore.owner !== userStore.myName">
+            여기에 광고판 컨텐츠
+          </div>
         </div>
       </div>
     </div>
@@ -49,6 +58,7 @@ import { useRoute } from "vue-router";
 import { useChatStore } from "@/stores/chat";
 import { useGameStore } from "@/stores/game";
 import { userStore } from "@/stores/user";
+import { useRoomStore } from "@/stores/room";
 import { useWebSocketStore } from "@/stores/socket";
 import fullVidio from "./fullVidio.vue";
 import resultloading from "./resultloading.vue";
@@ -60,12 +70,19 @@ const store = useChatStore();
 const gameStore = useGameStore();
 const userstore = userStore();
 const usesocketstore = useWebSocketStore();
+const roomStore = useRoomStore();
 const playername = userstore.myName;
 const myindex = ref(0);
 const now = ref();
 const nowkey = ref();
 const nowuserjson = ref();
 const nowuser = ref();
+const roomowner = roomStore.owner === userStore.myName;
+
+console.log(roomStore.owner);
+console.log(userstore.myName);
+console.log(gameStore.start);
+
 watch(
   () => gameStore.nowParticipant,
   (newVal, oldVal) => {
@@ -86,9 +103,6 @@ watch(
 );
 
 const gamestart = () => {
-  const payload = {
-    roomId: roomId,
-  };
   console.log(typeof roomId);
   usesocketstore.gameStart();
 };

@@ -44,7 +44,7 @@ const containsProfanity = (name) => {
 };
 
 const goToAuthView = () => {
-  username.value = "Participant" + Math.floor(Math.random() * 10000);
+  username.value = "mokko" + Math.floor(Math.random() * 10000);
   store.myName = username.value;
   specialChar.value = false;
   fuckword.value = false;
@@ -69,7 +69,7 @@ const goToAuthView = () => {
 };
 
 const goTogame = () => {
-  username.value = "Participant" + Math.floor(Math.random() * 10000);
+  username.value = "mokko" + Math.floor(Math.random() * 10000);
   store.myName = username.value;
   console.log(username.value);
   specialChar.value = false;
