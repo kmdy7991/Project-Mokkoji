@@ -144,4 +144,15 @@ public class RoomController {
             return ResponseEntity.status(404).body("사람이 1명 이상이라 방 폭파 실패");
         }
     }
+
+    @GetMapping("/{room_id}/participants")
+    public ResponseEntity<Object> getParticipantsList(@PathVariable("room_id") int roomId){
+        try {
+            List<UserDto> participantList = roomService.participantInfo(roomId);
+            return ResponseEntity.status(200).body(participantList);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(404).body("방폭파 실패");
+        }
+    }
 }
