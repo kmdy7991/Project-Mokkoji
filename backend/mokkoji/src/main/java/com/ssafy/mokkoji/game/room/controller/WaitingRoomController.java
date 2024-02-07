@@ -147,9 +147,9 @@ public class WaitingRoomController {
 
         } catch (Exception e) {
 //            sessionService.isExist(sessionName);
-            return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
-//            return ResponseEntity.status(404)
-//                    .body(SessionTokenPostRes.of(404, "서버에러 방없음", null));
+//            return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
+            return ResponseEntity.status(404)
+                    .body("입장실패");
         }
     }
 
