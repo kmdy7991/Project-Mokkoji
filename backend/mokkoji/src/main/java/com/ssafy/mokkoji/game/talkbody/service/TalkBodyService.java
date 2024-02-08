@@ -7,5 +7,6 @@ import java.util.List;
 
 @Service
 public interface TalkBodyService {
+
     List<TalkBodyDto> getAllSubject();
 }

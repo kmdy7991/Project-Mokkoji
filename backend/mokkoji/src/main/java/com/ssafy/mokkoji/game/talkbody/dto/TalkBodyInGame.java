@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document("talkBody_themes")
+@Document(collection ="talkBody_themes")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,7 +14,7 @@ import java.util.List;
 @ToString
 public class TalkBodyInGame {
     @Id
-    private String id;
+    private String _id;
     private int room_id;
     private String subject;
     private List<String> elements;

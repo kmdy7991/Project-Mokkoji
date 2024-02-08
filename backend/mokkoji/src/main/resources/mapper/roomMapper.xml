@@ -105,11 +105,11 @@
         where room_id = #{room_id}
     </select>
     <!--    게임 터지게 함-->
-    <select id="gameExplosion" parameterType="int" resultType="int">
+    <update id="gameExplosion" parameterType="int">
         UPDATE gameroom
         SET is_explosion = 1
         WHERE room_id = #{room_id};
-    </select>
+    </update>
     <!--    게임 안 사람 수를 센다.-->
     <select id="countInGame" parameterType="int" resultType="int">
         select gameroom.user_count

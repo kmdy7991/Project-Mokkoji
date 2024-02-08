@@ -15,7 +15,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class TalkBodyDto {
     @Id
-    private String id;
+    private String _id;
     private String subject;
     private List<String> elements;
 }
