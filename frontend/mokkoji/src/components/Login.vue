@@ -1,7 +1,16 @@
 <template>
   <div id="join-dialog" class="jumbotron vertical-center">
-    <h1>모꼬지</h1>
+    <h1 class="gamename">모꼬지</h1>
     <div class="form-container">
+      <!-- <div class="social">
+        <img class="kakao" src="@/assets/kakao_login.png" alt="kakao_login" />
+      </div> -->
+      <div class="social">
+        <img class="naver" src="@/assets/naver_login.png" alt="naver_login" />
+      </div>
+      <!-- <div class="social">
+        <img class="naver" src="@/assets/google_login.png" alt="google_login" />
+      </div> -->
       <div class="text-center">
         <button class="btn" @click="goTogame()">비회원 입장</button>
         <button class="btn" @click="goToAuthView()">관리자 입장</button>
@@ -173,7 +182,7 @@ const goTogame = () => {
 .btn:hover {
   background-color: #3498db; /* 예: 파란색 배경 */
   color: #fff; /* 예: 흰색 글자 */
-  cursor: click;
+  cursor: pointer;
 }
 
 .text-center {
@@ -184,5 +193,33 @@ const goTogame = () => {
   color: red;
   font-size: 28px;
   font-family: "DOSMyungjo";
+}
+
+.social {
+  width: 600px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.kakao {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.naver {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.naver:hover {
+  cursor: pointer;
+}
+
+.gamename {
+  font-family: DOSMyungjo;
 }
 </style>

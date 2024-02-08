@@ -27,7 +27,7 @@ export const useRoomStore = defineStore(
         url: `${API_URL}/api/room`,
       })
         .then((res) => {
-          console.log(res.data, "게임방 n 개 조회 됨"); //확인 완료. getmapping 성공
+          // console.log(res.data, "게임방 n 개 조회 됨"); //확인 완료. getmapping 성공
           Roomlist.value = res.data.filter(
             (room) => !room._active && !room._explosion
           );
@@ -63,19 +63,16 @@ export const useRoomStore = defineStore(
         _active: false,
         game_type: payload.game_type,
       };
-      console.log(jsonData);
       axios({
         method: "post",
         url: `${API_URL}/api/room/create`,
         data: jsonData,
       })
         .then((res) => {
-          console.log(res.data, "방 생성됨");
+          // console.log(res.data, "방 생성됨");
           owner.value = res.data.owner;
-          console.log(owner.value);
           roomId.value = res.data.room_id;
           const createdRoomId = String(res.data.room_id);
-          console.log(createdRoomId);
           const payload = {
             roomId: createdRoomId,
           };
@@ -137,16 +134,13 @@ export const useRoomStore = defineStore(
 
     const getplayer = function (roomId) {
       const myroomId = Number(roomId);
-      console.log(typeof myroomId);
       axios({
         method: "get",
         url: `${API_URL}/api/room/${myroomId}/participants`,
       })
         .then((res) => {
-          console.log(res.data, "게임방 입장");
+          // console.log(res.data, "게임방 입장");
           players.value = res.data;
-          console.log(players.value + `++++++++152`);
-          console.log(players.value);
         })
         .catch((err) => {
           console.log(`최신화 실패`);
@@ -162,10 +156,9 @@ export const useRoomStore = defineStore(
         url: `${API_URL}/api/room/delete/${payload.roomId}/${payload.nickname}`,
       })
         .then((res) => {
-          console.log(res);
-          players.value = res.data;
+          // console.log(res);
           owner.value = "";
-          console.log(players.value);
+          // console.log(players.value);
           // 성공적인 응답 처리
           // console.log(res);
           // console.log(`성공!`); 성공 완료

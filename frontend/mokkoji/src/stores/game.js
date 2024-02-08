@@ -2,12 +2,13 @@ import { ref, onMounted } from "vue";
 import { defineStore } from "pinia";
 import { useOpenViduStore } from "./openvidu";
 import { useWebSocketStore } from "./socket";
+import { useRoomStore } from "./room";
 import axios from "axios";
 
 export const useGameStore = defineStore(
   "game",
   () => {
-    const API_URL = "http://192.168.31.42:8080"; // 로컬단 서버로 올릴시 수정할것!
+    const API_URL = "http://192.168.31.58:8080"; // 로컬단 서버로 올릴시 수정할것!
     const start = ref(false);
     const nowcountdown = ref(false);
     const countdown = ref(5);
@@ -15,6 +16,9 @@ export const useGameStore = defineStore(
     const showAd = ref(false);
     const store = useOpenViduStore();
     const socketstore = useWebSocketStore();
+    const roomstore = useRoomStore();
+    const category = ref("");
+    const answers = ref("");
     const subscriber = ref([]);
     const publisher = ref();
     const combinedParticipants = ref([]); // New reference for combined data
@@ -22,28 +26,50 @@ export const useGameStore = defineStore(
     const nowIndex = ref(0);
     const gameend = ref(false);
     const gameresult = ref(false);
-    const gameStart = async (payload) => {
-      const { roomId } = payload;
-      axios({
-        method: "get",
-        url: `${API_URL}/api/room/start/${roomId}`,
-      })
-        .then((res) => {
-          console.log("시작 응답:", res.data);
-        })
-        .catch((err) => {
-          console.error("게임 시작 요청 에러:", err);
-        });
+
+    const getcategory = (roomId) => {
       axios({
         method: "get",
         url: `${API_URL}/api/talkbody/${roomId}/select`,
       })
         .then((res) => {
-          console.log("주제 응답:", res.data);
+          // console.log("주제 응답:", res.data);
+          category.value = res.data.subject;
+          // answers.value = res.data.elements;
         })
         .catch((err) => {
           console.error("주제 받아오기 실패:", err);
         });
+    };
+
+    const gameover = (roomId) => {
+      axios({
+        method: "get",
+        url: `${API_URL}/api/room/${roomId}/start`,
+      })
+        .then((res) => {
+          // console.log("시작 응답:", res);
+        })
+        .catch((err) => {
+          console.error("게임 종료 요청 에러:", err);
+        });
+    };
+    const gameStart = async (roomId) => {
+      nowcountdown.value = true;
+      const numroomId = Number(roomId);
+      console.log(typeof numroomId);
+      roomstore.getplayer(numroomId);
+      axios({
+        method: "get",
+        url: `${API_URL}/api/room/${numroomId}/start`,
+      })
+        .then((res) => {
+          // console.log("시작 응답:", res);
+        })
+        .catch((err) => {
+          console.error("게임 시작 요청 에러:", err);
+        });
+      getcategory(roomId);
       start.value = true;
       countdown.value = 5;
       nowcountdown.value = true;
@@ -53,11 +79,11 @@ export const useGameStore = defineStore(
         if (countdown.value === 0) {
           clearInterval(interval);
           showAd.value = false; // 게임 시작 직전 광고 비활성화
-          initGame();
+          initGame(roomId);
         }
       }, 1000);
     };
-    function initGame() {
+    function initGame(roomId) {
       subscriber.value = store.subscribers;
       publisher.value = store.publisher;
       combinedParticipants.value = [...subscriber.value, publisher.value];
@@ -65,7 +91,8 @@ export const useGameStore = defineStore(
       // 첫 참가자 시작을 3초 후로 지연
       setTimeout(() => {
         showAd.value = true;
-        updateParticipant(); // 첫 참가자 시작
+        nowcountdown.value = false;
+        updateParticipant(roomId); // 첫 참가자 시작
       }, 3000); // 프론트 만 접속시
       // axios
       //   .get(`${API_URL}/api/room/start/${roomId}`)
@@ -87,35 +114,54 @@ export const useGameStore = defineStore(
       //   }); // 백엔드 요청시
     }
 
-    function updateParticipant() {
+    function updateParticipant(roomId) {
       if (combinedParticipants.value.length > nowIndex.value) {
-        // 유저 데이터 값을 백엔드에서 받아올 예정.
-        nowParticipant.value = combinedParticipants.value[nowIndex.value];
-        console.log(
-          "현재 참가자: game.js 71",
-          nowParticipant.value.stream.connection.data
-        );
-        // 2분 후, 3초간 여유 시간
-        setTimeout(() => {
+        const nowplay = roomstore.players[nowIndex.value].user_nickname;
+        let foundIndex = -1;
+        for (let i = 0; i < combinedParticipants.value.length; i++) {
+          const nowPart = combinedParticipants.value[i];
+          const clientdata = JSON.parse(nowPart.session.connection.data);
+          const client = clientdata.clientData;
+          if (nowplay == client) {
+            foundIndex = i; // 일치하는 인덱스 저장
+            break; // 반복문 탈출
+          }
+        }
+        if (foundIndex !== -1) {
+          nowParticipant.value = combinedParticipants.value[foundIndex];
+          getcategory(roomId);
+          // console.log(
+          //   "현재 참가자: game.js 71",
+          //   JSON.parse(nowParticipant.value.stream.connection.data)
+          // );
+          // 2분 후, 3초간 여유 시간
           setTimeout(() => {
-            // 다음 참가자로 넘어가거나 게임 종료 처리
-            nowParticipant.value = "";
-            nowIndex.value++;
-            updateParticipant();
-          }, 3000); // 3초동안 정지
-        }, 10000); // 게임진행 2분
+            setTimeout(() => {
+              // 다음 참가자로 넘어가거나 게임 종료 처리
+              nowParticipant.value = "";
+              nowIndex.value++;
+              updateParticipant(roomId);
+            }, 3000); // 3초동안 정지
+          }, 10000);
+        } else {
+          nowIndex.value++;
+          updateParticipant(roomId);
+        }
+        // 게임진행 2분
       } else {
-        endGame();
+        endGame(roomId);
       }
     }
 
-    function endGame() {
+    function endGame(roomId) {
       gameend.value = true;
       nowParticipant.value = "";
       nowIndex.value = 0;
+      category.value = "";
       setTimeout(() => {
         gameend.value = false;
         gameresult.value = true; // 결과 표시 시 광고 비활성화
+        gameover(roomId);
       }, 10000); // 게임 종료 후 10초 대기, 결과 표시
     }
 
@@ -141,6 +187,8 @@ export const useGameStore = defineStore(
       countdown2,
       showAd,
       subscriber,
+      category,
+      answers,
       publisher,
       combinedParticipants,
       nowParticipant,
@@ -149,6 +197,7 @@ export const useGameStore = defineStore(
       gameout,
       gameend,
       gameresult,
+      nowcountdown,
     };
   },
   { persist: true }

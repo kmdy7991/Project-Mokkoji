@@ -48,12 +48,13 @@ export const useWebSocketStore = defineStore(
           switch (messageObject.type) {
             case "CHAT":
               // CHAT 유형의 메시지 처리
+              // if (messageObject){}
               store.addChat(messageObject);
               break;
             case "START":
               // START 유형의 메시지 처리
               store.addChat(messageObject);
-              usegamestore.gameStart(messageObject.roomId);
+              usegamestore.gameStart(roomId.value);
               // 여기에 START 유형에 대한 처리 로직 추가
               break;
             case "ENTER":

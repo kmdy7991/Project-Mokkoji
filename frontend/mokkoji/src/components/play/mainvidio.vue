@@ -5,13 +5,13 @@
       v-if="gameStore.showAd && nowuser?.clientData === playername"
       class="gamename"
     >
-      제시어: 박땡땡
+      제시어: {{ gameStore.category }}
     </h1>
     <h1
       v-if="gameStore.showAd && !(nowuser?.clientData === playername)"
       class="gamename"
     >
-      카테고리: 인물
+      카테고리: {{ gameStore.category }}
     </h1>
     <div class="mainvidio">
       <fullVidio
@@ -28,14 +28,16 @@
           <button class="button">게임시작</button>
         </form>
         <div v-else class="showAD">
-          <div v-if="gameStore.countdown > 0">
+          <div v-if="gameStore.countdown > 0 && gameStore.nowcountdown">
             {{ gameStore.countdown }}
           </div>
-          <div v-else-if="!gameStore.showAd">게임이 시작됩니다!</div>
+          <div v-else-if="!gameStore.showAd && gameStore.nowcountdown">
+            게임이 시작됩니다!
+          </div>
           <div
             v-if="
-              gameStore.showAd ||
-              (roomStore.owner !== userStore.myName && !gameStore.nowcountdown)
+              (gameStore.showAd || roomStore.owner !== userStore.myName) &&
+              !gameStore.nowcountdown
             "
           >
             여기에 광고판 컨텐츠
@@ -59,7 +61,6 @@ import { useChatStore } from "@/stores/chat";
 import { useGameStore } from "@/stores/game";
 import { userStore } from "@/stores/user";
 import { useRoomStore } from "@/stores/room";
-import { useRoomStore } from "@/stores/room";
 import { useWebSocketStore } from "@/stores/socket";
 import fullVidio from "./fullVidio.vue";
 import resultloading from "./resultloading.vue";
@@ -80,25 +81,24 @@ const nowuserjson = ref();
 const nowuser = ref();
 const roomowner = roomStore.owner === userstore.myName;
 
-console.log(roomStore.owner);
-console.log(userstore.myName);
-console.log(gameStore.start);
-console.log(roomowner);
+// console.log(roomStore.owner);
+// console.log(userstore.myName);
+// console.log(gameStore.start);
+// console.log(roomowner);
 
 watch(
   () => gameStore.nowParticipant,
   (newVal, oldVal) => {
-    console.log("New Participant:", newVal, "myindex.value:", myindex.value);
-    myindex.value += 1;
+    // console.log("New Participant:", newVal, "myindex.value:", myindex.value);
     now.value = newVal;
     // console.log(now.value.stream.connection.connectionId);
     nowkey.value = now.value.stream?.connection.connectionId;
-    console.log(nowkey.value);
+    // console.log(nowkey.value);
     nowuserjson.value = now.value.stream?.connection.data;
-    console.log(nowuserjson.value);
+    // console.log(nowuserjson.value);
     if (nowuserjson.value !== undefined) {
       nowuser.value = JSON.parse(nowuserjson.value);
-      console.log(nowuser.value);
+      // console.log(nowuser.value);
     }
   },
   { deep: true }

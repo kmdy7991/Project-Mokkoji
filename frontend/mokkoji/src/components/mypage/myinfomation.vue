@@ -2,7 +2,7 @@
   <div class="my-info">
     <div class="info">
       <div class="basic">이름</div>
-      <div class="privacy">임시닉네임3597</div>
+      <div class="privacy">{{ store.myName }}</div>
       <button class="name-change">이름 변경</button>
     </div>
     <div class="info">

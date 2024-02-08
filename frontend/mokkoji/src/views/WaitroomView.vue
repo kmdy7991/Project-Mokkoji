@@ -110,7 +110,7 @@ function gohome() {
 .button:hover {
   background-color: #3498db; /* 예: 파란색 배경 */
   color: #fff; /* 예: 흰색 글자 */
-  cursor: click;
+  cursor: pointer;
 }
 
 .redbutton {
@@ -137,7 +137,7 @@ function gohome() {
 .redbutton:hover {
   background-color: #dd2b14; /* 예: 파란색 배경 */
   color: #fff; /* 예: 흰색 글자 */
-  cursor: click;
+  cursor: pointer;
 }
 
 .live-player {
