@@ -8,7 +8,7 @@ import { useRouter } from "vue-router";
 export const useRoomStore = defineStore(
   "room",
   () => {
-    const API_URL = "http://192.168.31.58:8080"; // 로컬단 서버로 올릴시 수정할것! http://192.168.31.58:8080 예진님 코드
+    const API_URL = `http://192.168.31.58:8080`; // 로컬단 서버로 올릴시 수정할것! http://192.168.31.58:8080 예진님 코드
     const store = userStore();
     const router = useRouter();
     const name = store.myName;
@@ -105,7 +105,7 @@ export const useRoomStore = defineStore(
           router.replace({ path: `/TalkBody/${roomIdNumber}` }); // entranceRoom  함수에서 받아올 예정
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     };
 

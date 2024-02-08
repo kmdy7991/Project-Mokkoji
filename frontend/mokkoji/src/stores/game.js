@@ -8,7 +8,7 @@ import axios from "axios";
 export const useGameStore = defineStore(
   "game",
   () => {
-    const API_URL = "http://192.168.31.58:8080"; // 로컬단 서버로 올릴시 수정할것!
+    const API_URL = `http://192.168.31.58:8080`; // 로컬단 서버로 올릴시 수정할것!
     const start = ref(false);
     const nowcountdown = ref(false);
     const countdown = ref(5);
@@ -129,7 +129,6 @@ export const useGameStore = defineStore(
         }
         if (foundIndex !== -1) {
           nowParticipant.value = combinedParticipants.value[foundIndex];
-          getcategory(roomId);
           // console.log(
           //   "현재 참가자: game.js 71",
           //   JSON.parse(nowParticipant.value.stream.connection.data)
@@ -140,6 +139,7 @@ export const useGameStore = defineStore(
               // 다음 참가자로 넘어가거나 게임 종료 처리
               nowParticipant.value = "";
               nowIndex.value++;
+              getcategory(roomId);
               updateParticipant(roomId);
             }, 3000); // 3초동안 정지
           }, 10000);

@@ -66,7 +66,7 @@ const joinRoomDirectly = (roomId, secret) => {
 
   if (roomIdNumber !== null) {
     selectedRoomId.value = roomIdNumber;
-    console.log(selectedRoomId.value);
+    // console.log(selectedRoomId.value);
     if (secret === true) {
       checkpassword.value = !checkpassword.value;
       // console.log(checkpassword.value);

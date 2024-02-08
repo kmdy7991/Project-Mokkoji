@@ -18,10 +18,11 @@ export const useWebSocketStore = defineStore(
     const stomp = ref(null);
     const roomId = ref(null);
     const myName = userstore.myName;
+    const API_URL = `http://192.168.31.58:8080`;
 
     const initializeWebSocket = (newRoomId) => {
       roomId.value = newRoomId;
-      sock.value = new sockJs("http://192.168.31.58:8080/chat"); // 로컬단 서버로 올릴시 수정할것! 58 예진님 42 대영
+      sock.value = new sockJs(`${API_URL}/chat`); // 로컬단 서버로 올릴시 수정할것! 58 예진님 42 대영
       stomp.value = Stomp.over(sock.value);
 
       stomp.value.connect({}, (frame) => {
