@@ -28,13 +28,16 @@
           <button class="button">게임시작</button>
         </form>
         <div v-else class="showAD">
-          <div v-if="gameStore.countdown > 0 && gameStore.start">
+          <div v-if="gameStore.countdown > 0">
             {{ gameStore.countdown }}
           </div>
-          <div v-else-if="!gameStore.showAd && gameStore.start">
-            게임이 시작됩니다!
-          </div>
-          <div v-if="gameStore.showAd || roomStore.owner !== userStore.myName">
+          <div v-else-if="!gameStore.showAd">게임이 시작됩니다!</div>
+          <div
+            v-if="
+              gameStore.showAd ||
+              (roomStore.owner !== userStore.myName && !gameStore.nowcountdown)
+            "
+          >
             여기에 광고판 컨텐츠
           </div>
         </div>
@@ -55,6 +58,7 @@ import { useRoute } from "vue-router";
 import { useChatStore } from "@/stores/chat";
 import { useGameStore } from "@/stores/game";
 import { userStore } from "@/stores/user";
+import { useRoomStore } from "@/stores/room";
 import { useRoomStore } from "@/stores/room";
 import { useWebSocketStore } from "@/stores/socket";
 import fullVidio from "./fullVidio.vue";

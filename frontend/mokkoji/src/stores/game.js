@@ -9,6 +9,7 @@ export const useGameStore = defineStore(
   () => {
     const API_URL = "http://192.168.31.42:8080"; // 로컬단 서버로 올릴시 수정할것!
     const start = ref(false);
+    const nowcountdown = ref(false);
     const countdown = ref(5);
     const countdown2 = ref(3);
     const showAd = ref(false);
@@ -23,8 +24,29 @@ export const useGameStore = defineStore(
     const gameresult = ref(false);
     const gameStart = async (payload) => {
       const { roomId } = payload;
+      axios({
+        method: "get",
+        url: `${API_URL}/api/room/start/${roomId}`,
+      })
+        .then((res) => {
+          console.log("시작 응답:", res.data);
+        })
+        .catch((err) => {
+          console.error("게임 시작 요청 에러:", err);
+        });
+      axios({
+        method: "get",
+        url: `${API_URL}/api/talkbody/${roomId}/select`,
+      })
+        .then((res) => {
+          console.log("주제 응답:", res.data);
+        })
+        .catch((err) => {
+          console.error("주제 받아오기 실패:", err);
+        });
       start.value = true;
       countdown.value = 5;
+      nowcountdown.value = true;
       const interval = setInterval(() => {
         countdown.value--;
 
