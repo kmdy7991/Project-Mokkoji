@@ -1,5 +1,6 @@
 package com.ssafy.mokkoji.game.room.controller;
 
+import com.ssafy.mokkoji.common.chat.domain.response.MessageResponse;
 import com.ssafy.mokkoji.game.room.dto.UserDto;
 import com.ssafy.mokkoji.game.room.service.RoomService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -104,8 +105,8 @@ public class RoomController {
                     }
                     // 방장이 나가면 방 터짐 (소켓 활용)
                     if (roomService.checkOwner(roomId).equals(user_nickname)) {
-//                        MessageDto ownerMessage = Message.builder().content("방장이 나가 방이 터졌습니다.").type(Message.type.OWNER).build();
-//                        messagingTemplate.convertAndSend("/topic/" + roomId, ownerMessage);
+                        MessageResponse ownerMessage = MessageResponse.builder().content("방장이 나가 방이 터졌습니다.").type(MessageResponse.Type.OWNER).build();
+                        messagingTemplate.convertAndSend("/topic/" + roomId, ownerMessage);
                         HttpHeaders headers = new HttpHeaders();
                         // 한 번 봐보기
                         URI uri = new URI("http://192.168.31.58:8080/api/room");

@@ -87,6 +87,7 @@ public class ChatController {
                             .time(time)
                             .type(MessageResponse.Type.SUCCESS)
                             .build();
+                    case OWNER -> null;
                 }
         );
     }
