@@ -13,7 +13,8 @@ public class MessageResponse{
     private String content;
     private String time;
     private Type type;
+    private boolean corrects = false;
     public enum Type {
-        ENTER, START, CHAT
+        ENTER, START, CHAT, THEME, SUCCESS
     }
 }

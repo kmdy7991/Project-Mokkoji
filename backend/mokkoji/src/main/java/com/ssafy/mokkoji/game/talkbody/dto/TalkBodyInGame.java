@@ -18,4 +18,5 @@ public class TalkBodyInGame {
     private int room_id;
     private String subject;
     private List<String> elements;
+    private String element;
 }

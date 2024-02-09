@@ -10,3 +10,4 @@ public interface TalkBodyService {
 
     List<TalkBodyDto> getAllSubject();
 }
+

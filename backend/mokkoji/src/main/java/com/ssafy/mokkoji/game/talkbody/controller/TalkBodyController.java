@@ -52,7 +52,6 @@ public class TalkBodyController {
             tk.setSubject(b.getSubject());
             tk.setElements(b.getElements());
             System.out.println(tk);
-
             mongoTemplate.save(tk);
             return ResponseEntity.ok().body(b);
         } catch (Exception e) {
@@ -86,6 +85,8 @@ public class TalkBodyController {
                 responseMap.put("subject", subject);
                 responseMap.put("selectedElement", selectedElement);
 
+                document.setElement(selectedElement);
+                mongoTemplate.save(document);
                 // 선택된 요소를 리스트에서 제거
                 elements.remove(selectedElement);
 
