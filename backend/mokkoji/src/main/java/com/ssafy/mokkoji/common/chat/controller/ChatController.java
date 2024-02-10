@@ -38,7 +38,6 @@ public class ChatController {
     public void receive(MessageDto messageDto) {
         log.info("get Message {}", messageDto);
         boolean ans = false;
-        List<Map<String, Object>> part = null;
 
 // 정답 확인
         if (messageDto.getType() == MessageDto.Type.CHAT) {
@@ -48,21 +47,16 @@ public class ChatController {
             }
         }
 
-//  게임 끝났을 때 순위 판별
-        if (messageDto.getType() == MessageDto.Type.END){
-            part = getParticipantsOrderByScore();
-        }
-
         String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
         // 정답 맞춤 스코어 1 증가 및 성공했다는 메세지와 새로운 주제 보내줌
         if (ans){
-//            String query = "UPDATE participant " +
-//                    "SET score = score + 1 " +
-//                    "WHERE room_id = ? AND user_nickname = ?";
-//            jdbcTemplate.update(query, messageDto.getRoomId() , messageDto.getUserNickname());
+            String query = "UPDATE participant " +
+                    "SET score = score + 1 " +
+                    "WHERE room_id = ? AND user_nickname = ?";
+            jdbcTemplate.update(query, messageDto.getRoomId() , messageDto.getUserNickname());
             MessageResponse successMessage = MessageResponse.builder()
                     .roomId(messageDto.getRoomId())
-                    .userNickname(messageDto.getUserNickname())
+                    .userNickname("시스템")
                     .content(messageDto.getUserNickname()+"님 정답입니다!") // 성공 메시지의 내용을 여기에 작성하세요.
                     .time(time)
                     .type(MessageResponse.Type.SUCCESS)
@@ -127,7 +121,7 @@ public class ChatController {
                             builder()
                             .roomId(messageDto.getRoomId())
                             .userNickname(messageDto.getUserNickname())
-                            .content(messageDto.getContent())
+                            .userList(getParticipantsOrderByScore())
                             .time(time)
                             .type(MessageResponse.Type.END)
                             .build();
