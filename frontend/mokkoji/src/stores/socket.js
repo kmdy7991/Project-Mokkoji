@@ -50,9 +50,6 @@ export const useWebSocketStore = defineStore(
           switch (messageObject.type) {
             case "CHAT":
               // CHAT 유형의 메시지 처리
-              if (messageObject.corrects) {
-                getTHEME();
-              }
               store.addChat(messageObject);
               break;
             case "START":
@@ -77,7 +74,7 @@ export const useWebSocketStore = defineStore(
               console.log(roomexplosion.value);
               break;
             case "SUCCESS":
-              console.log(messageObject);
+              store.addChat(messageObject);
               break;
             // case "TURN":
             //   // TURN 유형의 메시지 처리
