@@ -94,28 +94,10 @@ export const useGameStore = defineStore(
         nowcountdown.value = false;
         updateParticipant(roomId); // 첫 참가자 시작
       }, 3000); // 프론트 만 접속시
-      // axios
-      //   .get(`${API_URL}/api/room/start/${roomId}`)
-      //   .then((response) => {
-      //     console.log("서버 응답:", response.data);
-      //     // 참가자 정보 업데이트 등 초기화 로직
-      //     subscriber.value = store.subscribers;
-      //     publisher.value = store.publisher;
-      //     combinedParticipants.value = [...subscriber.value, publisher.value];
-
-      //     // 첫 참가자 시작을 3초 후로 지연
-      //     setTimeout(() => {
-      //       showAd.value = true;
-      //       updateParticipant(); // 첫 참가자 시작
-      //     }, 3000);
-      //   })
-      //   .catch((error) => {
-      //     console.error("게임 시작 요청 에러:", error);
-      //   }); // 백엔드 요청시
     }
 
     function updateParticipant(roomId) {
-      if (combinedParticipants.value.length > nowIndex.value) {
+      if (roomstore.players.length > nowIndex.value) {
         const nowplay = roomstore.players[nowIndex.value].user_nickname;
         let foundIndex = -1;
         for (let i = 0; i < combinedParticipants.value.length; i++) {
@@ -129,11 +111,6 @@ export const useGameStore = defineStore(
         }
         if (foundIndex !== -1) {
           nowParticipant.value = combinedParticipants.value[foundIndex];
-          // console.log(
-          //   "현재 참가자: game.js 71",
-          //   JSON.parse(nowParticipant.value.stream.connection.data)
-          // );
-          // 2분 후, 3초간 여유 시간
           setTimeout(() => {
             setTimeout(() => {
               // 다음 참가자로 넘어가거나 게임 종료 처리
@@ -142,7 +119,7 @@ export const useGameStore = defineStore(
               getcategory(roomId);
               updateParticipant(roomId);
             }, 3000); // 3초동안 정지
-          }, 10000);
+          }, 120000);
         } else {
           nowIndex.value++;
           updateParticipant(roomId);

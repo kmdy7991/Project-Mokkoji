@@ -87,6 +87,7 @@ const gameout = () => {
     nickname: userstore.myName,
   };
   usegamestore.gameout();
+  usegamestore.countdown = 5;
   store.disconnectWebSocket();
   vidustore.leaveSession();
   session.value = vidustore.session;

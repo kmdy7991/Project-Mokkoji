@@ -29,17 +29,17 @@ const store = useWebSocketStore();
 const vidustore = useOpenViduStore();
 const userstore = userStore();
 const roomstore = useRoomStore();
-const countdown = ref(7); // 카운트다운 시작 숫자
+const countdown = ref(5); // 카운트다운 시작 숫자
 let countdownInterval;
 
-// onMounted(() => {
-//   countdownInterval = setInterval(() => {
-//     countdown.value--;
-//     if (countdown.value === 0) {
-//       gameout(); // 카운트다운이 0에 도달하면 gameout 함수 실행
-//     }
-//   }, 1000);
-// });
+onMounted(() => {
+  countdownInterval = setInterval(() => {
+    countdown.value--;
+    if (countdown.value === 0) {
+      gameout(); // 카운트다운이 0에 도달하면 gameout 함수 실행
+    }
+  }, 1000);
+});
 
 onUnmounted(() => {
   clearInterval(countdownInterval); // 컴포넌트 언마운트 시 인터벌 정리
