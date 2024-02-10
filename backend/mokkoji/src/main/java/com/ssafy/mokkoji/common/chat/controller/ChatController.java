@@ -61,20 +61,31 @@ public class ChatController {
         }
 
         String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
-        // 스코어 1 증가
+        // 정답 맞춤 스코어 1 증가 및 성공했다는 메세지와 새로운 주제 보내줌
         if (ans){
             String query = "UPDATE participant " +
                     "SET score = score + 1 " +
                     "WHERE room_id = ? AND user_nickname = ?";
             jdbcTemplate.update(query, messageDto.getRoomId() , messageDto.getUserNickname());
+
             MessageResponse successMessage = MessageResponse.builder()
                     .roomId(messageDto.getRoomId())
                     .userNickname(messageDto.getUserNickname())
-                    .content(messageDto.getUserNickname()+"정답입니다!") // 성공 메시지의 내용을 여기에 작성하세요.
+                    .content(messageDto.getUserNickname()+"님 정답입니다!") // 성공 메시지의 내용을 여기에 작성하세요.
                     .time(time)
                     .type(MessageResponse.Type.SUCCESS)
                     .build();
             chatService.sendMessage(successMessage);
+
+            MessageResponse themeMessage = MessageResponse.
+                    builder().
+                    roomId(messageDto.getRoomId())
+                    .userNickname(messageDto.getUserNickname())
+                    .content(content)
+                    .time(time)
+                    .type(MessageResponse.Type.THEME)
+                    .build();
+            chatService.sendMessage(themeMessage);
         }
         chatService.sendMessage(
                 switch (messageDto.getType()) {
