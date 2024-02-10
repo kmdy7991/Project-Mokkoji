@@ -15,6 +15,6 @@ public class MessageResponse{
     private Type type;
     private boolean corrects = false;
     public enum Type {
-        ENTER, START, CHAT, THEME, SUCCESS, OWNER
+        ENTER, START, CHAT, THEME, SUCCESS, OWNER, END
     }
 }

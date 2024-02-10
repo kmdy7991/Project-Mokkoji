@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,9 @@ import java.util.*;
 public class ChatController {
     @Autowired
     private MongoTemplate mongoTemplate;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     private final ChatService chatService;
 
     // message 매핑으로 들어옴 /pub/message 프론트에서 보낼 때 백에서 받을 때는 /roomId
@@ -35,6 +39,8 @@ public class ChatController {
         log.info("get Message {}", messageDto);
         String answer = "";
         String content = "";
+        boolean ans = false;
+        List<Map<String, Object>> part = null;
         if (messageDto.getType() == MessageDto.Type.THEME) {
             Map<String, String> responseMap = getQuestion(messageDto.getRoomId());
 
@@ -43,7 +49,33 @@ public class ChatController {
                 answer = responseMap.get("selectedElement");
             }
         }
+
+        if (!answer.isEmpty()){
+            ans = findWord(answer,messageDto.getContent()); // true 정답 false 오답
+        }
+
+
+//  게임 끝났을 때 순위 판별
+        if (messageDto.getType() == MessageDto.Type.END){
+            part = getParticipantsOrderByScore();
+        }
+
         String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+        // 스코어 1 증가
+        if (ans){
+            String query = "UPDATE participant " +
+                    "SET score = score + 1 " +
+                    "WHERE room_id = ? AND user_nickname = ?";
+            jdbcTemplate.update(query, messageDto.getRoomId() , messageDto.getUserNickname());
+            MessageResponse successMessage = MessageResponse.builder()
+                    .roomId(messageDto.getRoomId())
+                    .userNickname(messageDto.getUserNickname())
+                    .content(messageDto.getUserNickname()+"정답입니다!") // 성공 메시지의 내용을 여기에 작성하세요.
+                    .time(time)
+                    .type(MessageResponse.Type.SUCCESS)
+                    .build();
+            chatService.sendMessage(successMessage);
+        }
         chatService.sendMessage(
                 switch (messageDto.getType()) {
                     case ENTER -> MessageResponse.
@@ -68,7 +100,7 @@ public class ChatController {
                             .userNickname(messageDto.getUserNickname())
                             .content(messageDto.getContent())
                             .time(time)
-                            .corrects(findWord(answer,messageDto.getContent())) // 여기서 true이면 정답
+                            .corrects(ans) // 여기서 true이면 정답
                             .type(MessageResponse.Type.CHAT)
                             .build();
                     case THEME -> MessageResponse.
@@ -88,10 +120,24 @@ public class ChatController {
                             .type(MessageResponse.Type.SUCCESS)
                             .build();
                     case OWNER -> null;
+                    case END -> MessageResponse.
+                            builder()
+                            .roomId(messageDto.getRoomId())
+                            .userNickname(messageDto.getUserNickname())
+                            .content(messageDto.getContent())
+                            .time(time)
+                            .type(MessageResponse.Type.END)
+                            .build();
                 }
         );
     }
+    public List<Map<String, Object>> getParticipantsOrderByScore() {
+        String query = "SELECT p.user_nickname, p.score " +
+                "FROM participant p " +
+                "ORDER BY p.score DESC";
 
+        return jdbcTemplate.queryForList(query);
+    }
     public Map<String, String> getQuestion(String roomID) {
         log.info("roomId = {}", roomID);
         Query query = new Query(Criteria.where("room_id").is(roomID));
