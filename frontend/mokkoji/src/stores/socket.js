@@ -50,7 +50,9 @@ export const useWebSocketStore = defineStore(
           switch (messageObject.type) {
             case "CHAT":
               // CHAT 유형의 메시지 처리
-              // if (messageObject){}
+              if (messageObject.corrects) {
+                getTHEME();
+              }
               store.addChat(messageObject);
               break;
             case "START":
@@ -64,12 +66,17 @@ export const useWebSocketStore = defineStore(
               roomstore.getplayer(roomId.value);
               break;
             case "THEME":
-              console.log(messageObject);
+              // console.log(messageObject);
+              const words = messageObject.content.split(" ");
+              usegamestore.answers = words[words.length - 1];
               break;
             case "OWNER":
-              console.log(messageObject);
+              // console.log(messageObject);
               roomexplosion.value = messageObject.corrects;
               console.log(roomexplosion.value);
+              break;
+            case "SUCCESS":
+              console.log(messageObject);
               break;
             // case "TURN":
             //   // TURN 유형의 메시지 처리

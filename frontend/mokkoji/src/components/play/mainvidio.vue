@@ -5,7 +5,7 @@
       v-if="gameStore.showAd && nowuser?.clientData === playername"
       class="gamename"
     >
-      제시어: {{ gameStore.category }}
+      제시어: {{ gameStore.answers }}
     </h1>
     <h1
       v-if="gameStore.showAd && !(nowuser?.clientData === playername)"

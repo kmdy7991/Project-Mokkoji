@@ -56,8 +56,8 @@ export const useGameStore = defineStore(
     };
     const gameStart = async (roomId) => {
       nowcountdown.value = true;
+      getcategory(roomId);
       const numroomId = Number(roomId);
-      console.log(typeof numroomId);
       roomstore.getplayer(numroomId);
       axios({
         method: "get",
@@ -69,7 +69,6 @@ export const useGameStore = defineStore(
         .catch((err) => {
           console.error("게임 시작 요청 에러:", err);
         });
-      getcategory(roomId);
       start.value = true;
       countdown.value = 5;
       nowcountdown.value = true;
@@ -92,12 +91,13 @@ export const useGameStore = defineStore(
       setTimeout(() => {
         showAd.value = true;
         nowcountdown.value = false;
+        socketstore.getTHEME();
         updateParticipant(roomId); // 첫 참가자 시작
       }, 3000); // 프론트 만 접속시
     }
 
     function updateParticipant(roomId) {
-      if (roomstore.players.length > nowIndex.value) {
+      if (combinedParticipants.value.length > nowIndex.value) {
         const nowplay = roomstore.players[nowIndex.value].user_nickname;
         let foundIndex = -1;
         for (let i = 0; i < combinedParticipants.value.length; i++) {
@@ -116,7 +116,7 @@ export const useGameStore = defineStore(
               // 다음 참가자로 넘어가거나 게임 종료 처리
               nowParticipant.value = "";
               nowIndex.value++;
-              getcategory(roomId);
+              socketstore.getTHEME();
               updateParticipant(roomId);
             }, 3000); // 3초동안 정지
           }, 120000);
