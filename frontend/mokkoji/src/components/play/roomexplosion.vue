@@ -1,23 +1,8 @@
 <template>
   <div class="result">
     <div class="roading">
-      <div class="gameresult">게임 결과</div>
-      <div class="rankinginfo">
-        <div class="rank">게임 순위</div>
-        <div class="nickname">별명</div>
-        <div class="rankingpoint">승점</div>
-      </div>
-      <div
-        class="rankinginfo"
-        v-for="(rank, index) in adjustedRanks"
-        :key="index"
-      >
-        <div class="rank">{{ index + 1 }}</div>
-        <div class="nickname">{{ rank.nickname || "" }}</div>
-        <div class="rankingpoint">{{ rank.point || "" }}</div>
-      </div>
+      <div class="rankinginfo">방장이 나가 자동으로 대기실로 이동됩니다.</div>
       <div class="buttons">
-        <button class="button" @click="close">한번더!</button>
         <button class="button" @click="gameout()">
           나가기 {{ countdown }}
         </button>
@@ -47,12 +32,6 @@ const roomstore = useRoomStore();
 const countdown = ref(7); // 카운트다운 시작 숫자
 let countdownInterval;
 
-const ranks = ref([
-  { nickname: "누구", point: 50 },
-  { nickname: "나두", point: 20 },
-  { nickname: "궁금", point: -50 },
-]);
-
 // onMounted(() => {
 //   countdownInterval = setInterval(() => {
 //     countdown.value--;
@@ -74,30 +53,32 @@ const adjustedRanks = computed(() => {
   return filledArray;
 });
 
-// function close() {
-//   usegamestore.gameout();
-//   clearInterval(countdownInterval);
-// }
+function close() {
+  usegamestore.gameout();
+  clearInterval(countdownInterval);
+}
 
-// const gameout = () => {
-//   clearInterval(countdownInterval);
+const gameout = () => {
+  clearInterval(countdownInterval);
+  store.roomexplosion = true;
+  console.log(store.roomexplosion);
+  const payload = {
+    roomId: Number(roomId),
+    nickname: userstore.myName,
+  };
+  usegamestore.gameout();
+  store.disconnectWebSocket();
+  vidustore.leaveSession();
+  session.value = vidustore.session;
+  roomstore.getRoomlist();
+  roomstore.exitRoom(payload);
 
-//   const payload = {
-//     roomId: Number(roomId),
-//     nickname: userstore.myName,
-//   };
-//   usegamestore.gameout();
-//   store.disconnectWebSocket();
-//   vidustore.leaveSession();
-//   session.value = vidustore.session;
-//   roomstore.getRoomlist();
-//   roomstore.exitRoom(payload);
-//   if (userstore.Auth === true) {
-//     router.replace({ name: "Auth" });
-//   } else {
-//     router.replace({ name: "waitRoom" });
-//   }
-// }; // 비동기 처리가 필요한 함수라고 가정
+  if (userstore.Auth === true) {
+    router.replace({ name: "Auth" });
+  } else {
+    router.replace({ name: "waitRoom" });
+  }
+}; // 비동기 처리가 필요한 함수라고 가정
 // 페이지 전환은 모든 비동기 작업이 완료된 후 실행
 </script>
 
@@ -121,55 +102,31 @@ const adjustedRanks = computed(() => {
   align-items: center;
   flex-direction: column;
   width: 80%;
-  height: 80%;
+  height: 30%;
   background-color: rgba(255, 255, 255, 0.5);
   font-size: 48px;
   font-family: "DOSMyungjo";
 }
 
-.gameresult {
-  margin: 3% 5%;
-  width: 90%;
-  height: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .rankinginfo {
   width: 80%;
+  margin-top: 5%;
   margin-bottom: 2%;
   display: flex;
-}
-
-.rank {
-  width: 25%;
-  display: flex;
   justify-content: center;
 }
 
-.nickname {
-  width: 45%;
-  display: flex;
-  justify-content: center;
-}
-
-.rankingpoint {
-  width: 30%;
-  display: flex;
-  justify-content: center;
-}
 .buttons {
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 50%;
   justify-content: center;
   align-items: center;
 }
 
 .button {
   width: 15%;
-  height: 70%;
+  height: 50%;
   margin: 0% 10%;
   border-radius: 10px;
   border: none;

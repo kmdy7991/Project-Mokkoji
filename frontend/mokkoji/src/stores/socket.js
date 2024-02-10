@@ -62,11 +62,15 @@ export const useWebSocketStore = defineStore(
             case "ENTER":
               store.addChat(messageObject);
               roomstore.getplayer(roomId.value);
+              break;
             case "THEME":
               console.log(messageObject);
+              break;
             case "OWNER":
               console.log(messageObject);
               roomexplosion.value = messageObject.corrects;
+              console.log(roomexplosion.value);
+              break;
             // case "TURN":
             //   // TURN 유형의 메시지 처리
             //   console.log("차례가 변경되었습니다.");
@@ -142,6 +146,7 @@ export const useWebSocketStore = defineStore(
       sock,
       stomp,
       roomId,
+      roomexplosion,
       initializeWebSocket,
       subscribeToRoom,
       sendMessage,

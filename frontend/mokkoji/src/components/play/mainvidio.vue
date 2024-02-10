@@ -51,6 +51,9 @@
     <div v-if="gameStore.gameresult">
       <result />
     </div>
+    <div v-if="!gameStore.start && !usesocketstore.roomexplosion">
+      <roomexplosion />
+    </div>
   </div>
 </template>
 
@@ -65,6 +68,7 @@ import { useWebSocketStore } from "@/stores/socket";
 import fullVidio from "./fullVidio.vue";
 import resultloading from "./resultloading.vue";
 import result from "./result.vue";
+import roomexplosion from "./roomexplosion.vue";
 
 const route = useRoute();
 const roomId = route.params.id;
