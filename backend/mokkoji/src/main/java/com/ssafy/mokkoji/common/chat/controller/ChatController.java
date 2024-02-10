@@ -121,19 +121,19 @@ public class ChatController {
                             builder()
                             .roomId(messageDto.getRoomId())
                             .userNickname(messageDto.getUserNickname())
-                            .userList(getParticipantsOrderByScore())
+                            .userList(getParticipantsOrderByScore(Integer.parseInt(messageDto.getRoomId())))
                             .time(time)
                             .type(MessageResponse.Type.END)
                             .build();
                 }
         );
     }
-    public List<Map<String, Object>> getParticipantsOrderByScore() {
+    public List<Map<String, Object>> getParticipantsOrderByScore(int roomID) {
         String query = "SELECT p.user_nickname, p.score " +
-                "FROM participant p " +
+                "FROM participant p WHERE room_id = ?" +
                 "ORDER BY p.score DESC";
 
-        return jdbcTemplate.queryForList(query);
+        return jdbcTemplate.queryForList(query, roomID);
     }
     public String getQuestion(int roomID) {
         log.info("roomId = {}", roomID);
