@@ -37,26 +37,16 @@ public class ChatController {
     @MessageMapping("/{roomId}")
     public void receive(MessageDto messageDto) {
         log.info("get Message {}", messageDto);
-        String answer = "";
-        String content = "";
         boolean ans = false;
         List<Map<String, Object>> part = null;
-        Map<String, String> responseMap = null;
 
-//        if (messageDto.getType() == MessageDto.Type.THEME) {
-//            responseMap = getQuestion(Integer.parseInt(messageDto.getRoomId()));
-//            System.out.println("responseMap" + responseMap);
-//            if (responseMap != null &&!responseMap.isEmpty()) {
-//                content = responseMap.get("subject") + responseMap.get("selectedElement");
-//                answer = responseMap.get("selectedElement");
-//            }
-//            System.out.println("content" + content);
-//        }
-
-        if (!answer.isEmpty()){
-            ans = findWord(answer,messageDto.getContent()); // true 정답 false 오답
+// 정답 확인
+        if (messageDto.getType() == MessageDto.Type.CHAT) {
+            if (!messageDto.getContent().isEmpty() && messageDto.getContent() != null && getWord(Integer.parseInt(messageDto.getRoomId())) != null) {
+                System.out.println("정답매칭시작");
+                ans = findWord(getWord(Integer.parseInt(messageDto.getRoomId())), messageDto.getContent()); // true 정답 false 오답
+            }
         }
-
 
 //  게임 끝났을 때 순위 판별
         if (messageDto.getType() == MessageDto.Type.END){
@@ -66,11 +56,10 @@ public class ChatController {
         String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
         // 정답 맞춤 스코어 1 증가 및 성공했다는 메세지와 새로운 주제 보내줌
         if (ans){
-            String query = "UPDATE participant " +
-                    "SET score = score + 1 " +
-                    "WHERE room_id = ? AND user_nickname = ?";
-            jdbcTemplate.update(query, messageDto.getRoomId() , messageDto.getUserNickname());
-
+//            String query = "UPDATE participant " +
+//                    "SET score = score + 1 " +
+//                    "WHERE room_id = ? AND user_nickname = ?";
+//            jdbcTemplate.update(query, messageDto.getRoomId() , messageDto.getUserNickname());
             MessageResponse successMessage = MessageResponse.builder()
                     .roomId(messageDto.getRoomId())
                     .userNickname(messageDto.getUserNickname())
@@ -84,7 +73,7 @@ public class ChatController {
                     builder().
                     roomId(messageDto.getRoomId())
                     .userNickname(messageDto.getUserNickname())
-                    .content(content)
+                    .content(getQuestion(Integer.parseInt(messageDto.getRoomId())))
                     .time(time)
                     .type(MessageResponse.Type.THEME)
                     .build();
@@ -178,15 +167,24 @@ public class ChatController {
             mongoTemplate.save(document);
             // 선택된 요소를 리스트에서 제거
             elements.remove(selectedElement);
-
+            String tmp = subject +" "+ selectedElement;
             // MongoDB에서 선택된 요소를 제거
             Update update = new Update().pull("elements", selectedElement);
             mongoTemplate.updateFirst(query, update, TalkBodyInGame.class);
-            return selectedElement;
+            return tmp;
         }
         return null;
     }
 
+    public String getWord(int roomID){
+        Query query = new Query(Criteria.where("room_id").is(roomID));
+        List<TalkBodyInGame> result = mongoTemplate.find(query, TalkBodyInGame.class);
+        if (!result.isEmpty()) {
+            TalkBodyInGame document = result.get(0);
+            return document.getElement();
+        }
+        return "없어";
+    }
     // 게임 정답 맞추는 알고리즘
     static boolean findWord(String origin, String find) {
         int originIndex;
