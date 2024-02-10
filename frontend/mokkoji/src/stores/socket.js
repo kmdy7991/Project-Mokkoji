@@ -68,6 +68,7 @@ export const useWebSocketStore = defineStore(
             case "THEME":
               // console.log(messageObject);
               const words = messageObject.content.split(" ");
+              usegamestore.category = words[0];
               usegamestore.answers = words[words.length - 1];
               break;
             case "OWNER":
