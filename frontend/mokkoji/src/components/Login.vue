@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRoomStore } from "@/stores/room";
 import { useRouter } from "vue-router";
 import { userStore } from "@/stores/user";
@@ -41,6 +41,10 @@ const showModal = ref(false);
 const toggleModal = () => {
   showModal.value = !showModal.value;
 };
+
+onMounted(() => {
+  username.value = "";
+});
 
 const isValidUsername = (name) => {
   // 영어, 한글, 숫자만을 허용하는 정규표현식

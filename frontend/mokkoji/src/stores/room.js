@@ -8,7 +8,7 @@ import { useRouter } from "vue-router";
 export const useRoomStore = defineStore(
   "room",
   () => {
-    const API_URL = `http://192.168.31.58:8080`; // 로컬단 서버로 올릴시 수정할것! http://192.168.31.58:8080 예진님 코드
+    const API_URL = import.meta.env.VITE_APP_API_URL; // 로컬단 서버로 올릴시 수정할것! http://192.168.31.58:8080 예진님 코드
     const store = userStore();
     const router = useRouter();
     const name = store.myName;
@@ -17,6 +17,7 @@ export const useRoomStore = defineStore(
     const owner = ref("");
     const players = ref([]);
     const roomId = ref();
+    const roomname = ref("");
     const prevRoomlistLength = ref(Roomlist.value.length);
     const preplayers = ref(players.value.length);
     const worngPassWord = ref(false);
@@ -70,6 +71,7 @@ export const useRoomStore = defineStore(
       })
         .then((res) => {
           // console.log(res.data, "방 생성됨");
+          roomname.value = res.data.room_name;
           owner.value = res.data.owner;
           roomId.value = res.data.room_id;
           const createdRoomId = String(res.data.room_id);
@@ -77,7 +79,12 @@ export const useRoomStore = defineStore(
             roomId: createdRoomId,
           };
           vidustore.joinSession(payload);
-          router.replace({ path: `/TalkBody/${createdRoomId}` });
+          router.replace({
+            path: `/TalkBody/${createdRoomId}`,
+            query: {
+              roomName: roomname.value,
+            },
+          });
         })
         .catch((err) => {
           console.log(err, "방 create request 오류");
@@ -91,9 +98,10 @@ export const useRoomStore = defineStore(
         url: `${API_URL}/api/room/enter/${roomIdNumber}/${name}`,
       })
         .then((res) => {
-          // console.log(res.data, "게임방 입장"); 테스트 완료
+          console.log(res.data, "게임방 입장"); //테스트 완료
           // console.log(res.data.participants);
           players.value = res.data.participants;
+          roomname.value = res.data.room.room_name;
           roomIdNumber = String(roomIdNumber);
           const payload = {
             roomId: roomIdNumber,
@@ -102,7 +110,12 @@ export const useRoomStore = defineStore(
           // console.log(res.data.room.owner);
           console.log(owner.value);
           vidustore.joinSession(payload);
-          router.replace({ path: `/TalkBody/${roomIdNumber}` }); // entranceRoom  함수에서 받아올 예정
+          router.replace({
+            path: `/TalkBody/${roomIdNumber}`,
+            query: {
+              roomName: roomname.value,
+            },
+          }); // entranceRoom  함수에서 받아올 예정
         })
         .catch((err) => {
           // console.log(err);

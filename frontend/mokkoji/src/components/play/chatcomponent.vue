@@ -5,7 +5,7 @@
         <p>{{ roomId }}</p>
       </div>
       <div class="room-name">
-        <p>...</p>
+        <p>{{ roomName }}</p>
       </div>
     </div>
     <div class="chatting-area">
@@ -34,6 +34,7 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 const roomId = route.params.id;
+const roomName = ref("");
 const props = defineProps({
   roomId: String,
 });
@@ -46,6 +47,7 @@ const roomIdRef = ref(props.roomId);
 // 서버로 메시지 보내는 함
 
 onMounted(() => {
+  roomName.value = route.query.roomName;
   store.setRoomId(roomId);
   store.clearChats(); // 채팅방에 들어올 때 이전 채팅 내용을 초기화
   webSocketStore.initializeWebSocket(roomId);

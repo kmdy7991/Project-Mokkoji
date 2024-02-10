@@ -17,8 +17,9 @@ export const useWebSocketStore = defineStore(
     const sock = ref(null);
     const stomp = ref(null);
     const roomId = ref(null);
+    const roomexplosion = ref(true);
     const myName = userstore.myName;
-    const API_URL = `http://192.168.31.58:8080`;
+    const API_URL = import.meta.env.VITE_APP_API_URL;
 
     const initializeWebSocket = (newRoomId) => {
       roomId.value = newRoomId;
@@ -63,8 +64,9 @@ export const useWebSocketStore = defineStore(
               roomstore.getplayer(roomId.value);
             case "THEME":
               console.log(messageObject);
-            // case "OWNER":
-            //   console.log(messageObject);
+            case "OWNER":
+              console.log(messageObject);
+              roomexplosion.value = messageObject.corrects;
             // case "TURN":
             //   // TURN 유형의 메시지 처리
             //   console.log("차례가 변경되었습니다.");
@@ -140,7 +142,6 @@ export const useWebSocketStore = defineStore(
       sock,
       stomp,
       roomId,
-      myName,
       initializeWebSocket,
       subscribeToRoom,
       sendMessage,

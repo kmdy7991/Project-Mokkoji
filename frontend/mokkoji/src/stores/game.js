@@ -8,7 +8,7 @@ import axios from "axios";
 export const useGameStore = defineStore(
   "game",
   () => {
-    const API_URL = `http://192.168.31.58:8080`; // 로컬단 서버로 올릴시 수정할것!
+    const API_URL = import.meta.env.VITE_APP_API_URL; // 로컬단 서버로 올릴시 수정할것!
     const start = ref(false);
     const nowcountdown = ref(false);
     const countdown = ref(5);
@@ -169,6 +169,7 @@ export const useGameStore = defineStore(
       start.value = false;
       gameend.value = false;
       gameresult.value = false;
+      nowcountdown.value = false;
       countdown.value = 5;
       countdown2.value = 3;
       showAd.value = false;

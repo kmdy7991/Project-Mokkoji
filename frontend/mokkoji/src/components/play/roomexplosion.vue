@@ -53,14 +53,14 @@ const ranks = ref([
   { nickname: "궁금", point: -50 },
 ]);
 
-onMounted(() => {
-  countdownInterval = setInterval(() => {
-    countdown.value--;
-    if (countdown.value === 0) {
-      gameout(); // 카운트다운이 0에 도달하면 gameout 함수 실행
-    }
-  }, 1000);
-});
+// onMounted(() => {
+//   countdownInterval = setInterval(() => {
+//     countdown.value--;
+//     if (countdown.value === 0) {
+//       gameout(); // 카운트다운이 0에 도달하면 gameout 함수 실행
+//     }
+//   }, 1000);
+// });
 
 onUnmounted(() => {
   clearInterval(countdownInterval); // 컴포넌트 언마운트 시 인터벌 정리
@@ -74,30 +74,30 @@ const adjustedRanks = computed(() => {
   return filledArray;
 });
 
-function close() {
-  usegamestore.gameout();
-  clearInterval(countdownInterval);
-}
+// function close() {
+//   usegamestore.gameout();
+//   clearInterval(countdownInterval);
+// }
 
-const gameout = () => {
-  clearInterval(countdownInterval);
+// const gameout = () => {
+//   clearInterval(countdownInterval);
 
-  const payload = {
-    roomId: Number(roomId),
-    nickname: userstore.myName,
-  };
-  usegamestore.gameout();
-  store.disconnectWebSocket();
-  vidustore.leaveSession();
-  session.value = vidustore.session;
-  roomstore.getRoomlist();
-  roomstore.exitRoom(payload);
-  if (userstore.Auth === true) {
-    router.replace({ name: "Auth" });
-  } else {
-    router.replace({ name: "waitRoom" });
-  }
-}; // 비동기 처리가 필요한 함수라고 가정
+//   const payload = {
+//     roomId: Number(roomId),
+//     nickname: userstore.myName,
+//   };
+//   usegamestore.gameout();
+//   store.disconnectWebSocket();
+//   vidustore.leaveSession();
+//   session.value = vidustore.session;
+//   roomstore.getRoomlist();
+//   roomstore.exitRoom(payload);
+//   if (userstore.Auth === true) {
+//     router.replace({ name: "Auth" });
+//   } else {
+//     router.replace({ name: "waitRoom" });
+//   }
+// }; // 비동기 처리가 필요한 함수라고 가정
 // 페이지 전환은 모든 비동기 작업이 완료된 후 실행
 </script>
 

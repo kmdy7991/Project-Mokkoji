@@ -6,12 +6,13 @@ import axios from "axios";
 export const userStore = defineStore(
   "user",
   () => {
-    const API_URL = `http://192.168.31.58:8080`; //http://192.168.31.42:8080 대영이 로컬 호스트 주소
+    const API_URL = import.meta.env.VITE_APP_API_URL; //http://192.168.31.42:8080 대영이 로컬 호스트 주소
     const myName = ref("");
     const router = useRouter();
     const Auth = ref(false);
     const double = ref(false);
     const createuser = () => {
+      console.log(API_URL);
       axios({
         method: "get",
         url: `${API_URL}/api/guest/register/${myName.value}`,
