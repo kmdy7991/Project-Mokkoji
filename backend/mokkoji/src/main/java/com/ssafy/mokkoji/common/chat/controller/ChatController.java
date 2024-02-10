@@ -41,14 +41,17 @@ public class ChatController {
         String content = "";
         boolean ans = false;
         List<Map<String, Object>> part = null;
-        if (messageDto.getType() == MessageDto.Type.THEME) {
-            Map<String, String> responseMap = getQuestion(messageDto.getRoomId());
+        Map<String, String> responseMap = null;
 
-            if (!responseMap.isEmpty()) {
-                content = responseMap.get("subject") + responseMap.get("selectedElement");
-                answer = responseMap.get("selectedElement");
-            }
-        }
+//        if (messageDto.getType() == MessageDto.Type.THEME) {
+//            responseMap = getQuestion(Integer.parseInt(messageDto.getRoomId()));
+//            System.out.println("responseMap" + responseMap);
+//            if (responseMap != null &&!responseMap.isEmpty()) {
+//                content = responseMap.get("subject") + responseMap.get("selectedElement");
+//                answer = responseMap.get("selectedElement");
+//            }
+//            System.out.println("content" + content);
+//        }
 
         if (!answer.isEmpty()){
             ans = findWord(answer,messageDto.getContent()); // true 정답 false 오답
@@ -118,7 +121,7 @@ public class ChatController {
                             builder().
                             roomId(messageDto.getRoomId())
                             .userNickname(messageDto.getUserNickname())
-                            .content(content)
+                            .content(getQuestion(Integer.parseInt(messageDto.getRoomId())))
                             .time(time)
                             .type(MessageResponse.Type.THEME)
                             .build();
@@ -149,11 +152,12 @@ public class ChatController {
 
         return jdbcTemplate.queryForList(query);
     }
-    public Map<String, String> getQuestion(String roomID) {
+    public String getQuestion(int roomID) {
         log.info("roomId = {}", roomID);
         Query query = new Query(Criteria.where("room_id").is(roomID));
         List<TalkBodyInGame> result = mongoTemplate.find(query, TalkBodyInGame.class);
-
+        System.out.println("debug"+result);
+        System.out.println(query);
         // result에는 해당 room_id에 대한 문서가 포함된다.
         // 그 중에서 subject와 elements를 가져와서 사용하면 된다.
         if (!result.isEmpty()) {
@@ -178,7 +182,7 @@ public class ChatController {
             // MongoDB에서 선택된 요소를 제거
             Update update = new Update().pull("elements", selectedElement);
             mongoTemplate.updateFirst(query, update, TalkBodyInGame.class);
-            return responseMap;
+            return selectedElement;
         }
         return null;
     }
