@@ -109,7 +109,6 @@ watch(
 );
 
 const gamestart = () => {
-  console.log(typeof roomId);
   usesocketstore.gameStart();
 };
 

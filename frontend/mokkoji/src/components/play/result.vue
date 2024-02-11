@@ -79,7 +79,6 @@ onUnmounted(() => {
 
 const adjustedRanks = computed(() => {
   const filledArray = result.slice(); // ranks 배열 복사
-  console.log(filledArray + `97875464564`);
   for (let i = filledArray.length; i < 6; i++) {
     filledArray.push({}); // 빈 객체를 추가하여 길이를 6으로 맞춤
   }

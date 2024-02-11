@@ -162,8 +162,6 @@ export const useRoomStore = defineStore(
 
     const exitRoom = function (payload) {
       const { roomId, nickname } = payload;
-      console.log(typeof payload.roomId);
-      console.log(payload.nickname);
       axios({
         method: "delete",
         url: `${API_URL}/api/room/delete/${payload.roomId}/${payload.nickname}`,
