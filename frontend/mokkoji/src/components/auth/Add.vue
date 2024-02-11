@@ -9,47 +9,60 @@
       <div class="word">
         <div class="category">
           <div class="categoryvalue">
-            <div class="center">
-              카테고리
-            </div>
+            <div class="center">카테고리</div>
           </div>
           <div class="categoryselect">
-            <select class="toggledown">
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
+            <select class="toggledown" v-model="subject">
+              <option v-for="category in store.categorylist" class="wordinput">
+                {{ category }}
+              </option>
               <!-- 여기에 더 많은 옵션을 추가할 수 있습니다. -->
             </select>
           </div>
         </div>
         <div class="category">
           <div class="categoryvalue">
-            <div class="center">
-              제시어
-            </div>
+            <div class="center">제시어</div>
           </div>
           <div class="categoryselect">
-            <input class="wordinput" type="text">
+            <input class="wordinput" type="text" v-model="word" />
           </div>
         </div>
       </div>
     </div>
     <div class="addbutton">
-      <button>
-        추가
-      </button>
+      <button @click="subjectplus">추가</button>
     </div>
   </div>
 </template>
 
 <script setup>
 import { defineProps, defineEmits } from "vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useAuthStore } from "@/stores/auth";
 
+const store = useAuthStore();
+const subject = ref("");
+const word = ref("");
+console.log(subject.value);
+
+onMounted(() => {
+  store.getcategory();
+});
 const emit = defineEmits(["close"]);
 
 const goBack = () => {
   emit("close");
+};
+
+const subjectplus = () => {
+  const payload = {
+    subject: subject.value,
+    word: word.value,
+  };
+  store.plussubject(payload);
+  console.log(subject.value);
+  console.log(word.value);
 };
 </script>
 
@@ -90,40 +103,41 @@ const goBack = () => {
 .select {
   display: flex;
   flex-direction: column;
-  align-content:center;
+  align-content: center;
   padding-top: 8%;
   width: 100%;
 }
 
-.word{
+.word {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.category{
+.category {
   display: flex;
   flex-direction: row;
   justify-content: center;
   width: 60%;
   height: 100px;
-  background-color: #0594E0;
+  background-color: #0594e0;
   border-radius: 15px;
   padding: 1%;
   margin-bottom: 3%;
 }
 
-.categoryvalue{
+.categoryvalue {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: center;
   width: 15%;
   height: 100%;
-  background-color: #00ACFC;
+  background-color: #00acfc;
+  border-radius: 10px;
 }
 
-.center{
+.center {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -133,28 +147,30 @@ const goBack = () => {
   font-family: "DOSMyungjo";
 }
 
-.categoryselect{
+.categoryselect {
   display: flex;
   margin-left: 5%;
   width: 80%;
   height: 100%;
-  background-color: #00ACFC;
+  border-radius: 10px;
+  background-color: #00acfc;
   position: relative;
 }
 
-.toggledown{
+.toggledown {
   margin: 1%;
   width: 80%;
   height: 85px;
   border-radius: 10px;
+  font-size: 36px;
 }
 
-.togglebutton{
+.togglebutton {
   margin: 1%;
   width: 10%;
 }
 
-.wordinput{
+.wordinput {
   margin: 1%;
   width: 80%;
   height: 80px;
@@ -163,25 +179,25 @@ const goBack = () => {
   font-size: 36px;
 }
 
-.addbutton{
+.addbutton {
   display: flex;
   justify-content: center;
   padding-bottom: 10%;
 }
 
-.addbutton > button{
+.addbutton > button {
   width: 20%;
   height: 100px;
   border-radius: 10px;
   font-size: 52px;
   font-family: "LABdigital";
   border: none;
-  background-color: #FDC909;
+  background-color: #fdc909;
   transition: background-color 0.3s ease;
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.addbutton > button:hover{
+.addbutton > button:hover {
   background-color: #fdc809bd;
 }
 </style>

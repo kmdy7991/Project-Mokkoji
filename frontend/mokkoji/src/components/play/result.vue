@@ -7,14 +7,11 @@
         <div class="nickname">별명</div>
         <div class="rankingpoint">승점</div>
       </div>
-      <div
-        class="rankinginfo"
-        v-for="(rank, index) in adjustedRanks"
-        :key="index"
-      >
-        <div class="rank">{{ index + 1 }}</div>
-        <div class="nickname">{{ rank.nickname || "" }}</div>
-        <div class="rankingpoint">{{ rank.point || "" }}</div>
+      <div class="rankinginfo">
+        {{ usegamestore.ranks }}
+        <!-- <div class="rank">{{}}</div>
+        <div class="nickname">{{ rank }}</div>
+        <div class="rankingpoint">{{ }}</div> -->
       </div>
       <div class="buttons">
         <button class="button" @click="close">한번더!</button>
@@ -27,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from "vue";
+import { ref, onMounted, onUnmounted, computed, watch } from "vue";
 import { useGameStore } from "@/stores/game";
 import { useWebSocketStore } from "@/stores/socket";
 import { useOpenViduStore } from "@/stores/openvidu";
@@ -45,13 +42,8 @@ const vidustore = useOpenViduStore();
 const userstore = userStore();
 const roomstore = useRoomStore();
 const countdown = ref(7); // 카운트다운 시작 숫자
-let countdownInterval;
 
-const ranks = ref([
-  { nickname: "누구", point: 50 },
-  { nickname: "나두", point: 20 },
-  { nickname: "궁금", point: -50 },
-]);
+let countdownInterval;
 
 onMounted(() => {
   countdownInterval = setInterval(() => {
@@ -66,13 +58,12 @@ onUnmounted(() => {
   clearInterval(countdownInterval); // 컴포넌트 언마운트 시 인터벌 정리
 });
 
-const adjustedRanks = computed(() => {
-  const filledArray = ranks.value.slice(); // ranks 배열 복사
-  for (let i = filledArray.length; i < 6; i++) {
-    filledArray.push({}); // 빈 객체를 추가하여 길이를 6으로 맞춤
-  }
-  return filledArray;
-});
+// function ensureMinimumRankItems() {
+//   while (gameresult.value.length < 6) {
+//     gameresult.value.push({}); // 빈 객체를 추가하여 길이를 6으로 맞춤
+//   }
+//   // 이 함수는 gameresult.value가 변경될 때마다 호출될 것이며, 이는 자동으로 adjustedRanks의 재계산을 유발합니다.
+// }
 
 function close() {
   usegamestore.gameout();

@@ -81,10 +81,12 @@ export const useWebSocketStore = defineStore(
             //   console.log("차례가 변경되었습니다.");
             //   // 여기에 TURN 유형에 대한 처리 로직 추가
             //   break;
-            // case "END":
-            //   // END 유형의 메시지 처리
-            //   console.log("채팅이 종료되었습니다.");
-            //   // 여기에 END 유형에 대한 처리 로직 추가
+            case "END":
+              // END 유형의 메시지 처리
+              console.log(messageObject);
+              useGameStore.ranks = messageObject.userList;
+              break;
+            // 여기에 END 유형에 대한 처리 로직 추가
             //   break;
             //   default:
             //     // 알 수 없는 메시지 유형 처리
@@ -136,6 +138,17 @@ export const useWebSocketStore = defineStore(
       );
     };
 
+    const gameEnd = () => {
+      stomp.value.send(
+        `/pub/${roomId.value}`,
+        JSON.stringify({
+          roomId: roomId.value,
+          type: "END",
+        }),
+        {}
+      );
+    };
+
     const disconnectWebSocket = () => {
       if (stomp.value && stomp.value.connected) {
         stomp.value.disconnect(() => {
@@ -157,6 +170,7 @@ export const useWebSocketStore = defineStore(
       sendMessage,
       gameStart,
       getTHEME,
+      gameEnd,
       disconnectWebSocket,
     };
   },

@@ -26,6 +26,7 @@ export const useGameStore = defineStore(
     const nowIndex = ref(0);
     const gameend = ref(false);
     const gameresult = ref(false);
+    const ranks = ref([]);
 
     const getcategory = (roomId) => {
       axios({
@@ -91,13 +92,14 @@ export const useGameStore = defineStore(
       setTimeout(() => {
         showAd.value = true;
         nowcountdown.value = false;
-        socketstore.getTHEME();
+        answers.value = "";
         updateParticipant(roomId); // 첫 참가자 시작
       }, 3000); // 프론트 만 접속시
     }
 
     function updateParticipant(roomId) {
       if (combinedParticipants.value.length > nowIndex.value) {
+        socketstore.getTHEME();
         const nowplay = roomstore.players[nowIndex.value].user_nickname;
         let foundIndex = -1;
         for (let i = 0; i < combinedParticipants.value.length; i++) {
@@ -116,10 +118,9 @@ export const useGameStore = defineStore(
               // 다음 참가자로 넘어가거나 게임 종료 처리
               nowParticipant.value = "";
               nowIndex.value++;
-              socketstore.getTHEME();
               updateParticipant(roomId);
             }, 3000); // 3초동안 정지
-          }, 120000);
+          }, 10000);
         } else {
           nowIndex.value++;
           updateParticipant(roomId);
@@ -131,6 +132,7 @@ export const useGameStore = defineStore(
     }
 
     function endGame(roomId) {
+      socketstore.gameEnd();
       gameend.value = true;
       nowParticipant.value = "";
       nowIndex.value = 0;
@@ -176,6 +178,7 @@ export const useGameStore = defineStore(
       gameend,
       gameresult,
       nowcountdown,
+      ranks,
     };
   },
   { persist: true }
