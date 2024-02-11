@@ -83,8 +83,8 @@ export const useWebSocketStore = defineStore(
             //   break;
             case "END":
               // END 유형의 메시지 처리
-              console.log(messageObject);
-              useGameStore.ranks = messageObject.userList;
+              usegamestore.ranks = messageObject.userList;
+              console.log(usegamestore.ranks);
               break;
             // 여기에 END 유형에 대한 처리 로직 추가
             //   break;

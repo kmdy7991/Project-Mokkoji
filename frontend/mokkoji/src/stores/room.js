@@ -37,7 +37,7 @@ export const useRoomStore = defineStore(
           if (err.response && err.response.status === 404) {
             console.log("방이 없습니다.");
           } else {
-            console.log(err, "방 n개 Read request 오류");
+            // console.log(err, "방 n개 Read request 오류");
             Roomlist.value = [];
           }
         });
@@ -87,7 +87,7 @@ export const useRoomStore = defineStore(
           });
         })
         .catch((err) => {
-          console.log(err, "방 create request 오류");
+          // console.log(err, "방 create request 오류");
         });
     };
 
@@ -134,7 +134,7 @@ export const useRoomStore = defineStore(
         data: data,
       })
         .then((res) => {
-          console.log(res.data, "게임방 입장");
+          // console.log(res.data, "게임방 입장");
           entranceRoom(roomId); // entranceRoom  함수에서 받아올 예정
         })
         .catch((err) => {
@@ -178,7 +178,7 @@ export const useRoomStore = defineStore(
         })
         .catch((error) => {
           // 에러 처리
-          console.log(error);
+          // console.log(error);
           console.log(`실패!`);
         });
     };

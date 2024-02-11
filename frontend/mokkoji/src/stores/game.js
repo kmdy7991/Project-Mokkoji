@@ -118,6 +118,7 @@ export const useGameStore = defineStore(
               // 다음 참가자로 넘어가거나 게임 종료 처리
               nowParticipant.value = "";
               nowIndex.value++;
+              answers.value = "";
               updateParticipant(roomId);
             }, 3000); // 3초동안 정지
           }, 10000);
@@ -127,6 +128,7 @@ export const useGameStore = defineStore(
         }
         // 게임진행 2분
       } else {
+        answers.value = "";
         endGame(roomId);
       }
     }
@@ -155,11 +157,6 @@ export const useGameStore = defineStore(
       nowParticipant.value = "";
       nowIndex.value = 0;
     };
-
-    // Vue 3 Composition API를 사용하여 mounted 시점에 로직을 실행할 수 있습니다.
-    onMounted(() => {
-      // 여기에 필요한 로직을 추가합니다.
-    });
 
     return {
       start,

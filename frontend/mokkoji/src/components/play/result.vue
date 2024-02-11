@@ -7,11 +7,18 @@
         <div class="nickname">별명</div>
         <div class="rankingpoint">승점</div>
       </div>
-      <div class="rankinginfo">
-        {{ usegamestore.ranks }}
-        <!-- <div class="rank">{{}}</div>
-        <div class="nickname">{{ rank }}</div>
-        <div class="rankingpoint">{{ }}</div> -->
+      <div
+        class="rankinginfo"
+        v-for="(rank, index) in adjustedRanks"
+        :key="index"
+      >
+        <div class="rank">{{ index + 1 }}</div>
+        <div class="nickname">{{ rank.user_nickname || "" }}</div>
+        <div class="rankingpoint">
+          {{
+            rank.score !== null && rank.score !== undefined ? rank.score : ""
+          }}
+        </div>
       </div>
       <div class="buttons">
         <button class="button" @click="close">한번더!</button>
@@ -42,8 +49,20 @@ const vidustore = useOpenViduStore();
 const userstore = userStore();
 const roomstore = useRoomStore();
 const countdown = ref(7); // 카운트다운 시작 숫자
+const result = usegamestore.ranks;
 
 let countdownInterval;
+
+watch(
+  () => usegamestore.ranks,
+  (newVal) => {
+    result = newVal;
+    adjustedRanks;
+    // 이 시점에서 gameresult가 업데이트 되었으므로,
+    // Vue의 반응성 시스템에 의해 adjustedRanks도 자동으로 업데이트됩니다.
+    // 필요한 경우 여기서 추가 로직을 수행할 수 있습니다.
+  } // 컴포넌트가 마운트될 때 즉시 실행되도록 설정
+);
 
 onMounted(() => {
   countdownInterval = setInterval(() => {
@@ -58,12 +77,14 @@ onUnmounted(() => {
   clearInterval(countdownInterval); // 컴포넌트 언마운트 시 인터벌 정리
 });
 
-// function ensureMinimumRankItems() {
-//   while (gameresult.value.length < 6) {
-//     gameresult.value.push({}); // 빈 객체를 추가하여 길이를 6으로 맞춤
-//   }
-//   // 이 함수는 gameresult.value가 변경될 때마다 호출될 것이며, 이는 자동으로 adjustedRanks의 재계산을 유발합니다.
-// }
+const adjustedRanks = computed(() => {
+  const filledArray = result.slice(); // ranks 배열 복사
+  console.log(filledArray + `97875464564`);
+  for (let i = filledArray.length; i < 6; i++) {
+    filledArray.push({}); // 빈 객체를 추가하여 길이를 6으로 맞춤
+  }
+  return filledArray;
+});
 
 function close() {
   usegamestore.gameout();
