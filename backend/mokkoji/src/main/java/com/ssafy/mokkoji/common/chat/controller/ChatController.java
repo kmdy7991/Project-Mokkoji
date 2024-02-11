@@ -130,7 +130,7 @@ public class ChatController {
     }
     public List<Map<String, Object>> getParticipantsOrderByScore(int roomID) {
         String query = "SELECT p.user_nickname, p.score " +
-                "FROM participant p WHERE room_id = ?" +
+                "FROM participant p WHERE room_id = ? " +
                 "ORDER BY p.score DESC";
 
         return jdbcTemplate.queryForList(query, roomID);
