@@ -43,7 +43,7 @@ public class ChatController {
         if (messageDto.getType() == MessageDto.Type.CHAT) {
             if (!messageDto.getContent().isEmpty() && messageDto.getContent() != null && getWord(Integer.parseInt(messageDto.getRoomId())) != null) {
                 System.out.println("정답매칭시작");
-                ans = findWord(getWord(Integer.parseInt(messageDto.getRoomId())), messageDto.getContent()); // true 정답 false 오답
+                ans = findWord(messageDto.getContent(),getWord(Integer.parseInt(messageDto.getRoomId()))); // true 정답 false 오답
             }
         }
 
@@ -73,6 +73,9 @@ public class ChatController {
                     .build();
             chatService.sendMessage(themeMessage);
         }
+
+
+
         chatService.sendMessage(
                 switch (messageDto.getType()) {
                     case ENTER -> MessageResponse.
@@ -127,7 +130,13 @@ public class ChatController {
                             .build();
                 }
         );
+
+        if(messageDto.getType() == MessageDto.Type.START){
+            int n = endChangeZero(Integer.parseInt(messageDto.getRoomId()));
+            System.out.println(n);
+        }
     }
+
     public List<Map<String, Object>> getParticipantsOrderByScore(int roomID) {
         String query = "SELECT p.user_nickname, p.score " +
                 "FROM participant p WHERE room_id = ? " +
@@ -216,5 +225,10 @@ public class ChatController {
             originIndex += (table[origin.charAt(originIndex)] > findLen - findIndex) ? table[origin.charAt(originIndex)] : findLen - findIndex;
         }
         return false;
+    }
+
+    public int endChangeZero(int roomID){
+        String query = "UPDATE participant set score = 0 where room_id = ?";
+        return jdbcTemplate.update(query, roomID);
     }
 }
