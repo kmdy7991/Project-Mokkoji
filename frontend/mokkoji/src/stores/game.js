@@ -104,7 +104,8 @@ export const useGameStore = defineStore(
         let foundIndex = -1;
         for (let i = 0; i < combinedParticipants.value.length; i++) {
           const nowPart = combinedParticipants.value[i];
-          const clientdata = JSON.parse(nowPart.session.connection.data);
+          console.log(nowPart.stream.connection.data);
+          const clientdata = JSON.parse(nowPart.stream.connection.data);
           const client = clientdata.clientData;
           if (nowplay == client) {
             foundIndex = i; // 일치하는 인덱스 저장

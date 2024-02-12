@@ -96,6 +96,7 @@ export const useRoomStore = defineStore(
         url: `${API_URL}/api/room/enter/${roomIdNumber}/${store.myName}`,
       })
         .then((res) => {
+          console.log(res);
           console.log(res.data, "게임방 입장"); //테스트 완료
           // console.log(res.data.participants);
           players.value = res.data.participants;
