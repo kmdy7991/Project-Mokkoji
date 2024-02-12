@@ -53,7 +53,7 @@ export const useOpenViduStore = defineStore(
       // 4) Connect to the session with a valid user token
       getToken(payload.roomId).then((token) => {
         session.value
-          .connect(token, { clientData: myUserName })
+          .connect(token, { clientData: store.myName })
           .then(() => {
             // 5) Get your own camera stream with the desired properties
             let newPublisher = OV.value.initPublisher(undefined, {

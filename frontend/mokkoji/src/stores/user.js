@@ -12,7 +12,6 @@ export const userStore = defineStore(
     const Auth = ref(false);
     const double = ref(false);
     const createuser = () => {
-      // console.log(API_URL);
       axios({
         method: "get",
         url: `${API_URL}/api/guest/register/${myName.value}`,

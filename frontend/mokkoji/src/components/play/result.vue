@@ -49,14 +49,14 @@ const vidustore = useOpenViduStore();
 const userstore = userStore();
 const roomstore = useRoomStore();
 const countdown = ref(7); // 카운트다운 시작 숫자
-const result = usegamestore.ranks;
+const result = ref(usegamestore.ranks);
 
 let countdownInterval;
 
 watch(
   () => usegamestore.ranks,
   (newVal) => {
-    result = newVal;
+    result.value = newVal;
     adjustedRanks;
     // 이 시점에서 gameresult가 업데이트 되었으므로,
     // Vue의 반응성 시스템에 의해 adjustedRanks도 자동으로 업데이트됩니다.
@@ -78,7 +78,7 @@ onUnmounted(() => {
 });
 
 const adjustedRanks = computed(() => {
-  const filledArray = result.slice(); // ranks 배열 복사
+  const filledArray = result.value.slice(); // ranks 배열 복사
   for (let i = filledArray.length; i < 6; i++) {
     filledArray.push({}); // 빈 객체를 추가하여 길이를 6으로 맞춤
   }
@@ -102,8 +102,8 @@ const gameout = () => {
   store.disconnectWebSocket();
   vidustore.leaveSession();
   session.value = vidustore.session;
-  roomstore.getRoomlist();
   roomstore.exitRoom(payload);
+  roomstore.getRoomlist();
   if (userstore.Auth === true) {
     router.replace({ name: "Auth" });
   } else {

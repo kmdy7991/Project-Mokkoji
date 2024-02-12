@@ -18,14 +18,13 @@ export const useWebSocketStore = defineStore(
     const stomp = ref(null);
     const roomId = ref(null);
     const roomexplosion = ref(true);
-    const myName = userstore.myName;
     const API_URL = import.meta.env.VITE_APP_API_URL;
 
     const initializeWebSocket = (newRoomId) => {
       roomId.value = newRoomId;
       sock.value = new sockJs(`${API_URL}/chat`);
       stomp.value = Stomp.over(sock.value);
-      stomp.value.debug = () => {};
+      // stomp.value.debug = () => {}; 모든 작업 완료후 주석 해제 할것.
 
       stomp.value.connect({}, (frame) => {
         console.log("Connected: " + frame);
@@ -35,7 +34,7 @@ export const useWebSocketStore = defineStore(
           JSON.stringify({
             roomId: roomId.value,
             type: "ENTER",
-            user_nickname: myName,
+            user_nickname: userstore.myName,
           })
         );
       });
@@ -88,7 +87,7 @@ export const useWebSocketStore = defineStore(
       }
       const messageObject = {
         roomId: roomId.value,
-        user_nickname: myName,
+        user_nickname: userstore.myName,
         content: inputChat,
         type: "CHAT",
       };

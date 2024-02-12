@@ -1,16 +1,10 @@
 <template>
   <div class="container">
     <h1 v-if="!gameStore.showAd" class="gamename">몸으로 말해요</h1>
-    <h1
-      v-if="gameStore.showAd && nowuser?.clientData === playername"
-      class="gamename"
-    >
+    <h1 v-if="gameStore.showAd && nowplayer" class="gamename">
       제시어: {{ gameStore.answers }}
     </h1>
-    <h1
-      v-if="gameStore.showAd && !(nowuser?.clientData === playername)"
-      class="gamename"
-    >
+    <h1 v-if="gameStore.showAd && !nowplayer" class="gamename">
       카테고리: {{ gameStore.category }}
     </h1>
     <div class="mainvidio">
@@ -84,6 +78,7 @@ const nowkey = ref();
 const nowuserjson = ref();
 const nowuser = ref();
 const roomowner = roomStore.owner === userstore.myName;
+const nowplayer = computed(() => nowuser.value?.clientData === playername);
 
 // console.log(roomStore.owner);
 // console.log(userstore.myName);

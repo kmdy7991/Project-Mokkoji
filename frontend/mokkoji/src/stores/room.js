@@ -11,7 +11,6 @@ export const useRoomStore = defineStore(
     const API_URL = import.meta.env.VITE_APP_API_URL; // 로컬단 서버로 올릴시 수정할것! http://192.168.31.58:8080 예진님 코드
     const store = userStore();
     const router = useRouter();
-    const name = store.myName;
     const vidustore = useOpenViduStore();
     const Roomlist = ref([]);
     const owner = ref("");
@@ -54,7 +53,6 @@ export const useRoomStore = defineStore(
 
     const createRoom = function (payload) {
       const { room_name, room_password, _private, game_type } = payload;
-
       const jsonData = {
         room_name: payload.room_name,
         room_password: payload.room_password,
@@ -95,7 +93,7 @@ export const useRoomStore = defineStore(
       roomId.value = roomIdNumber;
       axios({
         method: "get",
-        url: `${API_URL}/api/room/enter/${roomIdNumber}/${name}`,
+        url: `${API_URL}/api/room/enter/${roomIdNumber}/${store.myName}`,
       })
         .then((res) => {
           console.log(res.data, "게임방 입장"); //테스트 완료

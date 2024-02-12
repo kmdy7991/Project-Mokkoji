@@ -56,8 +56,9 @@ const containsProfanity = (name) => {
   return profanities.some((profanity) => name.value.includes(profanity));
 };
 
-const goToAuthView = () => {
+async function goToAuthView() {
   username.value = "mokko" + Math.floor(Math.random() * 10000);
+  await new Promise((resolve) => setTimeout(resolve, 100));
   store.myName = username.value;
   specialChar.value = false;
   fuckword.value = false;
@@ -79,10 +80,11 @@ const goToAuthView = () => {
   } else {
     specialChar.value = true;
   }
-};
+}
 
-const goTogame = () => {
+async function goTogame() {
   username.value = "mokko" + Math.floor(Math.random() * 10000);
+  await new Promise((resolve) => setTimeout(resolve, 100));
   store.myName = username.value;
   specialChar.value = false;
   fuckword.value = false;
@@ -104,7 +106,7 @@ const goTogame = () => {
   } else {
     specialChar.value = true;
   }
-};
+}
 </script>
 
 <style scoped>
