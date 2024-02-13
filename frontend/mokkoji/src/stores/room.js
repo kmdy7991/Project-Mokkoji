@@ -17,6 +17,8 @@ export const useRoomStore = defineStore(
     const players = ref([]);
     const roomId = ref();
     const roomname = ref("");
+    const fullroom = ref(false);
+    const refuesentry = ref(false);
     const prevRoomlistLength = ref(Roomlist.value.length);
     const preplayers = ref(players.value.length);
     const worngPassWord = ref(false);
@@ -119,6 +121,11 @@ export const useRoomStore = defineStore(
         })
         .catch((err) => {
           console.log(err);
+          if (err.response.status === 403) {
+            fullroom.value = true;
+          } else {
+            refuesentry.value = false;
+          }
         });
     };
 
@@ -186,6 +193,8 @@ export const useRoomStore = defineStore(
       worngPassWord,
       owner,
       players,
+      fullroom,
+      refuesentry,
       getRoomlist,
       createRoom,
       entranceRoom,

@@ -13,7 +13,7 @@
       </div> -->
       <div class="text-center">
         <button class="btn" @click="goTogame()">비회원 입장</button>
-        <button class="btn" @click="AuthtoggleModal">관리자 입장</button>
+        <button class="btn" @click="goToAuthView()">관리자 입장</button>
       </div>
       <!-- <button @click="toggleModal">임시 닉네임 확인</button> -->
     </div>
@@ -64,31 +64,31 @@ const containsProfanity = (name) => {
   return profanities.some((profanity) => name.value.includes(profanity));
 };
 
-// async function goToAuthView() {
-//   username.value = "mokko" + Math.floor(Math.random() * 10000);
-//   await new Promise((resolve) => setTimeout(resolve, 100));
-//   store.myName = username.value;
-//   specialChar.value = false;
-//   fuckword.value = false;
-//   store.Auth = true;
+async function goToAuthView() {
+  username.value = "mokko" + Math.floor(Math.random() * 10000);
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  store.myName = username.value;
+  specialChar.value = false;
+  fuckword.value = false;
+  store.Auth = true;
 
-//   if (isValidUsername(username)) {
-//     specialChar.value = false;
-//     if (containsProfanity(username)) {
-//       fuckword.value = true;
-//     } else {
-//       roomStore.getRoomlist();
-//       store.createuser();
-//       // if (store.Auth === true) {
-//       //   router.replace({ name: "Auth" });
-//       // } else {
-//       //   router.replace({ name: "waitRoom" });
-//       // }
-//     }
-//   } else {
-//     specialChar.value = true;
-//   }
-// }
+  if (isValidUsername(username)) {
+    specialChar.value = false;
+    if (containsProfanity(username)) {
+      fuckword.value = true;
+    } else {
+      roomStore.getRoomlist();
+      store.createuser();
+      // if (store.Auth === true) {
+      //   router.replace({ name: "Auth" });
+      // } else {
+      //   router.replace({ name: "waitRoom" });
+      // }
+    }
+  } else {
+    specialChar.value = true;
+  }
+}
 
 async function goTogame() {
   username.value = "mokko" + Math.floor(Math.random() * 10000);
