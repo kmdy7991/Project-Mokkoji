@@ -28,6 +28,7 @@ export const useGameStore = defineStore(
     const nowIndex = ref(0);
     const gameend = ref(false);
     const gameresult = ref(false);
+    const myturn = ref("");
     const ranks = ref([]);
 
     const getcategory = (roomId) => {
@@ -117,6 +118,8 @@ export const useGameStore = defineStore(
           const nowuser = JSON.parse(
             nowParticipant.value.stream.connection.data
           );
+          myturn.value = nowuser.clientData;
+          console.log(myturn.value);
           if (nowuser.clientData == userstore.myName) {
             socketstore.getTHEME();
           }
@@ -126,6 +129,7 @@ export const useGameStore = defineStore(
               nowParticipant.value = "";
               nowIndex.value++;
               answers.value = "";
+              myturn.value = "";
               updateParticipant(roomId);
             }, 3000); // 3초동안 정지
           }, 10000);
@@ -183,6 +187,7 @@ export const useGameStore = defineStore(
       gameresult,
       nowcountdown,
       ranks,
+      myturn,
     };
   },
   { persist: true }
