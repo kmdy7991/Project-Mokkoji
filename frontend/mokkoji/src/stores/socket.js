@@ -4,7 +4,6 @@ import { useChatStore } from "@/stores/chat";
 import { useGameStore } from "./game";
 import { useRoomStore } from "./room";
 import { userStore } from "./user";
-import { useOpenViduStore } from "./openvidu";
 import sockJs from "sockjs-client/dist/sockjs";
 import Stomp from "webstomp-client";
 
@@ -15,7 +14,6 @@ export const useWebSocketStore = defineStore(
     const userstore = userStore();
     const usegamestore = useGameStore();
     const roomstore = useRoomStore();
-    const useopenvidustore = useOpenViduStore();
     const sock = ref(null);
     const stomp = ref(null);
     const roomId = ref(null);
@@ -29,7 +27,7 @@ export const useWebSocketStore = defineStore(
       // stomp.value.debug = () => {}; //모든 작업 완료후 주석 해제 할것.
 
       stomp.value.connect({}, (frame) => {
-        console.log("Connected: " + frame);
+        // console.log("Connected: " + frame);
         subscribeToRoom();
         stomp.value.send(
           `/pub/${roomId.value}`,

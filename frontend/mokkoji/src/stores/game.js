@@ -119,7 +119,6 @@ export const useGameStore = defineStore(
             nowParticipant.value.stream.connection.data
           );
           myturn.value = nowuser.clientData;
-          console.log(myturn.value);
           if (nowuser.clientData == userstore.myName) {
             socketstore.getTHEME();
           }

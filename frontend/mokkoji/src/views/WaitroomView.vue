@@ -41,13 +41,14 @@ import RankingModal from "@/components/mainscreenbuttons/ranking.vue";
 import MypageModal from "@/components/mypage/mypage.vue";
 import friendModal from "@/components/mainscreenbuttons/friend.vue";
 import { useRouter } from "vue-router";
-
+import { useRoomStore } from "@/stores/room";
 const router = useRouter();
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 
 const rankingModalVisible = ref(false);
 const mypageModalVisible = ref(false);
 const myfriendModalVisible = ref(false);
+const store = useRoomStore();
 
 function rankingmodal() {
   rankingModalVisible.value = !rankingModalVisible.value;
@@ -64,6 +65,22 @@ function myfriendmodal() {
 function gohome() {
   router.push({ name: "home" });
 }
+
+function handleF5(event) {
+  if (event.key === "F5" || event.keyCode === 116) {
+    // event.preventDefault(); // 기본 F5 동작 방지
+    store.getRoomlist();
+    router.replace({ name: "waitRoom" }); // 여기서 'home'은 리디렉트하고 싶은 라우트 이름
+  }
+}
+
+onMounted(() => {
+  window.addEventListener("keydown", handleF5);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", handleF5);
+});
 </script>
 <style scoped>
 .title {
