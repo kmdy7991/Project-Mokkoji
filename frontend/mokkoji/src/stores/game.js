@@ -3,12 +3,13 @@ import { defineStore } from "pinia";
 import { useOpenViduStore } from "./openvidu";
 import { useWebSocketStore } from "./socket";
 import { useRoomStore } from "./room";
+import { userStore } from "./user";
 import axios from "axios";
 
 export const useGameStore = defineStore(
   "game",
   () => {
-    const API_URL = import.meta.env.VITE_APP_API_URL; // 로컬단 서버로 올릴시 수정할것!
+    const API_URL = ""; // 로컬단 서버로 올릴시 수정할것!
     const start = ref(false);
     const nowcountdown = ref(false);
     const countdown = ref(5);
@@ -17,6 +18,7 @@ export const useGameStore = defineStore(
     const store = useOpenViduStore();
     const socketstore = useWebSocketStore();
     const roomstore = useRoomStore();
+    const userstore = userStore();
     const category = ref("");
     const answers = ref("");
     const subscriber = ref([]);
@@ -31,7 +33,7 @@ export const useGameStore = defineStore(
     const getcategory = (roomId) => {
       axios({
         method: "get",
-        url: `${API_URL}/api/talkbody/${roomId}/select`,
+        url: `/api/talkbody/${roomId}/select`,
       })
         .then((res) => {
           // console.log("주제 응답:", res.data);
@@ -46,7 +48,7 @@ export const useGameStore = defineStore(
     const gameover = (roomId) => {
       axios({
         method: "get",
-        url: `${API_URL}/api/room/${roomId}/start`,
+        url: `/api/room/${roomId}/start`,
       })
         .then((res) => {
           // console.log("시작 응답:", res);
@@ -62,7 +64,7 @@ export const useGameStore = defineStore(
       roomstore.getplayer(numroomId);
       axios({
         method: "get",
-        url: `${API_URL}/api/room/${numroomId}/start`,
+        url: `/api/room/${numroomId}/start`,
       })
         .then((res) => {
           // console.log("시작 응답:", res);
@@ -99,12 +101,10 @@ export const useGameStore = defineStore(
 
     function updateParticipant(roomId) {
       if (combinedParticipants.value.length > nowIndex.value) {
-        socketstore.getTHEME();
-        const nowplay = roomstore.players[nowIndex.value].user_nickname;
+        const nowplay = roomstore.players[nowIndex.value]?.user_nickname;
         let foundIndex = -1;
         for (let i = 0; i < combinedParticipants.value.length; i++) {
           const nowPart = combinedParticipants.value[i];
-          console.log(nowPart.stream.connection.data);
           const clientdata = JSON.parse(nowPart.stream.connection.data);
           const client = clientdata.clientData;
           if (nowplay == client) {
@@ -114,6 +114,12 @@ export const useGameStore = defineStore(
         }
         if (foundIndex !== -1) {
           nowParticipant.value = combinedParticipants.value[foundIndex];
+          const nowuser = JSON.parse(
+            nowParticipant.value.stream.connection.data
+          );
+          if (nowuser.clientData == userstore.myName) {
+            socketstore.getTHEME();
+          }
           setTimeout(() => {
             setTimeout(() => {
               // 다음 참가자로 넘어가거나 게임 종료 처리
@@ -144,7 +150,7 @@ export const useGameStore = defineStore(
         gameend.value = false;
         gameresult.value = true; // 결과 표시 시 광고 비활성화
         gameover(roomId);
-      }, 10000); // 게임 종료 후 10초 대기, 결과 표시
+      }, 3000); // 게임 종료 후 10초 대기, 결과 표시
     }
 
     const gameout = () => {

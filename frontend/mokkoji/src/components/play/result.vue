@@ -49,7 +49,7 @@ const vidustore = useOpenViduStore();
 const userstore = userStore();
 const roomstore = useRoomStore();
 const countdown = ref(7); // 카운트다운 시작 숫자
-const result = ref(usegamestore.ranks);
+const result = usegamestore.ranks;
 
 let countdownInterval;
 
@@ -78,7 +78,7 @@ onUnmounted(() => {
 });
 
 const adjustedRanks = computed(() => {
-  const filledArray = result.value.slice(); // ranks 배열 복사
+  const filledArray = result.slice(); // ranks 배열 복사
   for (let i = filledArray.length; i < 6; i++) {
     filledArray.push({}); // 빈 객체를 추가하여 길이를 6으로 맞춤
   }

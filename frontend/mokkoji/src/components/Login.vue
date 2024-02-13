@@ -13,11 +13,13 @@
       </div> -->
       <div class="text-center">
         <button class="btn" @click="goTogame()">비회원 입장</button>
-        <button class="btn" @click="goToAuthView()">관리자 입장</button>
+        <button class="btn" @click="AuthtoggleModal">관리자 입장</button>
       </div>
-      <button @click="toggleModal">임시 닉네임 확인</button>
+      <!-- <button @click="toggleModal">임시 닉네임 확인</button> -->
     </div>
-    <div></div>
+    <div>
+      <Authmodal :show="AuthshowModal" @close="AuthshowModal = false" />
+    </div>
     <inputnickname :show="showModal" @close="showModal = false" />
   </div>
 </template>
@@ -29,6 +31,7 @@ import { useRouter } from "vue-router";
 import { userStore } from "@/stores/user";
 import profanities from "@/assets/profanities";
 import inputnickname from "./inputnickname.vue";
+import Authmodal from "./Authmodal.vue";
 
 const roomStore = useRoomStore();
 const username = ref("");
@@ -37,9 +40,14 @@ const store = userStore();
 const specialChar = ref(false);
 const fuckword = ref(false);
 const showModal = ref(false);
+const AuthshowModal = ref(false);
 
 const toggleModal = () => {
   showModal.value = !showModal.value;
+};
+
+const AuthtoggleModal = () => {
+  AuthshowModal.value = !AuthshowModal.value;
 };
 
 onMounted(() => {
@@ -56,31 +64,31 @@ const containsProfanity = (name) => {
   return profanities.some((profanity) => name.value.includes(profanity));
 };
 
-async function goToAuthView() {
-  username.value = "mokko" + Math.floor(Math.random() * 10000);
-  await new Promise((resolve) => setTimeout(resolve, 100));
-  store.myName = username.value;
-  specialChar.value = false;
-  fuckword.value = false;
-  store.Auth = true;
+// async function goToAuthView() {
+//   username.value = "mokko" + Math.floor(Math.random() * 10000);
+//   await new Promise((resolve) => setTimeout(resolve, 100));
+//   store.myName = username.value;
+//   specialChar.value = false;
+//   fuckword.value = false;
+//   store.Auth = true;
 
-  if (isValidUsername(username)) {
-    specialChar.value = false;
-    if (containsProfanity(username)) {
-      fuckword.value = true;
-    } else {
-      roomStore.getRoomlist();
-      store.createuser();
-      // if (store.Auth === true) {
-      //   router.replace({ name: "Auth" });
-      // } else {
-      //   router.replace({ name: "waitRoom" });
-      // }
-    }
-  } else {
-    specialChar.value = true;
-  }
-}
+//   if (isValidUsername(username)) {
+//     specialChar.value = false;
+//     if (containsProfanity(username)) {
+//       fuckword.value = true;
+//     } else {
+//       roomStore.getRoomlist();
+//       store.createuser();
+//       // if (store.Auth === true) {
+//       //   router.replace({ name: "Auth" });
+//       // } else {
+//       //   router.replace({ name: "waitRoom" });
+//       // }
+//     }
+//   } else {
+//     specialChar.value = true;
+//   }
+// }
 
 async function goTogame() {
   username.value = "mokko" + Math.floor(Math.random() * 10000);

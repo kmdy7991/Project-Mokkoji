@@ -17,7 +17,6 @@ export const useOpenViduStore = defineStore(
     const subscribers = ref([]);
     const store = userStore();
     const mySessionId = ref("" + Math.floor(Math.random() * 100));
-    const myUserName = store.myName;
 
     const joinSession = (payload) => {
       const { roomId } = payload;
@@ -166,7 +165,6 @@ export const useOpenViduStore = defineStore(
       publisher,
       subscribers,
       mySessionId,
-      myUserName,
       joinSession,
       leaveSession,
       getToken,

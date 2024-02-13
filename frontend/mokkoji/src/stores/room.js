@@ -90,10 +90,11 @@ export const useRoomStore = defineStore(
     };
 
     const entranceRoom = function (roomIdNumber) {
+      const myName = store.myName;
       roomId.value = roomIdNumber;
       axios({
         method: "get",
-        url: `${API_URL}/api/room/enter/${roomIdNumber}/${store.myName}`,
+        url: `${API_URL}/api/room/enter/${roomIdNumber}/${myName}`,
       })
         .then((res) => {
           console.log(res);
@@ -117,7 +118,7 @@ export const useRoomStore = defineStore(
           }); // entranceRoom  함수에서 받아올 예정
         })
         .catch((err) => {
-          // console.log(err);
+          console.log(err);
         });
     };
 
