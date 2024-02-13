@@ -87,9 +87,9 @@ export const useWebSocketStore = defineStore(
     };
 
     const sendMessage = (inputChat) => {
-      console.log(userstore.myName);
-      console.log(usegamestore.myturn);
-      console.log(usegamestore.myturn === userstore.myName);
+      // console.log(userstore.myName);
+      // console.log(usegamestore.myturn);
+      // console.log(usegamestore.myturn === userstore.myName);
       if (!inputChat.trim() || usegamestore.myturn === userstore.myName) {
         return;
       }
