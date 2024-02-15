@@ -1,0 +1,108 @@
+# sever port & ssl auth
+server:
+    port: 8081
+
+# kafka setting
+kafka:
+    server: i10b304.p.ssafy.io:9092
+    group-id: ssafy
+    offset: latest
+spring:
+    security:
+        oauth2:
+            client:
+                registration:
+                    google:
+                        client-id: 844773279085-3c2un0l4fvvg8d75po6uf5p2ecnbkivm.apps.googleusercontent.com
+                        client-secret: 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
+                        scope:
+                            - profile
+                            - email
+
+                    naver:
+                        client-id: AX2Hx1gI2YQ5WyhQAJdD
+                        client-secret: ipY6rw5dB2
+                        client-name: Naver
+                        scope: name,email,profile_image
+                        authorization-grant-type: authorization_code
+                        redirect-uri: 'http://ssafy-test.store/login/oauth2/code/naver'
+
+                    kakao:
+                        client-id: 0ba526fca1f7c929ccbf6d2a1e340bdb
+                        # client-secret: AOGDpVNW7Suz3cNNgVoWVWnexJJrJXgD
+                        authorization-grant-type: authorization_code
+                        scope:
+                            - profile_nickname
+                            - profile_image
+                            - account_email
+                        client-name: kakao
+                        client-authentication-method: client_secret_post
+                        redirect-uri: 'http://ssafy-test.store:8082/{action}/oauth2/code/{registrationId}'
+
+                # Provider 설정
+                # 네이버, 카카오는 OAuth2.0 공식 지원대상이 아니라서 provider 설정이 필요
+                # 요청주소, 응답 데이터가 다름
+                provider:
+                    naver:
+                        authorization-uri: https://nid.naver.com/oauth2.0/authorize
+                        token-uri: https://nid.naver.com/oauth2.0/token
+                        user-info-uri: https://openapi.naver.com/v1/nid/me
+                        user-name-attribute: response
+
+                    kakao:
+                        authorization-uri: https://kauth.kakao.com/oauth/authorize
+                        token-uri: https://kauth.kakao.com/oauth/token
+                        user-info-uri: https://kapi.kakao.com/v2/user/me
+                        user-name-attribute: id
+    data:
+        mongodb:
+            uri: mongodb+srv://S10P13B304:zyolRrePbj@ssafy.ngivl.mongodb.net/S10P13B304?authSource=admin&retryWrites=true&w=majority
+
+    # 데이터 소스 설정
+    datasource:
+        url: jdbc:mysql://i10b304.p.ssafy.io:3306/mokkoji?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
+        username: root
+        password: ssafy
+        driver-class-name: com.mysql.cj.jdbc.Driver
+
+        # hikari
+        hikari:
+            pool-name: jpa-hikari-pool
+            maximum-pool-size: 20
+            jdbc-url: ${spring.datasource.url}
+            username: ${spring.datasource.username}
+            password: ${spring.datasource.password}
+            driver-class-name: ${spring.datasource.driver-class-name}
+            data-source-properties:
+                rewriteBatchedStatements: true
+
+            # 꼭 필요한건 아니지만 에러떠서 추가함
+            close-leak-thread: true
+            connection-timeout: 10000 # Conection(히카리x mySql)
+            validation-timeout: 10000
+            minimum-idle: 5
+            idleTimeout: 1800000 # 커넥션이 유휴 상태로 유지될 수 있는 최대 시간 : 30분
+            max-lifetime: 3600000 #  풀에서 생성된 커넥션이 유지될 수 있는 최대 시간 : 1시간
+            connection-init-sql: set wait_timeout = 600 # Session wait_timeout
+
+        # jpa
+    jpa:
+        show-sql: true
+        open-in-view: false
+        properties:
+            hibernate:
+                format_sql: true
+        defer-datasource-initialization: true
+        hibernate:
+            ddl-auto: none #처음만 create 후에 update로 고정
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+# jwt secret key 설정
+oauth:
+    jwt:
+        secret: c3ByaW5nYm9vdC1qd3QtdHV0b3JpYWwtc3ByaW5nYm9vdC1qd3QtdHV0b3JpYWwtc3ByaW5nYm9vdC1qd3QtdHV0b3JpYWwK
+    authorizedRedirectUri: 'http://ssafy-test.store:8082/login/oauth2/code/kakao' # 성주님 주소
+# myBatis
+mybatis:
+    mapper-locations: classpath:/mapper/**/*.xml
