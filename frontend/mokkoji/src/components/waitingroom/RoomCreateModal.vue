@@ -10,7 +10,7 @@
             >
               몸으로 말해요
             </button>
-            <button class="unselected">출시 예정</button>
+            <button class="unselected">미출시</button>
           </div>
         </div>
         <div class="form-group">
