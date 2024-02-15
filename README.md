@@ -32,7 +32,7 @@ The results of the work are greater**
 Mokkoji, an online video chat game developed to achieve the goal of enhancing intimacy among colleagues to improve work performance.
 
 ## 개발 환경
->IntelliJ 2023.3.2
+IntelliJ 2023.3.2
  Springboot: 3.2.2
  VS Code: 1.85.1
  Vue3 3.4.15
