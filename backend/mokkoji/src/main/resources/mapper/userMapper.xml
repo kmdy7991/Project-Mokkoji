@@ -3,13 +3,13 @@
 <mapper namespace="com.ssafy.mokkoji.member.users.mapper.UserMapper">
     <!--    익명으로 입장할 때 db에 저장-->
     <insert id="guestInput" parameterType="String">
-        INSERT INTO user (user_nickname, role, created_at)
+        INSERT INTO users (user_nickname, role, created_at)
         VALUES (#{user_nickname}, 'GUEST', NOW());
     </insert>
     <!--    닉네임 중복 체크-->
     <select id="isSameNickname" parameterType="String" resultType="int">
         select COUNT(*) > 0
-        from user
+        from users
         where user_nickname = #{user_nickname}
     </select>
 </mapper>

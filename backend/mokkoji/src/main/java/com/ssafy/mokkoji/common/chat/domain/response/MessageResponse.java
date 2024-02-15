@@ -2,6 +2,9 @@ package com.ssafy.mokkoji.common.chat.domain.response;
 
 import lombok.*;
 
+import java.util.List;
+import java.util.Map;
+
 @Getter
 @ToString
 @Builder
@@ -13,7 +16,13 @@ public class MessageResponse{
     private String content;
     private String time;
     private Type type;
+    private boolean corrects = false;
+    private List<Map<String, Object>> userList;
     public enum Type {
+<<<<<<< HEAD
         ENTER, START, CHAT, THEME
+=======
+        ENTER, START, CHAT, THEME, SUCCESS, OWNER, END
+>>>>>>> eecf0bf236253efae2a604eb97476568347484cf
     }
 }

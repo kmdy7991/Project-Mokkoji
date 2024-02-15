@@ -11,6 +11,11 @@ public class MessageDto {
     private String content;
     private Type type;
     public enum Type {
+<<<<<<< HEAD
         ENTER, START, CHAT, THEME;
+=======
+        ENTER, START, CHAT, THEME, SUCCESS, OWNER, END;
+>>>>>>> eecf0bf236253efae2a604eb97476568347484cf
     }
 }
+// 일단 주제는 테마로 보내고 성공햇는지는 채팅에 보낼지 성공에 보낼지 생각해보기 일단 그 알고리즘 find에서 무조건 사용해야함

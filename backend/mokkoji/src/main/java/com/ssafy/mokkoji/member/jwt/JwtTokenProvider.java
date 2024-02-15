@@ -1,8 +1,10 @@
 package com.ssafy.mokkoji.member.jwt;
 
 
+import com.ssafy.mokkoji.common.config.ExpireTime;
 import com.ssafy.mokkoji.common.properties.ExpireTimeProperties;
 import com.ssafy.mokkoji.member.users.dto.UserResponseDto;
+import com.ssafy.mokkoji.member.users.enums.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -55,6 +57,12 @@ public class JwtTokenProvider {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
+        // Role 정보 가져오기
+        Role role = inputAuthorities.stream()
+                .map(authority -> Role.valueOf(authority.getAuthority()))
+                .findFirst()
+                .orElse(null); // 만약 Role이 없을 경우 null 처리
+
         Date now = new Date();
 
         //Generate AccessToken
@@ -63,7 +71,7 @@ public class JwtTokenProvider {
                 .claim(AUTHORITIES_KEY, authorities)
                 .claim("type", TYPE_ACCESS)
                 .setIssuedAt(now)   //토큰 발행 시간 정보
-                .setExpiration(new Date(now.getTime() + ExpireTimeProperties.ACCESS_TOKEN_EXPIRE_TIME))  //토큰 만료 시간 설정
+                .setExpiration(new Date(now.getTime() + ExpireTime.ACCESS_TOKEN_EXPIRE_TIME))  //토큰 만료 시간 설정
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
@@ -71,16 +79,17 @@ public class JwtTokenProvider {
         String refreshToken = Jwts.builder()
                 .claim("type", TYPE_REFRESH)
                 .setIssuedAt(now)   //토큰 발행 시간 정보
-                .setExpiration(new Date(now.getTime() + ExpireTimeProperties.REFRESH_TOKEN_EXPIRE_TIME)) //토큰 만료 시간 설정
+                .setExpiration(new Date(now.getTime() + ExpireTime.REFRESH_TOKEN_EXPIRE_TIME)) //토큰 만료 시간 설정
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
         return UserResponseDto.TokenInfo.builder()
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
-                .accessTokenExpirationTime(ExpireTimeProperties.ACCESS_TOKEN_EXPIRE_TIME)
+                .accessTokenExpirationTime(ExpireTime.ACCESS_TOKEN_EXPIRE_TIME)
                 .refreshToken(refreshToken)
-                .refreshTokenExpirationTime(ExpireTimeProperties.REFRESH_TOKEN_EXPIRE_TIME)
+                .refreshTokenExpirationTime(ExpireTime.REFRESH_TOKEN_EXPIRE_TIME)
+                .role(role) // Role 정보 추가
                 .build();
     }
 
@@ -104,6 +113,7 @@ public class JwtTokenProvider {
         UserDetails principal = new User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
+
 
     //토큰 정보를 검증
     public boolean validateToken(String token) {

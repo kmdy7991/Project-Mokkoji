@@ -59,7 +59,7 @@
 <!--    닉네임 주소를 통해 id를 찾는다. (수정 필요)-->
     <select id="nicknameToID" parameterType="String" resultType="int">
         SELECT IFNULL(id, -1) AS id
-        FROM user
+        FROM users
         WHERE user_nickname = #{user_id}
     </select>
 <!--    닉네임을 통해 유저가 게임에 참여중인지 확인한다.-->
@@ -105,11 +105,11 @@
         where room_id = #{room_id}
     </select>
     <!--    게임 터지게 함-->
-    <select id="gameExplosion" parameterType="int" resultType="int">
+    <update id="gameExplosion" parameterType="int">
         UPDATE gameroom
         SET is_explosion = 1
         WHERE room_id = #{room_id};
-    </select>
+    </update>
     <!--    게임 안 사람 수를 센다.-->
     <select id="countInGame" parameterType="int" resultType="int">
         select gameroom.user_count
@@ -129,7 +129,7 @@
     </select>
 <!--    유저 고유 번호를 통해 닉네임 알아냄-->
     <select id="findNickname" parameterType="int" resultType="String">
-        select user.user_nickname from user
+        select users.user_nickname from users
         where #{id} = id;
     </select>
 </mapper>

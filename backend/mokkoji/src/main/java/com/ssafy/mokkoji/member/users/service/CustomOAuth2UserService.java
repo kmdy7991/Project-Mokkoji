@@ -38,8 +38,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {  // OAut
         }
     }
 
-    //  google, kakao, naver 등, oauth 인증 요청 플랫폼을 구분해
-    //  각각의 사용자 정보 형태에 맞는 OAuth2UserInfo 객체를 가져와 회원가입 또는 회원 정보 갱신 로직을 처리
+    //  google, kakao, naver를 구분해서 각각의 사용자 정보 형태에 맞는 OAuth2UserInfo 객체를 가져와 회원가입 or 회원 정보 갱신 로직 처리
     protected OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
         System.out.println("processoAuth2User");
         AuthProvider authProvider = AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId().toUpperCase());
@@ -60,7 +59,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {  // OAut
 
     private Users registerUser(AuthProvider provider, OAuth2UserInfo oAuth2UserInfo) {
         System.out.println("가입합니다");
-
         Users user = Users.builder()
                 .provider(provider)
                 .email(oAuth2UserInfo.getEmail())
@@ -93,6 +91,21 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {  // OAut
         user.setEmail(registrationRequest.getEmail());
         user.setUserNickname(registrationRequest.getNickname());
         // 다른 필요한 정보들 설정
+
+        // UserRepository를 통해 저장
+        userRepository.save(user);
+    }
+
+    // 닉네임 업데이트
+    public void updateUserNickname(UserRegistrationRequest registrationRequest) {
+        log.info("닉네임 업데이트");
+
+        // 사용자 정보 가져오기
+        Users user = userRepository.findByEmail(registrationRequest.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // 닉네임 업데이트
+        user.setUserNickname(registrationRequest.getNickname());
 
         // UserRepository를 통해 저장
         userRepository.save(user);

@@ -1,10 +1,11 @@
 package com.ssafy.mokkoji.game.talkbody.controller;
 
 import com.ssafy.mokkoji.game.talkbody.dto.TalkBodyInGame;
-import com.ssafy.mokkoji.game.talkbody.service.TalkBodyService;
 import com.ssafy.mokkoji.game.talkbody.dto.TalkBodyDto;
+import com.ssafy.mokkoji.game.talkbody.service.TalkBodyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -24,30 +25,33 @@ import java.util.Random;
 @RequiredArgsConstructor
 @RequestMapping("/api/talkbody")
 public class TalkBodyController {
+    @Autowired
     private MongoTemplate mongoTemplate;
-    private final TalkBodyService talkBodyService;
+    private final TalkBodyServiceImpl talkBodyService;
 
     // 이렇게 되면 방에서 선택되게하고 mongodb에 따로 저장한다.
     @GetMapping("/{room_id}/select")
     public ResponseEntity<Object> getAllSubject(@PathVariable("room_id") int roomId) {
         log.info("get subject = {}", roomId);
         try {
+            System.out.println("aaa");
             // 이상한 이슈로 다시 select가 눌리면 방 3번이 중복 된다. 그래서 room_id같은 거 삭제시켜줘야함
             Query query = new Query(Criteria.where("room_id").is(roomId));
+            System.out.println(query);
             mongoTemplate.remove(query, TalkBodyInGame.class);
 
+            System.out.println("bbb");
             List<TalkBodyDto> a = talkBodyService.getAllSubject();
-
+            System.out.println(a);
             Random random = new Random();
             int randomNumber = random.nextInt(a.size());
 
             TalkBodyDto b = a.get(randomNumber);
             TalkBodyInGame tk = new TalkBodyInGame();
-
             tk.setRoom_id(roomId);
             tk.setSubject(b.getSubject());
             tk.setElements(b.getElements());
-
+            System.out.println(tk);
             mongoTemplate.save(tk);
             return ResponseEntity.ok().body(b);
         } catch (Exception e) {
@@ -81,6 +85,8 @@ public class TalkBodyController {
                 responseMap.put("subject", subject);
                 responseMap.put("selectedElement", selectedElement);
 
+                document.setElement(selectedElement);
+                mongoTemplate.save(document);
                 // 선택된 요소를 리스트에서 제거
                 elements.remove(selectedElement);
 

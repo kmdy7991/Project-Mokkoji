@@ -24,7 +24,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Setter
-public class Users implements OAuth2User, Serializable {  // 직렬화 추가, extends BaseDateEntity 제거
+public class Users implements OAuth2User, Serializable {  // 직렬화 추가
 
     @Override
     public Map<String, Object> getAttributes() {
@@ -40,7 +40,7 @@ public class Users implements OAuth2User, Serializable {  // 직렬화 추가, e
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // 권한 정보를 반환 (Role 등)
+        // 권한 정보를 반환 (Role)
         return Set.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
@@ -56,9 +56,6 @@ public class Users implements OAuth2User, Serializable {  // 직렬화 추가, e
 
     private String email;
 
-    @Column(nullable = false)
-    private String password;
-
     private String name;
 
     private String oauth2Id;
@@ -71,9 +68,6 @@ public class Users implements OAuth2User, Serializable {  // 직렬화 추가, e
 
     @Column(name = "user_nickname")
     private String userNickname;
-
-    @Column(name = "refresh_token", length = 256)
-    private String refreshToken;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

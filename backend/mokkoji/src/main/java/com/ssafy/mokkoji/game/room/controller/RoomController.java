@@ -1,5 +1,6 @@
 package com.ssafy.mokkoji.game.room.controller;
 
+import com.ssafy.mokkoji.common.chat.domain.response.MessageResponse;
 import com.ssafy.mokkoji.game.room.dto.UserDto;
 import com.ssafy.mokkoji.game.room.service.RoomService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -10,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
-
+import com.ssafy.mokkoji.common.chat.domain.request.MessageDto;
 import java.net.URI;
 import java.util.List;
 
@@ -104,8 +105,8 @@ public class RoomController {
                     }
                     // 방장이 나가면 방 터짐 (소켓 활용)
                     if (roomService.checkOwner(roomId).equals(user_nickname)) {
-//                        Message ownerMessage = Message.builder().content("방장이 나가 방이 터졌습니다.").type(Message.type.OWNER).build();
-//                        messagingTemplate.convertAndSend("/topic/" + roomId, ownerMessage);
+                        MessageResponse ownerMessage = MessageResponse.builder().content("방장이 나가 방이 터졌습니다.").type(MessageResponse.Type.OWNER).build();
+                        messagingTemplate.convertAndSend("/topic/" + roomId, ownerMessage);
                         HttpHeaders headers = new HttpHeaders();
                         // 한 번 봐보기
                         URI uri = new URI("http://192.168.31.58:8080/api/room");
@@ -142,6 +143,17 @@ public class RoomController {
             return ResponseEntity.status(404).body("방폭파 실패");
         } else {
             return ResponseEntity.status(404).body("사람이 1명 이상이라 방 폭파 실패");
+        }
+    }
+
+    @GetMapping("/{room_id}/participants")
+    public ResponseEntity<Object> getParticipantsList(@PathVariable("room_id") int roomId){
+        try {
+            List<UserDto> participantList = roomService.participantInfo(roomId);
+            return ResponseEntity.status(200).body(participantList);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(404).body("방폭파 실패");
         }
     }
 }
