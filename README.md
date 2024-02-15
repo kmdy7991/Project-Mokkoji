@@ -33,13 +33,20 @@ Mokkoji, an online video chat game developed to achieve the goal of enhancing in
 
 ## 개발 환경
 IntelliJ 2023.3.2
+
  Springboot: 3.2.2
+
  VS Code: 1.85.1
  Vue3 3.4.15
+
  Vite: 5.0.10
+
  Node.js: 20.10.0
+
  JVM: 17.0.9
+
  SERVER: AWS EC2 Ubuntu 20.04.6 LTS
+ 
  MySQL: 8.0.34
 
 ## 주요 기능 소개
