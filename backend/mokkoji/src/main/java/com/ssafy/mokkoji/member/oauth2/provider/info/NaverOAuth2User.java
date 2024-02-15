@@ -9,6 +9,7 @@ public class NaverOAuth2User extends OAuth2UserInfo {
 
     public NaverOAuth2User(Map<String, Object> attributes) {
         super((Map<String, Object>) attributes.get("response"));
+        System.out.println(attributes.get("response"));
     }
 
     @Override

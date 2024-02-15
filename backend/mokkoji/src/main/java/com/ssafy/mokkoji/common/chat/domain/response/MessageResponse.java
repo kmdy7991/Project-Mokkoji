@@ -14,6 +14,6 @@ public class MessageResponse{
     private String time;
     private Type type;
     public enum Type {
-        ENTER, START, CHAT
+        ENTER, START, CHAT, THEME
     }
 }

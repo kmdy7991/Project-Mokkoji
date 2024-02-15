@@ -29,7 +29,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {  // OAut
     // loadUser 메서드가 호출되었을 때 OAuth2UserRequest 객체에는 oauth 인증 결과인 access token을 포함
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        System.out.println("loadUser");
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
         try {

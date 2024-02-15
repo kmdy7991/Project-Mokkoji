@@ -11,6 +11,6 @@ public class MessageDto {
     private String content;
     private Type type;
     public enum Type {
-        ENTER, START, CHAT;
+        ENTER, START, CHAT, THEME;
     }
 }

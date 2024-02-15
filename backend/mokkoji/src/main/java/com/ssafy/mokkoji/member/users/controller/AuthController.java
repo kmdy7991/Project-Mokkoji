@@ -1,38 +1,63 @@
-//package com.example.mokkoji.member.users.controller;
-//
+package com.ssafy.mokkoji.member.users.controller;
+
 //import com.example.mokkoji.common.ApiResponse;
 //import com.example.mokkoji.common.utils.CookieUtils;
 //import com.example.mokkoji.common.utils.HeaderUtil;
-//import io.jsonwebtoken.Claims;
-//import jakarta.servlet.http.Cookie;
-//import jakarta.servlet.http.HttpServletRequest;
-//import jakarta.servlet.http.HttpServletResponse;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.Date;
-//
-//// 로그인, 토큰 갱신 작업
-//@RestController
-//@RequestMapping("/api/v1/auth")
-//@RequiredArgsConstructor
-//public class AuthController {
-//
+import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.Date;
+import java.util.Map;
+
+// 로그인, 토큰 갱신 작업
+@Slf4j
+@RestController
+@RequestMapping("/api/v1/auth")
+@RequiredArgsConstructor
+public class AuthController {
+
 //    private final AuthTokenProvider tokenProvider;  // jwt 생성
 //    private final AuthenticationManager authenticationManager;  // 사용자 인증 처리 (시큐리티)
 //    private final UserRefreshTokenRepository userRefreshTokenRepository;  // 리프레쉬 토큰
-//    private final static long THREE_DAYS_MSEC = 259200000;  // 3일
-//    private final static String REFRESH_TOKEN = "refresh_token";
+    private final static long THREE_DAYS_MSEC = 259200000;  // 3일
+    private final static String REFRESH_TOKEN = "refresh_token";
+
+    // 사용자 로그인 처리
+    // 1. 사용자의 인증 정보를 받아 authentication 객체 생성
+    // 2. accessToken, refreshToken 생성
+    // 3. refreshToken db에 저장/업뎃
+    // 4. refreshToken 쿠키에 저장 후 클라이언트에게 전달
+    @GetMapping("/redirect/{provider}")
+    public RedirectView redirectUser(@PathVariable("provider") String provider){
+        System.out.println(provider);
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("http://172.30.1.78:5173/about");
+        return redirectView;
+    }
+
+    @GetMapping("/callback/{provider}")
+    public ResponseEntity<Map<String, Object>> callResp(@RequestParam String code, @PathVariable String provider) {
+        log.info(provider + " " + code);
+
+//        Map<String, Object> resp = oauthService.getAccessToken(code, provider);
+//        System.out.println(resp);
+        return ResponseEntity.ok().body(Map.of("code", code));
+
+    }
+
 //
-//    // 사용자 로그인 처리
-//    // 1. 사용자의 인증 정보를 받아 authentication 객체 생성
-//    // 2. accessToken, refreshToken 생성
-//    // 3. refreshToken db에 저장/업뎃
-//    // 4. refreshToken 쿠키에 저장 후 클라이언트에게 전달
+//
 //    @PostMapping("/login")
 //    public ApiResponse login(HttpServletRequest request, HttpServletResponse response, @RequestBody AuthReqModel authReqModel) {
 //
@@ -135,4 +160,4 @@
 //
 //        return ApiResponse.success("token", newAccessToken.getToken());
 //    }
-//}
+}

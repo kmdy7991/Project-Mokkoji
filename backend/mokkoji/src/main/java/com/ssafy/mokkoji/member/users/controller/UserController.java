@@ -27,8 +27,7 @@ public class UserController {
     public UserResponseDto.TokenInfo login(@RequestBody UserLoginRequestDto memberLoginRequestDto) {
         String memberId = memberLoginRequestDto.getUserId();
         String password = memberLoginRequestDto.getPassword();
-        UserResponseDto.TokenInfo tokenInfo = userService.login(memberId, password);
-        return tokenInfo;
+        return userService.login(memberId, password);
     }
 
 
@@ -80,7 +79,6 @@ public class UserController {
             }
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User registered failed.");
         }catch (Exception e){
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error registering user.");
         }
     }

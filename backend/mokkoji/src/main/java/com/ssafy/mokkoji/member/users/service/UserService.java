@@ -24,8 +24,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
-
-    @Autowired
     private UserMapper userMapper; // mybatis
 
 //    userId 없어 ㅠㅠㅠㅠ
@@ -81,8 +79,7 @@ public class UserService {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        UserResponseDto.TokenInfo tokenInfo = jwtTokenProvider.generateToken(userName, authorities);
 
-        return tokenInfo;
+        return jwtTokenProvider.generateToken(userName, authorities);
     }
 }

@@ -32,7 +32,6 @@ public class ChatController {
                             .roomId(messageDto.getRoomId())
                             .userNickname("시스템")
                             .content(messageDto.getUserNickname() + "님 입장하였습니다!!")
-                            .time(time)
                             .type(MessageResponse.Type.ENTER)
                             .build();
                     case START -> MessageResponse.
@@ -40,7 +39,6 @@ public class ChatController {
                             .roomId(messageDto.getRoomId())
                             .userNickname("시스템")
                             .content("게임을 시작합니다")
-                            .time(time)
                             .type(MessageResponse.Type.START)
                             .build();
                     case CHAT -> MessageResponse.
@@ -50,6 +48,12 @@ public class ChatController {
                             .content(messageDto.getContent())
                             .time(time)
                             .type(MessageResponse.Type.CHAT)
+                            .build();
+                    case THEME -> MessageResponse.
+                            builder()
+                            .roomId(messageDto.getRoomId())
+                            .content("fd")
+                            .type(MessageResponse.Type.THEME)
                             .build();
                 }
         );
