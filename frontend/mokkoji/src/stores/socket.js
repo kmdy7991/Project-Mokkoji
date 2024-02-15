@@ -18,16 +18,16 @@ export const useWebSocketStore = defineStore(
     const stomp = ref(null);
     const roomId = ref(null);
     const roomexplosion = ref(true);
-    const API_URL = import.meta.env.VITE_APP_API_URL;
+    const API_URL = "";
 
     const initializeWebSocket = (newRoomId) => {
       roomId.value = newRoomId;
-      sock.value = new sockJs(`${API_URL}/chat`);
+      sock.value = new sockJs(`${API_URL}/chat`); // 로컬단 서버로 올릴시 수정할것! 58 예진님 42 대영
       stomp.value = Stomp.over(sock.value);
-      // stomp.value.debug = () => {}; //모든 작업 완료후 주석 해제 할것.
+      stomp.value.debug = () => {};
 
       stomp.value.connect({}, (frame) => {
-        // console.log("Connected: " + frame);
+        console.log("Connected: " + frame);
         subscribeToRoom();
         stomp.value.send(
           `/pub/${roomId.value}`,
@@ -60,9 +60,9 @@ export const useWebSocketStore = defineStore(
               roomstore.getplayer(roomId.value);
               break;
             case "THEME":
-              // const words = messageObject.content.split(" ");
-              // usegamestore.category = words[0];
-              // usegamestore.answers = words[words.length - 1];
+              const words = messageObject.content.split(" ");
+              usegamestore.category = words[0];
+              usegamestore.answers = words[words.length - 1];
               break;
             case "OWNER":
               roomexplosion.value = messageObject.corrects;
@@ -71,24 +71,17 @@ export const useWebSocketStore = defineStore(
             case "SUCCESS":
               store.addChat(messageObject);
               break;
-            case "TURN":
-              console.log(messageObject);
-              break;
             case "END":
-              // END 유형의 메시지 처리
               usegamestore.ranks = messageObject.userList;
+              console.log(usegamestore.ranks);
               break;
-            // 여기에 END 유형에 대한 처리 로직 추가
           }
         });
       }
     };
 
     const sendMessage = (inputChat) => {
-      // console.log(userstore.myName);
-      // console.log(usegamestore.myturn);
-      // console.log(usegamestore.myturn === userstore.myName);
-      if (!inputChat.trim() || usegamestore.myturn === userstore.myName) {
+      if (!inputChat.trim() || userstore.myName === usegamestore.nowturn) {
         return;
       }
       const messageObject = {
@@ -137,17 +130,6 @@ export const useWebSocketStore = defineStore(
       );
     };
 
-    const nextturn = () => {
-      stomp.value.send(
-        `/pub/${roomId.value}`,
-        JSON.stringify({
-          roomId: roomId.value,
-          type: "TURN",
-        }),
-        {}
-      );
-    };
-
     const disconnectWebSocket = () => {
       if (stomp.value && stomp.value.connected) {
         stomp.value.disconnect(() => {
@@ -170,7 +152,6 @@ export const useWebSocketStore = defineStore(
       gameStart,
       getTHEME,
       gameEnd,
-      nextturn,
       disconnectWebSocket,
     };
   },

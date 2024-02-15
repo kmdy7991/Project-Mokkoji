@@ -10,11 +10,7 @@
             >
               몸으로 말해요
             </button>
-            <button class="unselected">
-              <!-- :class="{ selected: gameType === 1, unselected: gameType !== 1 }"
-              @click="selectGameType(1)" -->
-              미출시
-            </button>
+            <button class="unselected">출시 예정</button>
           </div>
         </div>
         <div class="form-group">
@@ -58,22 +54,16 @@
 
 <script setup>
 import { defineProps, defineEmits } from "vue";
-import { ref, onMounted } from "vue";
-import { useOpenViduStore } from "@/stores/openvidu";
+import { ref } from "vue";
 import { useRoomStore } from "@/stores/room";
-import { useRouter } from "vue-router";
-const store = useOpenViduStore();
 const Roomstore = useRoomStore();
 const roomId = ref("");
 const roomPwd = ref(null);
-const router = useRouter();
 const isPasswordEnabled = ref(false);
 const gameType = ref(0);
 
 const selectGameType = (type) => {
   gameType.value = type; // 선택된 게임 유형 업데이트
-  console.log(gameType.value);
-  console.log(typeof gameType.value);
 };
 // Props 정의
 const props = defineProps({
@@ -87,14 +77,6 @@ const emit = defineEmits(["close"]);
 function closeModal() {
   emit("close");
 }
-
-// const joinSession = () => {
-//   const payload = {
-//     roomId: roomId.value,
-//   };
-//   store.joinSession(payload);
-//   router.replace({ name: "TalkBody", params: { id: roomId.value } });
-// }; // 프론트에서만 돌리는 코드
 
 //테스트 코드
 const joinSession = () => {

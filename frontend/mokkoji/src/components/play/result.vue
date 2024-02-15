@@ -92,7 +92,6 @@ function close() {
 
 const gameout = () => {
   clearInterval(countdownInterval);
-
   const payload = {
     roomId: Number(roomId),
     nickname: userstore.myName,
@@ -101,6 +100,7 @@ const gameout = () => {
   usegamestore.countdown = 5;
   store.disconnectWebSocket();
   vidustore.leaveSession();
+  store.roomexplosion = true;
   session.value = vidustore.session;
   roomstore.exitRoom(payload);
   roomstore.getRoomlist();
@@ -119,7 +119,7 @@ const gameout = () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: none;
+  background-color: #052b68;
   position: fixed; /* 고정 위치 */
   top: 0;
   left: 0;

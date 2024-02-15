@@ -6,19 +6,11 @@
           <div class="Authlogin">관리자 로그인</div>
           <div class="room-info">
             <div class="room-number">
-              <div class="info">관리자 ID</div>
-              <div class="input-value">
-                <input class="roomname" v-model="roomId" type="text" required />
-              </div>
-            </div>
-          </div>
-          <div class="room-info">
-            <div class="room-number">
-              <div class="info">비밀번호</div>
+              <div class="info">관리자 코드</div>
               <div class="input-value">
                 <input
-                  v-model="roomPwd"
                   class="roomname"
+                  v-model="Authemail"
                   type="password"
                   required
                 />
@@ -27,7 +19,7 @@
           </div>
         </div>
         <div class="checkbuttons">
-          <button class="checkbutton" @click="joinSession()">확인</button>
+          <button class="checkbutton" @click="goToAuthView()">확인</button>
           <button class="checkbutton" @click="closeModal">취소</button>
         </div>
       </div>
@@ -36,13 +28,14 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-const roomId = ref("");
-const roomPwd = ref(null);
+import { ref } from "vue";
+import { useRouter } from "vue-router"; // 관리자 로그인 안될경우 야매로 둔 코드
+import { userStore } from "@/stores/user";
+
+const store = userStore();
+
+const Authemail = ref("");
 const router = useRouter();
-const isPasswordEnabled = ref(false);
 
 // Props 정의
 const props = defineProps({
@@ -55,6 +48,14 @@ const emit = defineEmits(["close"]);
 // Methods
 function closeModal() {
   emit("close");
+}
+
+function goToAuthView() {
+  const payload = {
+    Authemail: Authemail.value,
+  };
+  store.myName = "ssafy";
+  router.replace({ name: "Auth" });
 }
 </script>
 
@@ -92,36 +93,7 @@ function closeModal() {
 .game-info {
   width: 100%;
 }
-.game-buttons {
-  margin-top: 5%;
-  margin-bottom: 5%;
-  width: 100%;
-  height: 250px;
-  /* Adjust the margin as needed */
-  display: flex; /* Set as Flex container */
-  justify-content: center; /* Even space around each item */
-  align-items: center;
-}
 
-.unselected,
-.selected {
-  width: 250px;
-  height: 250px;
-  margin: 0% 5%;
-  font-size: 72px;
-  font-family: "LABdigital";
-  border-radius: 5%;
-  border: 0;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.3s ease, color 0.5s ease;
-}
-.unselected {
-  background-color: #12deff;
-}
-
-.selected {
-  background-color: #fdc909; /* 예시 색상, 원하는 색상으로 변경 가능 */
-}
 .form-group {
   display: flex;
   justify-content: center;
@@ -148,11 +120,11 @@ function closeModal() {
 .room-number {
   width: 90%;
   height: 80%;
-  margin-left: 5%;
+  margin-left: 3%;
   display: flex;
   justify-content: center;
   align-content: center;
-  font-size: 24px;
+  font-size: 28px;
   font-family: "DOSMyungjo";
   color: white;
 }
@@ -184,27 +156,9 @@ function closeModal() {
   margin: 1%;
   height: 80%;
   width: 100%;
+  font-size: 20px;
   border-radius: 5px;
   border: none;
-}
-
-.freeroom {
-  display: flex;
-  margin: 1%;
-  height: 60%;
-  width: 70%;
-  border-radius: 5px;
-  border: none;
-  background-color: #afafaf;
-}
-.screet-room {
-  font-size: 24px;
-}
-
-.screet-room > input {
-  width: 20px;
-  height: 20px;
-  margin-top: 5%;
 }
 
 .checkbuttons {

@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useGameStore } from "@/stores/game";
 import { useWebSocketStore } from "@/stores/socket";
 import { useOpenViduStore } from "@/stores/openvidu";
@@ -45,23 +45,9 @@ onUnmounted(() => {
   clearInterval(countdownInterval); // 컴포넌트 언마운트 시 인터벌 정리
 });
 
-const adjustedRanks = computed(() => {
-  const filledArray = ranks.value.slice(); // ranks 배열 복사
-  for (let i = filledArray.length; i < 6; i++) {
-    filledArray.push({}); // 빈 객체를 추가하여 길이를 6으로 맞춤
-  }
-  return filledArray;
-});
-
-function close() {
-  usegamestore.gameout();
-  clearInterval(countdownInterval);
-}
-
 const gameout = () => {
   clearInterval(countdownInterval);
   store.roomexplosion = true;
-  console.log(store.roomexplosion);
   const payload = {
     roomId: Number(roomId),
     nickname: userstore.myName,

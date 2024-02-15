@@ -1,12 +1,19 @@
 <template>
   <div class="container">
     <h1 v-if="!gameStore.showAd" class="gamename">몸으로 말해요</h1>
-    <h1 v-if="gameStore.showAd && nowplayer" class="gamename">
-      제시어: {{ gameStore.answers }}
-    </h1>
-    <h1 v-if="gameStore.showAd && !nowplayer" class="gamename">
-      카테고리: {{ gameStore.category }}
-    </h1>
+    <div class="game-display">
+      <h1 v-if="gameStore.showAd && nowplayer" class="gamename">
+        제시어: {{ gameStore.answers }}
+      </h1>
+      <h1 v-if="gameStore.showAd && !nowplayer" class="gamename">
+        카테고리: {{ gameStore.category }}
+      </h1>
+      <div class="center-items">
+        <h1 v-if="gameStore.showAd" class="gamename left-item">
+          {{ gameStore.gamecountdown }}초
+        </h1>
+      </div>
+    </div>
     <div class="mainvidio">
       <fullVidio
         v-show="now"
@@ -54,7 +61,6 @@
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { useChatStore } from "@/stores/chat";
 import { useGameStore } from "@/stores/game";
 import { userStore } from "@/stores/user";
 import { useRoomStore } from "@/stores/room";
@@ -66,13 +72,11 @@ import roomexplosion from "./roomexplosion.vue";
 
 const route = useRoute();
 const roomId = route.params.id;
-const store = useChatStore();
 const gameStore = useGameStore();
 const userstore = userStore();
 const usesocketstore = useWebSocketStore();
 const roomStore = useRoomStore();
 const playername = userstore.myName;
-const myindex = ref(0);
 const now = ref();
 const nowkey = ref();
 const nowuserjson = ref();
@@ -80,31 +84,26 @@ const nowuser = ref();
 const roomowner = roomStore.owner === userstore.myName;
 const nowplayer = computed(() => nowuser.value?.clientData === playername);
 
-// console.log(roomStore.owner);
-// console.log(userstore.myName);
-// console.log(gameStore.start);
-// console.log(roomowner);
-
 watch(
   () => gameStore.nowParticipant,
   (newVal, oldVal) => {
-    // console.log("New Participant:", newVal, "myindex.value:", myindex.value);
     now.value = newVal;
-    // console.log(now.value.stream.connection.connectionId);
     nowkey.value = now.value.stream?.connection.connectionId;
-    // console.log(nowkey.value);
     nowuserjson.value = now.value.stream?.connection.data;
-    // console.log(nowuserjson.value);
     if (nowuserjson.value !== undefined) {
       nowuser.value = JSON.parse(nowuserjson.value);
-      // console.log(nowuser.value);
     }
   },
   { deep: true }
 );
 
 const gamestart = () => {
+  const numroomId = Number(roomId);
+  roomStore.getplayer(numroomId);
   usesocketstore.gameStart();
+  if (roomStore.players.length > 2) {
+    usesocketstore.gameStart();
+  }
 };
 
 onMounted(() => {
@@ -115,13 +114,6 @@ const gameStartOnLoad = () => {
   gameStore.start = false; // gameStore의 start 상태를 true로 설정
   gameStore.gameend = false;
   gameStore.gameresult = false;
-};
-
-const plusChat = function () {
-  if (start === false) {
-    return;
-  }
-  store.startChat();
 };
 </script>
 
@@ -154,7 +146,7 @@ const plusChat = function () {
   text-align: center;
   color: white;
   font-family: "DosMyungjo";
-  font-size: 48px;
+  font-size: 72px;
 }
 
 .button {
@@ -188,5 +180,21 @@ const plusChat = function () {
 
 .showAD {
   font-size: 48px;
+}
+
+.game-display {
+  display: flex; /* Flexbox 레이아웃 활성화 */
+  width: 100%; /* 전체 너비 설정 */
+}
+
+.left-item {
+  justify-self: flex-start; /* 왼쪽 요소를 flex 컨테이너의 시작점으로 정렬 */
+  white-space: nowrap;
+}
+
+.center-items {
+  display: flex; /* Flexbox 레이아웃 활성화 */
+  justify-content: center; /* 중앙 요소들을 가로 방향에서 중앙 정렬 */
+  align-items: center; /* 세로 방향에서 중앙 정렬 */ /* 중앙 요소들이 가능한 많은 공간을 차지하도록 설정 */
 }
 </style>

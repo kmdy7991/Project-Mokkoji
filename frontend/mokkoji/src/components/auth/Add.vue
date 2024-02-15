@@ -12,12 +12,18 @@
             <div class="center">카테고리</div>
           </div>
           <div class="categoryselect">
-            <select class="toggledown" v-model="subject">
+            <select class="toggledown" v-if="!directInput" v-model="subject">
               <option v-for="category in store.categorylist" class="wordinput">
                 {{ category }}
               </option>
               <!-- 여기에 더 많은 옵션을 추가할 수 있습니다. -->
             </select>
+            <input v-else class="wordinput" type="text" v-model="subject" />
+            <div class="switch">
+              <button @click="toggleDirectInput">
+                {{ directInput ? "목록확인" : "직접입력" }}
+              </button>
+            </div>
           </div>
         </div>
         <div class="category">
@@ -25,34 +31,40 @@
             <div class="center">제시어</div>
           </div>
           <div class="categoryselect">
-            <input class="wordinput" type="text" v-model="word" />
+            <textarea class="elementinput" type="text" v-model="word" />
           </div>
         </div>
       </div>
     </div>
     <div class="addbutton">
-      <button @click="subjectplus">추가</button>
+      <button v-if="directInput" @click="subjectplus">추가</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
+import { defineEmits } from "vue";
 import { ref, onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
 
 const store = useAuthStore();
 const subject = ref("");
 const word = ref("");
-console.log(subject.value);
+const directInput = ref(false);
 
 onMounted(() => {
   store.getcategory();
 });
+
 const emit = defineEmits(["close"]);
 
 const goBack = () => {
   emit("close");
+};
+
+const toggleDirectInput = () => {
+  directInput.value = !directInput.value;
+  subject.value = "";
 };
 
 const subjectplus = () => {
@@ -61,8 +73,6 @@ const subjectplus = () => {
     word: word.value,
   };
   store.plussubject(payload);
-  console.log(subject.value);
-  console.log(word.value);
 };
 </script>
 
@@ -91,7 +101,7 @@ const subjectplus = () => {
 .button:hover {
   background-color: #dd2b14; /* 예: 파란색 배경 */
   color: #fff; /* 예: 흰색 글자 */
-  cursor: click;
+  cursor: pointer;
 }
 
 .button img {
@@ -141,6 +151,7 @@ const subjectplus = () => {
   width: 100%;
   display: flex;
   justify-content: center;
+  align-content: center;
   object-fit: contain;
   color: white;
   font-size: 36px;
@@ -179,6 +190,17 @@ const subjectplus = () => {
   font-size: 36px;
 }
 
+.elementinput {
+  margin: 1%;
+  min-width: 80%;
+  min-height: 80px;
+  max-width: 80%;
+  max-height: 80px;
+  border-radius: 10px;
+  border: none;
+  font-size: 18px;
+}
+
 .addbutton {
   display: flex;
   justify-content: center;
@@ -199,5 +221,29 @@ const subjectplus = () => {
 
 .addbutton > button:hover {
   background-color: #fdc809bd;
+}
+
+.switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+}
+
+.switch > button {
+  width: 90%;
+  height: 80%;
+  border-radius: 10px;
+  border: none;
+  background-color: #12deff;
+  transition: background-color 0.3s ease;
+  font-family: "LABdigital";
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+  font-size: 28px;
+}
+
+.switch > button:hover {
+  background-color: #3498db; /* 예: 파란색 배경 */
+  cursor: pointer;
 }
 </style>

@@ -3,12 +3,6 @@
     <div class="title">
       <h1>모꼬지</h1>
       <div class="buttons">
-        <button class="button" @click="rankingmodal">
-          <img src="@/assets/rank.png" alt="rank.png" />
-        </button>
-        <button class="button" @click="myfriendmodal">
-          <img src="@/assets/Friend.png" alt="Friend.png" />
-        </button>
         <button class="button" @click="mypagemodal">
           <img src="@/assets/mypage.png" alt="mypage.png" />
         </button>
@@ -20,67 +14,29 @@
     <div>
       <WaitingArea />
     </div>
-    <RankingModal
-      v-if="rankingModalVisible"
-      @close="rankingModalVisible = false"
-    />
     <MypageModal
       v-if="mypageModalVisible"
       @close="mypageModalVisible = false"
-    />
-    <friendModal
-      v-if="myfriendModalVisible"
-      @close="myfriendModalVisible = false"
     />
   </div>
 </template>
 
 <script setup>
 import WaitingArea from "@/components/waitingroom/WaitingArea.vue";
-import RankingModal from "@/components/mainscreenbuttons/ranking.vue";
 import MypageModal from "@/components/mypage/mypage.vue";
-import friendModal from "@/components/mainscreenbuttons/friend.vue";
 import { useRouter } from "vue-router";
-import { useRoomStore } from "@/stores/room";
 const router = useRouter();
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref } from "vue";
 
-const rankingModalVisible = ref(false);
 const mypageModalVisible = ref(false);
-const myfriendModalVisible = ref(false);
-const store = useRoomStore();
-
-function rankingmodal() {
-  rankingModalVisible.value = !rankingModalVisible.value;
-}
 
 function mypagemodal() {
   mypageModalVisible.value = !mypageModalVisible.value;
 }
 
-function myfriendmodal() {
-  myfriendModalVisible.value = !myfriendModalVisible.value;
-}
-
 function gohome() {
   router.push({ name: "home" });
 }
-
-function handleF5(event) {
-  if (event.key === "F5" || event.keyCode === 116) {
-    // event.preventDefault(); // 기본 F5 동작 방지
-    store.getRoomlist();
-    router.replace({ name: "waitRoom" }); // 여기서 'home'은 리디렉트하고 싶은 라우트 이름
-  }
-}
-
-onMounted(() => {
-  window.addEventListener("keydown", handleF5);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("keydown", handleF5);
-});
 </script>
 <style scoped>
 .title {
@@ -155,13 +111,5 @@ onUnmounted(() => {
   background-color: #dd2b14; /* 예: 파란색 배경 */
   color: #fff; /* 예: 흰색 글자 */
   cursor: pointer;
-}
-
-.live-player {
-  width: 25%;
-}
-
-.game-room {
-  width: 75%;
 }
 </style>
