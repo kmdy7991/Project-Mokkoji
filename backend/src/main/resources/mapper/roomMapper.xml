@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.mokkoji.game.room.mapper.RoomMapper">
+    <!--    터지지 않은 방 리스트 출력-->
+    <select id="getAllRooms" resultType="com.ssafy.mokkoji.game.room.dto.RoomDto">
+        select room_id,
+               room_name,
+               user_count,
+               is_private,
+               is_explosion,
+               is_active,
+               game_type,
+               owner
+        from gameroom
+        where is_explosion = 0 and is_active = 0;
+    </select>
+    <select id="list" parameterType="map" resultType="com.ssafy.mokkoji.game.room.dto.RoomDto">
+        /* ListMapper.list*/
+        SELECT *
+        FROM gameroom
+        LIMIT ${offset} , ${pageSize}
+    </select>
+    <!--    방 생성 -->
+    <insert id="createRoom" parameterType="com.ssafy.mokkoji.game.room.dto.RoomDto" useGeneratedKeys="true"
+            keyProperty="room_id">
+        insert into gameroom (room_name, room_password, user_count, is_private, is_explosion, is_active, game_type,
+                              owner)
+        values (#{room_name}, #{room_password}, 1, #{is_private}, false, false, #{game_type}, #{owner})
+    </insert>
+    <!--        터지지 않은 방의 개수를 센다-->
+    <select id="countRooms" resultType="int">
+        SELECT COUNT(*) AS room_count
+        FROM gameroom
+        where is_explosion = 0;
+    </select>
+    <!--    방 정보 불러오기-->
+    <select id="selectRoom" parameterType="int" resultType="com.ssafy.mokkoji.game.room.dto.RoomDto">
+        select *
+        from gameroom
+        where #{room_id} = room_id;
+    </select>
+<!-- 방에 입장한다.-->
+    <insert id="enterUser" parameterType="java.util.Map">
+        INSERT INTO participant (id, user_nickname, room_id)
+        VALUES (#{user_id}, #{user_nickname}, #{room_id})
+    </insert>
+<!-- 방에 들어가는 경우 유저 수 1 증가-->
+    <update id="userCountPlusOne" parameterType="int">
+        UPDATE gameroom
+        SET user_count = user_count + 1
+        WHERE #{room_id} = room_id;
+    </update>
+<!--  방에서 나가는 경우 유저 수 1 감소-->
+    <update id="userCountMinusOne" parameterType="int">
+        UPDATE gameroom
+        SET user_count = user_count - 1
+        WHERE #{room_id} = room_id;
+    </update>
+<!--    닉네임 주소를 통해 id를 찾는다. (수정 필요)-->
+    <select id="nicknameToID" parameterType="String" resultType="Integer">
+        SELECT IFNULL(id, -1) AS id
+        FROM users
+        WHERE user_nickname = #{user_id}
+    </select>
+<!--    닉네임을 통해 유저가 게임에 참여중인지 확인한다.-->
+    <select id="userInGame" parameterType="String" resultType="int">
+        select count(*) as userInGame
+        from participant
+        where user_nickname = #{user_id};
+    </select>
+<!--    패스워드를 확인한다.-->
+    <select id="checkPassword" parameterType="int" resultType="String">
+        select room_password
+        from gameroom
+        where room_id = #{room_id};
+    </select>
+<!--    게임을 시작한다.-->
+    <update id="gameStart" parameterType="int">
+        UPDATE gameroom
+        SET is_active = 1
+        WHERE room_id = #{room_id};
+    </update>
+<!--    게임을 끝낸다.-->
+    <update id="gameEnd" parameterType="int">
+        UPDATE gameroom
+        SET is_active = 0
+        WHERE room_id = #{room_id};
+    </update>
+<!--    유저가 게임방 밖으로 나온다.-->
+    <delete id="goOutUser" parameterType="int">
+        DELETE
+        FROM participant
+        WHERE id = #{user_id};
+    </delete>
+<!--    유저의 방 아이디를 확인한다.-->
+    <select id="userRoomID" parameterType="int" resultType="int">
+        select room_id
+        from participant
+        where id = #{user_id};
+    </select>
+    <!--    게임이 폭파됐는지 확인-->
+    <select id="isExplosion" parameterType="int" resultType="int">
+        select gameroom.is_explosion
+        from gameroom
+        where room_id = #{room_id}
+    </select>
+    <!--    게임 터지게 함-->
+    <update id="gameExplosion" parameterType="int">
+        UPDATE gameroom
+        SET is_explosion = 1
+        WHERE room_id = #{room_id};
+    </update>
+    <!--    게임 안 사람 수를 센다.-->
+    <select id="countInGame" parameterType="int" resultType="int">
+        select gameroom.user_count
+        from gameroom
+        where room_id = #{room_id}
+    </select>
+    <!--   방 번호에 따른 participant 정보 불러오게 -->
+    <select id="participantInfo" parameterType="int" resultType="com.ssafy.mokkoji.game.room.dto.UserDto">
+        select user_nickname
+        from participant
+        where room_id = #{room_id}
+    </select>
+<!--    방 번호의 owner 확인-->
+    <select id="checkOwner" parameterType="int" resultType="String">
+        select gameroom.owner from gameroom
+        where #{room_id} = room_id
+    </select>
+<!--    유저 고유 번호를 통해 닉네임 알아냄-->
+    <select id="findNickname" parameterType="int" resultType="String">
+        select users.user_nickname from users
+        where #{id} = id;
+    </select>
+</mapper>
