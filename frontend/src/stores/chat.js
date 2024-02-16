@@ -1,10 +1,9 @@
-import { ref, computed, onMounted } from "vue";
+import { ref } from "vue";
 import { defineStore } from "pinia";
 
 export const useChatStore = defineStore(
   "chat",
   () => {
-    let id = 0;
     const roomId = ref("");
     const chats = ref([]);
     const setRoomId = (newRoomId) => {

@@ -1,12 +1,19 @@
 <template>
   <div class="container">
     <h1 v-if="!gameStore.showAd" class="gamename">몸으로 말해요</h1>
-    <h1 v-if="gameStore.showAd && nowplayer" class="gamename">
-      제시어: {{ gameStore.answers }}
-    </h1>
-    <h1 v-if="gameStore.showAd && !nowplayer" class="gamename">
-      카테고리: {{ gameStore.category }}
-    </h1>
+    <div class="game-display">
+      <h1 v-if="gameStore.showAd && nowplayer" class="gamename">
+        제시어: {{ gameStore.answers }}
+      </h1>
+      <h1 v-if="gameStore.showAd && !nowplayer" class="gamename">
+        카테고리: {{ gameStore.category }}
+      </h1>
+      <div class="center-items">
+        <h1 v-if="gameStore.showAd" class="gamename left-item">
+          {{ gameStore.gamecountdown }}초
+        </h1>
+      </div>
+    </div>
     <div class="mainvidio">
       <fullVidio
         v-show="now"
@@ -172,5 +179,21 @@ const gameStartOnLoad = () => {
 
 .showAD {
   font-size: 48px;
+}
+
+.game-display {
+  display: flex; /* Flexbox 레이아웃 활성화 */
+  width: 100%; /* 전체 너비 설정 */
+}
+
+.left-item {
+  justify-self: flex-start; /* 왼쪽 요소를 flex 컨테이너의 시작점으로 정렬 */
+  white-space: nowrap;
+}
+
+.center-items {
+  display: flex; /* Flexbox 레이아웃 활성화 */
+  justify-content: center; /* 중앙 요소들을 가로 방향에서 중앙 정렬 */
+  align-items: center; /* 세로 방향에서 중앙 정렬 */ /* 중앙 요소들이 가능한 많은 공간을 차지하도록 설정 */
 }
 </style>

@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps } from "vue";
+import { defineProps } from "vue";
 import fullMainVidoo from "./fullMainVidio.vue";
 import { useGameStore } from "@/stores/game";
 const gameStore = useGameStore();

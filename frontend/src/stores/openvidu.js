@@ -39,9 +39,7 @@ export const useOpenViduStore = defineStore(
       });
 
       // On every asynchronous exception...
-      session.value.on("exception", ({ exception }) => {
-        console.warn(exception);
-      });
+      session.value.on("exception", ({ exception }) => {});
 
       // 4) Connect to the session with a valid user token
       getToken(payload.roomId).then((token) => {
@@ -54,7 +52,7 @@ export const useOpenViduStore = defineStore(
               videoSource: undefined, // The source of video. If undefined default webcam
               publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
               publishVideo: true, // Whether you want to start publishing with your video enabled or not
-              resolution: "800x600", // The resolution of your video
+              resolution: "990x650", // The resolution of your video
               frameRate: 30, // The frame rate of your video
               insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
               mirror: false, // Whether to mirror your local video or not
@@ -63,13 +61,7 @@ export const useOpenViduStore = defineStore(
             publisher.value = newPublisher;
             session.value.publish(newPublisher);
           })
-          .catch((error) => {
-            console.log(
-              "There was an error connecting to the session:",
-              error.code,
-              error.message
-            );
-          });
+          .catch((error) => {});
       });
     };
 
@@ -88,7 +80,6 @@ export const useOpenViduStore = defineStore(
         return await createToken(sessionId);
       } catch (error) {
         // Handle any errors that might occur during createSession or createToken
-        console.error("Error getting token:", error);
         throw error;
       }
     };
@@ -114,7 +105,6 @@ export const useOpenViduStore = defineStore(
         let test = await response();
         return test.data.id;
       } catch (error) {
-        console.log(error);
         if (error?.response?.status === 409) {
           return sessionId;
         } else {

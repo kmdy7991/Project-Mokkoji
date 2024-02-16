@@ -13,6 +13,7 @@ export const useGameStore = defineStore(
     const nowcountdown = ref(false);
     const countdown = ref(5);
     const countdown2 = ref(3);
+    const gamecountdown = ref(30);
     const showAd = ref(false);
     const store = useOpenViduStore();
     const socketstore = useWebSocketStore();
@@ -50,7 +51,6 @@ export const useGameStore = defineStore(
         .catch((err) => {});
     };
     const gameStart = async (roomId) => {
-      nowcountdown.value = true;
       getcategory(roomId);
       const numroomId = Number(roomId);
       roomstore.getplayer(numroomId);
@@ -74,6 +74,7 @@ export const useGameStore = defineStore(
       }, 1000);
     };
     function initGame(roomId) {
+      gamecountdown.value = 30;
       subscriber.value = store.subscribers;
       publisher.value = store.publisher;
       combinedParticipants.value = [...subscriber.value, publisher.value];
@@ -106,16 +107,22 @@ export const useGameStore = defineStore(
         }
         if (foundIndex !== -1) {
           nowParticipant.value = combinedParticipants.value[foundIndex];
-          setTimeout(() => {
-            setTimeout(() => {
-              // 다음 참가자로 넘어가거나 게임 종료 처리
-              nowParticipant.value = "";
-              nowIndex.value++;
-              answers.value = "";
-              nowturn.value = "";
-              updateParticipant(roomId);
-            }, 3000); // 3초동안 정지
-          }, 30000);
+          const countdownInterval = setInterval(() => {
+            gamecountdown.value -= 1;
+            if (gamecountdown.value === 0) {
+              clearInterval(countdownInterval); // 카운트다운이 끝나면 인터벌을 중지
+              // 카운트다운이 0에 도달했을 때 실행할 로직
+              setTimeout(() => {
+                // 다음 참가자로 넘어가거나 게임 종료 처리
+                nowParticipant.value = "";
+                nowIndex.value++;
+                answers.value = "";
+                nowturn.value = "";
+                gamecountdown.value = 30;
+                updateParticipant(roomId); // 현재 이것은 로컬에서 테스트 후 진행.
+              }, 3000); // 3초 후에 실행
+            }
+          }, 1000); // 1초마다 실행
         } else {
           nowIndex.value++;
           nowturn.value = "";
@@ -125,6 +132,7 @@ export const useGameStore = defineStore(
       } else {
         answers.value = "";
         nowturn.value = "";
+        gamecountdown.value = 30;
         endGame(roomId);
       }
     }
@@ -158,6 +166,7 @@ export const useGameStore = defineStore(
       start,
       countdown,
       countdown2,
+      gamecountdown,
       showAd,
       subscriber,
       category,

@@ -67,7 +67,6 @@ export const useRoomStore = defineStore(
           owner.value = res.data.owner;
           roomId.value = res.data.room_id;
           const createdRoomId = String(res.data.room_id);
-          console.log(createdRoomId);
           const payload = {
             roomId: createdRoomId,
           };
@@ -97,7 +96,6 @@ export const useRoomStore = defineStore(
           };
           owner.value = res.data.room.owner;
           vidustore.joinSession(payload);
-          console.log(roomIdNumber);
           router.replace({
             path: `/TalkBody/${roomIdNumber}`,
             query: {

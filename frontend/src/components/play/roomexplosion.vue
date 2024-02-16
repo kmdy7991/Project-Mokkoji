@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useGameStore } from "@/stores/game";
 import { useWebSocketStore } from "@/stores/socket";
 import { useOpenViduStore } from "@/stores/openvidu";
@@ -56,7 +56,6 @@ const gameout = () => {
   store.disconnectWebSocket();
   vidustore.leaveSession();
   session.value = vidustore.session;
-  store.roomexplosion = true;
   roomstore.getRoomlist();
   roomstore.exitRoom(payload);
 

@@ -20,14 +20,13 @@ export const useWebSocketStore = defineStore(
     const roomexplosion = ref(true);
     const API_URL = "";
 
-    console.log(API_URL);
     const initializeWebSocket = (newRoomId) => {
       roomId.value = newRoomId;
       sock.value = new sockJs(`${API_URL}/chat`);
       stomp.value = Stomp.over(sock.value);
+      stomp.value.debug = () => {};
 
       stomp.value.connect({}, (frame) => {
-        console.log("Connected: " + frame);
         subscribeToRoom();
         stomp.value.send(
           `/pub/${roomId.value}`,
@@ -67,7 +66,6 @@ export const useWebSocketStore = defineStore(
               break;
             case "OWNER":
               roomexplosion.value = messageObject.corrects;
-              console.log(roomexplosion.value);
               break;
             case "SUCCESS":
               store.addChat(messageObject);
@@ -75,7 +73,6 @@ export const useWebSocketStore = defineStore(
             case "END":
               // END 유형의 메시지 처리
               usegamestore.ranks = messageObject.userList;
-              console.log(usegamestore.ranks);
               break;
           }
         });
@@ -83,7 +80,7 @@ export const useWebSocketStore = defineStore(
     };
 
     const sendMessage = (inputChat) => {
-      if (!inputChat.trim()) {
+      if (!inputChat.trim() || userstore.myName === usegamestore.nowturn) {
         return;
       }
       const messageObject = {
