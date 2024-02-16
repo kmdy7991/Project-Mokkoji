@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
+import { defineEmits } from "vue";
 import { ref, onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
 
@@ -174,11 +174,6 @@ const subjectplus = () => {
   height: 85px;
   border-radius: 10px;
   font-size: 36px;
-}
-
-.togglebutton {
-  margin: 1%;
-  width: 10%;
 }
 
 .wordinput {

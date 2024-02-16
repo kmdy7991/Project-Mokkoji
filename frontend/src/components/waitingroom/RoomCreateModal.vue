@@ -64,8 +64,6 @@ const gameType = ref(0);
 
 const selectGameType = (type) => {
   gameType.value = type; // 선택된 게임 유형 업데이트
-  console.log(gameType.value);
-  console.log(typeof gameType.value);
 };
 // Props 정의
 const props = defineProps({

@@ -33,7 +33,6 @@ const roomstore = useRoomStore();
 
 const handlePageRefresh = (event) => {
   gamestore.gameout();
-  console.log(gamestore.start);
   // Prevent default action and display a confirmation dialog
   event.preventDefault();
   event.returnValue = "정말로 페이지를 벗어나시겠습니까?";
