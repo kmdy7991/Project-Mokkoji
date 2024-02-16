@@ -30,8 +30,10 @@
 <script setup>
 import { ref } from "vue";
 import { userStore } from "@/stores/user";
+import { useRouter } from "vue-router";
 
 const store = userStore();
+const router = useRouter();
 const Authemail = ref("");
 
 // Props 정의
