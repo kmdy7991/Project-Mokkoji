@@ -100,7 +100,7 @@ watch(
 const gamestart = () => {
   const numroomId = Number(roomId);
   roomStore.getplayer(numroomId);
-  if (roomStore.players.length > 2) {
+  if (roomStore.players.length > 1) {
     usesocketstore.gameStart();
   }
 };
