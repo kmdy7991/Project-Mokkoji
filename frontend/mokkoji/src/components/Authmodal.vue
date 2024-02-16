@@ -54,7 +54,8 @@ function goToAuthView() {
   const payload = {
     Authemail: Authemail.value,
   };
-  store.myName = "ssafy";
+  store.myName = "ssafy1234";
+  store.Auth = true;
   router.replace({ name: "Auth" });
 }
 </script>
