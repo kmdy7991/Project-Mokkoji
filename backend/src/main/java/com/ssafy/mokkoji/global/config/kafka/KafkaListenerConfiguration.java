@@ -1,0 +1,43 @@
+package com.ssafy.mokkoji.global.config.kafka;
+
+import com.ssafy.mokkoji.chat.dto.response.MessageResponse;
+import com.ssafy.mokkoji.global.properties.KafkaProperties;
+import com.google.common.collect.ImmutableMap;
+import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
+
+import java.util.Map;
+
+@EnableKafka
+@Configuration
+@RequiredArgsConstructor
+public class KafkaListenerConfiguration {
+    private final KafkaProperties kafkaProperties;
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, MessageResponse> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, MessageResponse> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(kafkaListenerConsumer());
+        return factory;
+    }
+
+    @Bean
+    public ConsumerFactory<String, MessageResponse> kafkaListenerConsumer() {
+        Map<String, Object> consumerConfigurations =
+                ImmutableMap.<String, Object>builder()
+                        .put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getServer())
+                        .put(ConsumerConfig.GROUP_ID_CONFIG, kafkaProperties.getGroupId())
+                        .put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, kafkaProperties.getOffset())
+                        .build();
+
+        return new DefaultKafkaConsumerFactory<>(consumerConfigurations, new StringDeserializer(), new JsonDeserializer<>(MessageResponse.class));
+    }
+}
