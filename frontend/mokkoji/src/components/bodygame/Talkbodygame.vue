@@ -71,8 +71,8 @@ const goWaitRoom = () => {
     store.disconnectWebSocket();
     vidustore.leaveSession();
     session.value = vidustore.session;
-    roomstore.getRoomlist();
     roomstore.exitRoom(payload);
+    roomstore.getRoomlist();
     if (userstore.Auth === true) {
       router.replace({ name: "Auth" });
     } else {

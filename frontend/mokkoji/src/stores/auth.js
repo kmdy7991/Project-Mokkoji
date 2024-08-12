@@ -1,42 +1,35 @@
 import { defineStore } from "pinia";
-import { ref, watch, computed } from "vue";
+import { ref } from "vue";
 import axios from "axios";
 
 export const useAuthStore = defineStore(
   "Auth",
   () => {
-    const API_URL = import.meta.env.VITE_APP_API_URL;
     const categorylist = ref([]);
     const getcategory = () => {
       axios({
         method: "get",
-        url: `${API_URL}/api/admin/talkbodylist`,
+        url: `/api/admin/talkbodylist`,
       })
         .then((res) => {
           categorylist.value = res.data.map((item) => item.subject);
-          console.log(categorylist.value);
         })
-        .catch((err) => {
-          console.log(err.data);
-        });
+        .catch((err) => {});
     };
     const plussubject = (payload) => {
       const { subject, word } = payload;
-
+      const elementsArray = payload.word.split(",");
       const jsonData = {
-        word: payload.word,
+        subject: payload.subject,
+        elements: elementsArray,
       };
       axios({
         method: "post",
-        url: `${API_URL}/api/admin/input`,
+        url: `/api/admin/input`,
         data: jsonData,
       })
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log(err.data);
-        });
+        .then((res) => {})
+        .catch((err) => {});
     };
     return { categorylist, getcategory, plussubject };
   },

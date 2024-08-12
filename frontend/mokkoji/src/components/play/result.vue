@@ -56,7 +56,7 @@ let countdownInterval;
 watch(
   () => usegamestore.ranks,
   (newVal) => {
-    result = newVal;
+    result.value = newVal;
     adjustedRanks;
     // 이 시점에서 gameresult가 업데이트 되었으므로,
     // Vue의 반응성 시스템에 의해 adjustedRanks도 자동으로 업데이트됩니다.
@@ -79,7 +79,6 @@ onUnmounted(() => {
 
 const adjustedRanks = computed(() => {
   const filledArray = result.slice(); // ranks 배열 복사
-  console.log(filledArray + `97875464564`);
   for (let i = filledArray.length; i < 6; i++) {
     filledArray.push({}); // 빈 객체를 추가하여 길이를 6으로 맞춤
   }
@@ -93,7 +92,6 @@ function close() {
 
 const gameout = () => {
   clearInterval(countdownInterval);
-
   const payload = {
     roomId: Number(roomId),
     nickname: userstore.myName,
@@ -102,9 +100,10 @@ const gameout = () => {
   usegamestore.countdown = 5;
   store.disconnectWebSocket();
   vidustore.leaveSession();
+  store.roomexplosion = true;
   session.value = vidustore.session;
-  roomstore.getRoomlist();
   roomstore.exitRoom(payload);
+  roomstore.getRoomlist();
   if (userstore.Auth === true) {
     router.replace({ name: "Auth" });
   } else {
@@ -120,7 +119,7 @@ const gameout = () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: none;
+  background-color: #052b68;
   position: fixed; /* 고정 위치 */
   top: 0;
   left: 0;

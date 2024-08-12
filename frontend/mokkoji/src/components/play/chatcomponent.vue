@@ -8,7 +8,7 @@
         <p>{{ roomName }}</p>
       </div>
     </div>
-    <div class="chatting-area">
+    <div class="chatting-area" ref="chattingAreaRef">
       <div class="chat" v-for="chat in store.chats" :key="chat.id" :chat="chat">
         <p v-if="chat.roomId === roomIdRef">
           {{ chat.name }} : {{ chat.text }}
@@ -28,22 +28,21 @@
 <script setup>
 import { useChatStore } from "@/stores/chat";
 import { useWebSocketStore } from "@/stores/socket";
-import { useRoomStore } from "@/stores/room";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
 const roomId = route.params.id;
 const roomName = ref("");
+const chattingAreaRef = ref(null);
+const store = useChatStore();
+const webSocketStore = useWebSocketStore();
+const inputChat = ref("");
 const props = defineProps({
   roomId: String,
 });
-
-const store = useChatStore();
-const webSocketStore = useWebSocketStore();
-const roomstore = useRoomStore();
-const inputChat = ref("");
 const roomIdRef = ref(props.roomId);
+
 // 서버로 메시지 보내는 함
 
 onMounted(() => {
@@ -53,45 +52,20 @@ onMounted(() => {
   webSocketStore.initializeWebSocket(roomId);
 });
 
-// onMounted(() => {
-//   store.setRoomId(props.roomId);
-//   webSocketStore.initializeWebSocket(props.roomId);
-//   // sock.value = new sockJs("http://localhost:8080/chat");
-//   // stomp.value = Stomp.over(sock.value);
-//   // stomp.value.connect({}, (frame) => {
-//   //   console.log("Connected: " + frame);
-//   //   stomp.value.subscribe(`/topic/${roomIdRef.value}`, (message) => {
-//   //     // 메시지 수신 처리
-//   //     // console.log("구독받은 메세지 = " + message.body);
-//   //     const messageObject = JSON.parse(message.body);
-
-//   //     // userName 속성에 접근
-//   //     console.log(messageObject);
-//   //     store.addChat(messageObject);
-//     });
-// //   });
-// // });
+watch(
+  () => store.chats.length,
+  () => {
+    nextTick(() => {
+      if (chattingAreaRef.value) {
+        chattingAreaRef.value.scrollTop = chattingAreaRef.value.scrollHeight;
+      }
+    });
+  }
+);
 
 function sendMessage() {
   webSocketStore.sendMessage(inputChat.value);
   inputChat.value = "";
-  // if (inputChat.value === "") {
-  //   // 입력란이 비어있거나 공백만 있는 경우 함수 실행 중단
-  //   return;
-  // }
-  // const messageObject = {
-  //   "sessionId": roomIdRef.value,
-  //   userName: "ssafy", // 추후 이부분은 userstore 따와 유저 정보 넣을 예정.
-  //   content: inputChat.value,
-  //   // 예시로 현재 시간을 추가
-  //   // 다른 필요한 프로퍼티를 여기에 추가할 수 있습니다
-  // };
-
-  // const messageJson = JSON.stringify(messageObject);
-  // console.log(store.setRoomId)
-  // stomp.value.send(`/pub/${roomIdRef.value}`, messageJson, {}); // 추후 방 번호도 다른 store 따와서 방 번호 따올 예정
-
-  // // console.log(store.chats)
   inputChat.value = null;
 }
 </script>
@@ -114,9 +88,11 @@ function sendMessage() {
   color: white;
   margin-left: 2%;
   margin-bottom: 2%;
+  font-size: 24px;
 }
 
 .chat > p {
+  font-size: 14px;
   margin: 1%;
 }
 .room-number {

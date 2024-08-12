@@ -18,13 +18,13 @@ export const useWebSocketStore = defineStore(
     const stomp = ref(null);
     const roomId = ref(null);
     const roomexplosion = ref(true);
-    const myName = userstore.myName;
-    const API_URL = import.meta.env.VITE_APP_API_URL;
+    const API_URL = "";
 
     const initializeWebSocket = (newRoomId) => {
       roomId.value = newRoomId;
       sock.value = new sockJs(`${API_URL}/chat`); // 로컬단 서버로 올릴시 수정할것! 58 예진님 42 대영
       stomp.value = Stomp.over(sock.value);
+      stomp.value.debug = () => {};
 
       stomp.value.connect({}, (frame) => {
         console.log("Connected: " + frame);
@@ -34,7 +34,7 @@ export const useWebSocketStore = defineStore(
           JSON.stringify({
             roomId: roomId.value,
             type: "ENTER",
-            user_nickname: myName,
+            user_nickname: userstore.myName,
           })
         );
       });
@@ -43,10 +43,7 @@ export const useWebSocketStore = defineStore(
     const subscribeToRoom = () => {
       if (roomId.value && stomp.value) {
         stomp.value.subscribe(`/topic/${roomId.value}`, (message) => {
-          // console.log("구독받은 메세지 = " + message.body);
           const messageObject = JSON.parse(message.body);
-          // store.addChat(messageObject);
-          // 메시지 유형에 따른 조건 처리
           switch (messageObject.type) {
             case "CHAT":
               // CHAT 유형의 메시지 처리
@@ -63,49 +60,33 @@ export const useWebSocketStore = defineStore(
               roomstore.getplayer(roomId.value);
               break;
             case "THEME":
-              // console.log(messageObject);
               const words = messageObject.content.split(" ");
               usegamestore.category = words[0];
               usegamestore.answers = words[words.length - 1];
               break;
             case "OWNER":
-              // console.log(messageObject);
               roomexplosion.value = messageObject.corrects;
               console.log(roomexplosion.value);
               break;
             case "SUCCESS":
               store.addChat(messageObject);
               break;
-            // case "TURN":
-            //   // TURN 유형의 메시지 처리
-            //   console.log("차례가 변경되었습니다.");
-            //   // 여기에 TURN 유형에 대한 처리 로직 추가
-            //   break;
             case "END":
-              // END 유형의 메시지 처리
               usegamestore.ranks = messageObject.userList;
               console.log(usegamestore.ranks);
               break;
-            // 여기에 END 유형에 대한 처리 로직 추가
-            //   break;
-            //   default:
-            //     // 알 수 없는 메시지 유형 처리
-            //     console.log(
-            //       "알 수 없는 메시지 유형입니다: " + messageObject.type
-            // );
           }
         });
       }
     };
 
     const sendMessage = (inputChat) => {
-      if (!inputChat.trim()) {
+      if (!inputChat.trim() || userstore.myName === usegamestore.nowturn) {
         return;
       }
-      console.log(myName);
       const messageObject = {
         roomId: roomId.value,
-        user_nickname: myName,
+        user_nickname: userstore.myName,
         content: inputChat,
         type: "CHAT",
       };

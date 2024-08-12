@@ -6,12 +6,6 @@
       alt="bodyword.png"
       class="centered-image"
     />
-    <img
-      v-else-if="gameType === 1"
-      src="@/assets/musicQ.png"
-      alt="musicQ.png"
-      class="centered-image"
-    />
     <div v-else class="centered-image">
       <div class="blank"></div>
     </div>

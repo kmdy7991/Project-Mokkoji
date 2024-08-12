@@ -12,7 +12,7 @@
           <p>카테고리</p>
           <p>추가</p>
         </button>
-        <button class="button2" @click="playermanagement">유저 명단</button>
+        <button class="button2" @click="">개발중</button>
       </div>
     </div>
     <Add v-if="word" @close="wordClose" />
@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits} from "vue";
+import { ref, defineProps, defineEmits } from "vue";
 import Add from "./Add.vue";
 import Players from "./Players.vue";
 
@@ -61,7 +61,7 @@ const goBack = () => {
   /* 버튼들을 세로 방향으로 중앙에 배치 */
   height: 100%; /* 컨테이너의 높이를 화면 높이와 동일하게 설정 */
   width: 100%;
-  background-color: #00C3F4;
+  background-color: #00c3f4;
 }
 .buttons {
   display: flex;
@@ -98,13 +98,13 @@ const goBack = () => {
   cursor: click;
 }
 
-
 .button img {
   width: 100%; /* 이미지 너비를 버튼 너비에 맞춤 */
   height: 100%; /* 이미지 높이를 버튼 높이에 맞춤 */
   object-fit: contain; /* 이미지 비율을 유지하면서 버튼 내에 맞춤 */
 }
-.button1,.button2 {
+.button1,
+.button2 {
   display: flex;
   flex-direction: column;
   justify-content: center; /* 텍스트를 가로 방향으로 중앙에 배치 */
@@ -120,19 +120,19 @@ const goBack = () => {
   border: none;
 }
 
-.button2{
+.button2 {
   color: white;
 }
 
 .button1 {
-  background-color: #F68D12;
+  background-color: #f68d12;
 }
 
 .button1:hover {
   background-color: #f68c12cb;
 }
 .button2 {
-  background-color: #3F46EA;
+  background-color: #3f46ea;
 }
 
 .button2:hover {

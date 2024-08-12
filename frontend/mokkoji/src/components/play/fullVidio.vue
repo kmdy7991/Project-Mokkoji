@@ -7,18 +7,13 @@
 </template>
 
 <script setup>
-import { computed, defineProps } from "vue";
+import { defineProps } from "vue";
 import fullMainVidoo from "./fullMainVidio.vue";
 import { useGameStore } from "@/stores/game";
 const gameStore = useGameStore();
 // props 정의
 const props = defineProps({
   streamManager: Object,
-});
-
-const clientData = computed(() => {
-  const connection = props.streamManager.stream.connection;
-  return JSON.parse(connection.data).clientData;
 });
 </script>
 <style scoped>

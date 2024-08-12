@@ -23,12 +23,6 @@ const clientData = computed(() => {
   const connection = props.streamManager.stream.connection;
   return JSON.parse(connection.data).clientData;
 });
-
-// methods
-const getConnectionData = () => {
-  const connection = props.streamManager.stream.connection;
-  return JSON.parse(connection.data);
-};
 </script>
 <style scoped>
 #video-show {
@@ -53,30 +47,3 @@ const getConnectionData = () => {
   padding: 0%;
 }
 </style>
-
-<!-- <template>
-  <div v-if="streamManager">
-    <ov-video :stream-manager="streamManager" />
-    <div>
-      <p>{{ clientData }}</p>
-    </div>
-  </div>
-</template>
-
-<script setup>
-import { computed } from "vue";
-import OvVideo from "./OvVideo.vue";
-
-const props = defineProps({
-  streamManager: Object,
-});
-
-const clientData = computed(() => {
-  if (!props.streamManager) {
-    return "";
-  }
-
-  const connection = props.streamManager.stream.connection;
-  return JSON.parse(connection.data).clientData;
-});
-</script> -->
