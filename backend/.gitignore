@@ -37,6 +37,7 @@ out/
 .vscode/
 
 ### OAuth ###
+#application-oauth.yml
 
 ### ssl
 !**/src/main/resources/ssafy-ssl.jks
