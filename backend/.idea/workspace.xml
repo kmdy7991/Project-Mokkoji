@@ -5,182 +5,132 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f68b749c-4da2-4015-884b-d1772af60e50" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/a.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/MokkojiApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/Interceptor/MessageTypeChannelInterceptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/aspect/LogAspect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/chat/controller/ChatController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/chat/domain/entity/Message.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/chat/domain/request/MessageDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/chat/domain/response/MessageResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/chat/service/ChatService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/chat/service/ChatServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/chat/service/kafka/KafkaListen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/chat/service/kafka/KafkaSend.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/config/ExpireTime.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/config/SslConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/config/WebSecurityConfigure.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/config/WebSocketConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/config/kafka/KafkaListenerConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/config/kafka/KafkaProducerConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/properties/ExpireTimeProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/properties/KafkaProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/swagger/SwaggerSuccess.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/utils/ConstantUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/utils/CookieUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/common/utils/HeaderUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/game/room/controller/GameStartController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/game/room/controller/RoomController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/game/room/controller/WaitingRoomController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/game/room/dto/RoomDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/game/room/dto/UserDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/game/room/mapper/RoomMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/game/room/service/RoomService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/game/room/service/RoomServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/game/talkbody/controller/TalkBodyController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/game/talkbody/dto/TalkBodyDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/game/talkbody/dto/TalkBodyInGame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/game/talkbody/repository/TalkBodyRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/game/talkbody/service/TalkBodyService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/game/talkbody/service/TalkBodyServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/administrator/controller/AdminController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/administrator/dto/TalkBodyDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/administrator/repository/AdminBodyRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/administrator/service/AdminService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/jwt/JwtAuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/jwt/JwtTokenProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/oauth2/handler/OAuth2AuthenticationFailureHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/oauth2/handler/OAuth2AuthenticationSuccessHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/oauth2/provider/OAuth2UserInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/oauth2/provider/OAuth2UserInfoFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/oauth2/provider/UserPrincipal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/oauth2/provider/info/GoogleOAuth2User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/oauth2/provider/info/KakaoOAuth2User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/oauth2/provider/info/NaverOAuth2User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/users/controller/GuestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/users/controller/IndexController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/users/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/users/dto/UserLoginRequestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/users/dto/UserResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/users/entity/Users.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/users/enums/AuthProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/users/enums/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/users/mapper/UserMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/users/repository/CookieAuthorizationRequestRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/users/repository/UserRegistrationRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/users/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/users/service/CustomOAuth2UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/mokkoji/member/users/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/roomMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/userMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/ssafy/mokkoji/MokkojiApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/10기_공통PJT_발표자료_B304.pptx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/B304 QA 산출물.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/B304 최종 산출물.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/Convention.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/desktop.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/img/1.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/img/Jira.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/img/cypress.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/img/erd.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/img/gerrit.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/img/image.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/img/image2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/img/image3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/img/image4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/img/image5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/img/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/img/logoeng.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/img/sysarch.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/mokkoji2.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/모꼬지_포팅_매뉴얼.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../exec/시연시나리오.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/.vscode/extensions.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/jsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/nginx/default.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/public/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/public/moggozi.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/App.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/assets/backdo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/assets/bodyword.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/assets/fonts.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/assets/fonts/DOSMyungjo.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/assets/fonts/LABdigital.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/assets/gear.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/assets/logout.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/assets/moggozi.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/assets/musicQ.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/assets/mypage.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/assets/rank.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/assets/screetroom.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/Authmodal.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/Login.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/auth/Add.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/auth/AuthPick.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/auth/Players.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/bodygame/Talkbodygame.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/livePlayer/livePlayer.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/livePlayer/myinfo.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/livePlayer/otherliveplayer.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/livePlayer/otherplayer.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/mypage/myinfo.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/mypage/myinfomation.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/mypage/mypage.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/mypage/mypicture.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/play/OvVideo.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/play/UserVideo.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/play/chatcomponent.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/play/fullMainVidio.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/play/fullVidio.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/play/mainvidio.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/play/playcomponent.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/play/result.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/play/resultloading.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/play/roomexplosion.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/waitingroom/GameArea.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/waitingroom/IndividualRoom.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/waitingroom/RoomCreateModal.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/waitingroom/Roomarea.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/waitingroom/WaitingArea.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/waitingroom/checkpwd.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/waitingroom/fullroom.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/waitingroom/gamepicture.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/waitingroom/refuesentry.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/components/waitingroom/roomname.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/router/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/stores/auth.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/stores/chat.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/stores/game.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/stores/openvidu.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/stores/room.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/stores/socket.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/stores/user.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/views/AuthView.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/views/HomeView.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/views/TalkBodyGameView.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/src/views/WaitroomView.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../frontend/vite.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../산출물/B304 QA 산출물.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../산출물/B304 최종 산출물.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../산출물/B304 최종 산출물.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/MokkojiApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/room/controller/RoomController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/room/controller/WaitingRoomController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/room/dto/RoomDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/room/mapper/RoomMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/room/service/RoomService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/room/service/RoomServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/user/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/user/config/WebMvcConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/user/config/auth/PrincipalDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/user/config/auth/PrincipalDetailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/user/config/auth/oauth/PrincipalOauth2UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/user/config/auth/oauth/provider/GoogleUserInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/user/config/auth/oauth/provider/NaverUserInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/user/config/auth/oauth/provider/OAuth2UserInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/user/controller/IndexController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/user/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/mokkoji/user/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/joinForm.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/loginForm.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/mokkoji/MokkojiApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/Authmodal.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/livePlayer/otherliveplayer.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/result.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/resultloading.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/roomexplosion.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/checkpwd.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/fullroom.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/refuesentry.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/stores/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/mokkoji/test2.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/.vscode/extensions.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/jsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/public/moggozi.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/App.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/assets/backdo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/assets/bodyword.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/assets/fonts.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/assets/fonts/DOSMyungjo.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/assets/fonts/LABdigital.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/assets/gear.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/assets/logout.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/assets/moggozi.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/assets/mypage.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/assets/rank.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/assets/screetroom.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/components/Login.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/components/bodygame/Talkbodygame.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/components/play/chatcomponent.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/components/play/mainvidio.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/components/play/playcomponent.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/components/waitingroom/GameArea.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/components/waitingroom/IndividualRoom.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/components/waitingroom/RoomCreateModal.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/components/waitingroom/Roomarea.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/components/waitingroom/WaitingArea.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/components/waitingroom/gamepicture.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/components/waitingroom/roomname.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/router/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/stores/chat.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/stores/game.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/stores/room.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/stores/socket.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/stores/user.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/views/HomeView.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/views/TalkBodyGameView.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/views/WaitroomView.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/vite.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../frontend/vue-project2/vue.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/roomMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/roomMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/public/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/Login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/auth/Add.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/auth/Add.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/auth/AuthPick.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/auth/AuthPick.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/bodygame/Talkbodygame.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/bodygame/Talkbodygame.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/livePlayer/livePlayer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/livePlayer/livePlayer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/livePlayer/myinfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/livePlayer/myinfo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/livePlayer/otherplayer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/livePlayer/otherplayer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/mypage/myinfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/mypage/myinfo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/mypage/myinfomation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/mypage/myinfomation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/mypage/mypage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/mypage/mypage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/mypage/mypicture.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/mypage/mypicture.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/OvVideo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/OvVideo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/UserVideo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/UserVideo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/chatcomponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/chatcomponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/fullMainVidio.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/fullMainVidio.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/fullVidio.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/fullVidio.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/mainvidio.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/mainvidio.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/playcomponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/play/playcomponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/GameArea.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/GameArea.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/IndividualRoom.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/IndividualRoom.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/RoomCreateModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/RoomCreateModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/Roomarea.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/Roomarea.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/WaitingArea.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/WaitingArea.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/gamepicture.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/gamepicture.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/roomname.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/components/waitingroom/roomname.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/stores/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/stores/chat.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/stores/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/stores/game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/stores/openvidu.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/stores/openvidu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/stores/room.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/stores/room.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/stores/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/stores/socket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/stores/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/stores/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/views/AuthView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/views/AuthView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/views/HomeView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/views/HomeView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/src/views/WaitroomView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/src/views/WaitroomView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/mokkoji/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/mokkoji/vite.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/vue-project2/src/assets/Friend.png" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/assets/Friend.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/vue-project2/src/assets/musicQ.png" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/assets/musicQ.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/vue-project2/src/components/play/uservidiocomponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/vue-project2/src/components/play/uservidiocomponent.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,20 +153,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.MongoClientConnectionExample.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging feature/backend",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/SSAFY/Desktop/S10P12B304/backend/mokkoji",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.MongoClientConnectionExample.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging feature/backend&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/SSAFY/Desktop/S10P12B304/backend/mokkoji&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Application.MongoClientConnectionExample">
     <configuration name="MongoClientConnectionExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.ssafy.mokkoji.game.room.controller.MongoClientConnectionExample" />
